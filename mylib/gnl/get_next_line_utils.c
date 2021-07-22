@@ -51,7 +51,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	return (r);
 }
 
-char 	*ft_strjoin_v3(char **s1, char **s2)
+char	*ft_strjoin_v3(char **s1, char **s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;

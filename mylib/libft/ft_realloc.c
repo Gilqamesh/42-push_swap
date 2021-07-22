@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:29:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 14:32:19 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/22 19:38:18 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ void	*ft_realloc(void *src, size_t size)
 
 	new = malloc(size);
 	if (!new)
-		return (src);
+	{
+		if (src)
+			free(src);
+		return ((void *)0);
+	}
 	if (!src)
 		return (new);
 	ft_memmove(new, src, size);

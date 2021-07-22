@@ -6,14 +6,14 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:30:48 by edavid            #+#    #+#             */
-/*   Updated: 2021/06/18 19:30:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/22 19:06:41 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void 	ft_lstdelone(t_list *lst, void (*del)(void *))
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
 	(*del)(lst);
 }

@@ -6,13 +6,13 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:30:49 by edavid            #+#    #+#             */
-/*   Updated: 2021/06/18 19:30:50 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/22 19:06:38 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void 	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	while (lst)
 	{

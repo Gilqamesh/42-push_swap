@@ -1,6 +1,8 @@
 NAME = push_swap
 CC = gcc
-OBJ = ft_driver.o ft_initialize.o ft_error.o
+OBJ = ft_driver.o ft_initialize.o ft_error.o ft_testers.o \
+stack_operations/stack_op1.o stack_operations/stack_op2.o \
+stack_operations/stack_op3.o
 CFLAGS = 
 LIBNAME = libpush_swap.a
 LIBPATH = /Users/edavid/Desktop/Repo/MyProjects/push_swap/$(LIBNAME)
@@ -11,6 +13,8 @@ $(NAME): $(OBJ)
 	cd mylib && $(MAKE) fclean
 	ar -x libmylib.a
 	ar -rs $(LIBNAME) *.o
+	ar -rs $(LIBNAME) ./stack_operations/*.o
+	cd stack_operations && rm -f *.o
 	rm -f *.o libmylib.a
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBPATH)
 	rm -f libmylib.a $(LIBNAME)
@@ -21,6 +25,7 @@ $(NAME): $(OBJ)
 clean:
 	rm -f *.o $(NAME)
 	cd mylib && $(MAKE) fclean
+	cd stack_operations && rm -f *.o
 fclean:
 	make clean
 	rm -f $(LIBNAME)

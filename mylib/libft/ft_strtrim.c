@@ -48,7 +48,7 @@ static char	*ft_strtrim2(size_t end_index, char const *set, char const *s1)
 	return (init_str(&new_str, start_index, end_index, (char *)s1));
 }
 
-char 	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	end_index;
 

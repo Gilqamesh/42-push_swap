@@ -6,13 +6,13 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:30:55 by edavid            #+#    #+#             */
-/*   Updated: 2021/06/18 19:30:56 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/22 19:06:33 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int 	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	int	len;
 

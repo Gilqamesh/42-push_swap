@@ -6,11 +6,12 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 15:34:48 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/22 19:08:28 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
+#include <stdlib.h>
 #include "ft_push_swap.h"
 
 static int	contains_non_numeric(char *str)
@@ -21,18 +22,19 @@ static int	contains_non_numeric(char *str)
 	return (0);
 }
 
-static int	is_str_valid_integer(char *str)
+static void	test_is_str_valid_int(char *str)
 {
 	int	res;
 
 	if (*str == '+')
 		str++;
 	if (*str == '-')
-		if (contains_non_numeric(str + 1) || !*str)
+	{
+		if (!*str || contains_non_numeric(str + 1))
 			ft_error();
-	else
-		if (contains_non_numeric(str) || !*str)
-			ft_error();
+	}
+	else if (!*str || contains_non_numeric(str))
+		ft_error();
 	res = ft_atoi(str);
 	if (res == INT_MIN && ft_strncmp(str, "-2147483648", 11))
 		ft_error();
@@ -40,9 +42,20 @@ static int	is_str_valid_integer(char *str)
 		ft_error();
 }
 
-void	parse_input(int argc, char **argv)
+void	initialize_struct(t_push_swap *mystruct, int argc)
+{
+	ft_bzero(mystruct, sizeof(*mystruct));
+	mystruct->a.arr = malloc((argc - 1)
+			* sizeof(*mystruct->a.arr));
+	mystruct->b.arr = malloc((argc - 1)
+			* sizeof(*mystruct->b.arr));
+}
+
+void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 {
 	while (--argc > 0)
-		if (!is_str_valid_integer(argv[argc]))
-			ft_error();
+	{
+		test_is_str_valid_int(argv[argc]);
+		mystruct->a.arr[mystruct->a.n++] = ft_atoi(argv[argc]);
+	}
 }
