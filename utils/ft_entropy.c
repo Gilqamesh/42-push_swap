@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_driver.c                                        :+:      :+:    :+:   */
+/*   ft_entropy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 10:33:18 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/23 10:01:02 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/23 10:45:08 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_push_swap.h"
+#include "../ft_push_swap.h"
 
-int	main(int argc, char **argv)
+int	calc_entropy(t_stack *stack)
 {
-	t_push_swap	mystruct;
+	int	entropy;
+	int	i;
 
-	if (argc < 2)
-		ft_error();
-	initialize_struct(&mystruct, argc);
-	parse_input(&mystruct, argc, argv);
-	// order_stack_algo(&mystruct);
-	game_loop(&mystruct);
-	return (0);
+	entropy = 0;
+	i = -1;
+	while (++i < stack->n - 1)
+		if (stack->arr[i] < stack->arr[i + 1])
+			entropy++;
+	if (stack->n > 2 && stack->arr[0] < stack->arr[stack->n - 1])
+		entropy++;
+	return (entropy);
 }

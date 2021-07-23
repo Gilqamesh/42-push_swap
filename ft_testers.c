@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 19:07:16 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 10:40:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	print_stacks(t_push_swap *mystruct)
 			mystruct->b.arr[b_index--]);
 	ft_printf("_\t\t_\n");
 	ft_printf("a\t\tb\n");
+	ft_printf("entropies\n");
+	ft_printf("%d\t\t%d\n", calc_entropy(&mystruct->a),
+		calc_entropy(&mystruct->b));
+	ft_printf("n of elements\n");
+	ft_printf("%d\t\t%d\n", mystruct->a.n, mystruct->b.n);
 	ft_printf("------------------------------------------------------------\n");
 }
 

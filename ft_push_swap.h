@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 19:08:11 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 10:14:43 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,17 @@ void	stack_rr(t_push_swap *mystruct);
 void	stack_rra(t_push_swap *mystruct);
 // shift down all elements of stack b by 1
 void	stack_rrb(t_push_swap *mystruct);
-//shift down all elements of stack a and b by 1
+// shift down all elements of stack a and b by 1
 void	stack_rrr(t_push_swap *mystruct);
+// a while loop asking for user input for a stack operation while printing the
+// stacks a and b after each operation being made
 void	game_loop(t_push_swap *mystruct);
+// returns an integer that tells us how unordered a stack is, ordered stack
+// refers to ascending ordering from the top of the stack, 0 entropy means
+// the stack is ordered but might need extra rotations for the final asc order
+int		calc_entropy(t_stack *stack);
+// orders all the elements that has been parsed with the operations available,
+// end result is the ordered elements in an ascending order on stack a
+void	order_stack_algo(t_push_swap *mystruct);
 
 #endif
