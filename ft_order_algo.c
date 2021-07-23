@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 10:15:47 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:21:07 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 19:40:51 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,11 @@ void	order_stack_algo(t_push_swap *mystruct)
 	int	entropy_of_a;
 	int	entropy_of_b;
 
-	update_entropies(mystruct, &entropy_of_a, &entropy_of_b);
-	while (!entropy_of_a && !entropy_of_b)
-	{
-		// check for swap, push and rotate functions and apply the one that
-		// reduces entropy the most
-		// change of entropy for push: -2, -1, 0, 1, +2
-		// change of entropy for swap: -2 <= swap <= +2
-		// change of entropy for rot: -2, -1, 0, 1, +2
-		// these values are for each stack individually
-		// problem: what if there is no operation that decreases entropy?
-		update_entropies(mystruct, &entropy_of_a, &entropy_of_b);
-	}
-	/* entropy of a and b are 0 */
-	// rotate a and use (pa) to push the remaining elements to a
-	// rotate a to final position
+	// Find possible rotations of stack_a when applying either sa or pb
+	// would reduce the most entropy, while also taking account into
+	// the number of operation that would let us make that move.
+	// Perhaps if there are more solutions that are close, we could run
+	// multiple threads on them and see which is more optimal after some search
+	// depth after which we could choose it as our main route again.
+	
 }
