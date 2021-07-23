@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   mylib.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 15:04:26 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 13:33:43 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/23 14:34:57 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/23 14:35:48 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "ft_push_swap.h"
+#ifndef MYLIB_H
+# define MYLIB_H
 
-void	ft_error(void)
-{
-	write(2, "Error\n", 6);
-	exit(EXIT_FAILURE);
-}
+#include "gnl/get_next_line.h"
+#include "libft/libft.h"
+#include "printf/ft_printf.h"
+
+#endif

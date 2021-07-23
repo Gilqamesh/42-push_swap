@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 10:40:53 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 16:39:49 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,20 @@ void	game_loop(t_push_swap *mystruct)
 		check_key_pressed(mystruct, input);
 		print_stacks(mystruct);
 	}
+}
+
+int	is_solution(t_push_swap *mystruct)
+{
+	int	entr_a;
+	int	entr_b;
+	int	i;
+
+	update_entropies(mystruct, &entr_a, &entr_b);
+	if (entr_a || entr_b || mystruct->b.n)
+		return (0);
+	i = -1;
+	while (++i < mystruct->a.n - 1)
+		if (mystruct->a.arr[i] < mystruct->a.arr[i + 1])
+			return (0);
+	return (1);
 }

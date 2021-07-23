@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 19:41:52 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 15:15:51 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 // only works when size >= size of allocated memory src point to
+// also frees src in case the malloc for the new content fails, which is
+// problematic if src was pointing to other pointers that were previously
+// malloced -> it has to do a recursive freeing for src before returning null
 void	*ft_realloc(void *src, size_t size);
 
 #endif
