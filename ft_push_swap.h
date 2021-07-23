@@ -6,15 +6,14 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 10:14:43 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/23 16:36:54 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PUSH_SWAP_H
 # define FT_PUSH_SWAP_H
 
-# include "mylib/libft/libft.h"
-# include "mylib/printf/ft_printf.h"
+# include "mylib/mylib.h"
 
 typedef struct s_stack
 {
@@ -64,5 +63,13 @@ int		calc_entropy(t_stack *stack);
 // orders all the elements that has been parsed with the operations available,
 // end result is the ordered elements in an ascending order on stack a
 void	order_stack_algo(t_push_swap *mystruct);
+void	read_operations(t_push_swap *mystruct);
+// updates entr_a and entr_b based on the entropy of stack a and stack b
+void	update_entropies(t_push_swap *mystruct, int *entr_a, int *entr_b);
+// returns 1 if stack a is sorted and b has no elements, 0 otherwise
+int		is_solution(t_push_swap *mystruct);
+// executes the operation functions on the stacks a and b
+void	execute_operations(t_push_swap *mystruct, char **operations,
+		int number_of_ops);
 
 #endif
