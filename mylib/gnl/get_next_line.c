@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:10:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/01 13:57:26 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/24 10:19:23 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <unistd.h>
 #include <limits.h>
+#ifndef OPEN_MAX
+# define OPEN_MAX 3000
+#endif
 
 static int	reset_ret(char **line, int ret, char **buf_p)
 {

@@ -7,7 +7,7 @@ stack_operations/stack_op1.o stack_operations/stack_op2.o \
 stack_operations/stack_op3.o utils/ft_entropy.o ft_order_algo.o
 CFLAGS = 
 LIBNAME = libpush_swap.a
-LIBPATH = /Users/edavid/Desktop/Repo/MyProjects/push_swap/$(LIBNAME)
+LIBPATH = /mnt/c/Users/Gilqamesh/Desktop/Projects/42/42-push_swap/$(LIBNAME)
 
 $(NAME): $(OBJ) ft_driver.o
 	make library
@@ -22,7 +22,7 @@ $(LIBNAME):
 	ar -x libmylib.a
 	ar -rs $(LIBNAME) *.o
 	ar -rs $(LIBNAME) ./stack_operations/*.o
-	cd stack_operations && rm -f *.o
+	rm -f ./stack_operations/*.o
 	ar -rs $(LIBNAME) ./utils/*.o
 	cd utils && rm -f *.o
 	rm -f *.o libmylib.a
@@ -46,4 +46,4 @@ bonus: fclean $(OBJ) $(BONUSOBJ)
 	make library
 	$(CC) $(CFLAGS) -o $(BONUSNAME) $(LIBNAME)
 	make clean
-library: libpush_swap.a
+library: $(LIBNAME)

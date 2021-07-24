@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_conversion_s.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 19:29:49 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 14:06:42 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/24 10:18:25 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,9 @@ int	print_conversion_s(char *str, int *flags)
 	int	str_len;
 	int	printed_bytes;
 	int	precision;
-	int	is_null;
 
-	is_null = 0;
 	if (!str)
-	{
-		is_null = 1;
 		str = "(null)";
-	}
 	str_len = ft_strlen(str);
 	set_precision(&precision, flags, str_len);
 	printed_bytes = 0;

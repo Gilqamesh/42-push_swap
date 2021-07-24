@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_testers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:39:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/24 10:25:48 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	print_stacks(t_push_swap *mystruct)
 
 	a_index = mystruct->a.n - 1;
 	b_index = mystruct->b.n - 1;
-	ft_printf("------------------------------------------------------------\n");
+	ft_printf("\033[2J");
+	ft_printf("\n------------------------------------------------------------\n");
 	while (a_index >= 0 && a_index > b_index)
 		ft_printf("%d\n", mystruct->a.arr[a_index--]);
 	while (b_index >= 0 && b_index > a_index)
