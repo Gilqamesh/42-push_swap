@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:36:54 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/24 15:20:10 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_stack
 {
-	int	*arr;
+	t_list	*top;
 	int	n;
 }	t_stack;
 
@@ -71,5 +71,12 @@ int		is_solution(t_push_swap *mystruct);
 // executes the operation functions on the stacks a and b
 void	execute_operations(t_push_swap *mystruct, char **operations,
 		int number_of_ops);
+// return string of operation within a range, starting from the smallest value
+// of: (number of operations - amount of entropy reduced)
+char	**get_potential_routes(t_push_swap *mystruct);
+// returns number of rotation operations needed to get the element to the top
+// of the stack after which using sa or pb would reduce entropy, direction is 1
+// for ra and 0 for rra rotation
+int		distance_from_entropy_point_on_stack(t_stack *a, int direction);
 
 #endif

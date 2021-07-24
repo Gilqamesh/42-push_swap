@@ -11,16 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
-}
+#include "../libft/libft.h"
 
 int	contains_newline(char *str, size_t n)
 {
@@ -34,21 +25,6 @@ int	contains_newline(char *str, size_t n)
 		index_of_newline++;
 	}
 	return (index_of_newline);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	void	*r;
-
-	r = dest;
-	while (n--)
-	{
-		if (src > dest)
-			*(unsigned char *)dest++ = *(unsigned char *)src++;
-		else
-			*((unsigned char *)dest + n) = *((unsigned char *)src + n);
-	}
-	return (r);
 }
 
 char	*ft_strjoin_v3(char **s1, char **s2)
