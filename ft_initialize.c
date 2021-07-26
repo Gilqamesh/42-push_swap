@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 10:22:09 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 14:22:50 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	contains_non_numeric(char *str)
 	return (0);
 }
 
-static void	test_is_str_valid_int(char *str)
+static void	test_is_str_valid_int(t_node_binary *mystruct, char *str)
 {
 	int	res;
 
@@ -31,15 +31,15 @@ static void	test_is_str_valid_int(char *str)
 	if (*str == '-')
 	{
 		if (!*str || contains_non_numeric(str + 1))
-			ft_error();
+			ft_error(mystruct);
 	}
 	else if (!*str || contains_non_numeric(str))
-		ft_error();
+		ft_error(mystruct);
 	res = ft_atoi(str);
 	if (res == INT_MIN && ft_strncmp(str, "-2147483648", 11))
-		ft_error();
+		ft_error(mystruct);
 	if (res == INT_MAX && ft_strncmp(str, "2147483647", 10))
-		ft_error();
+		ft_error(mystruct);
 }
 
 void	initialize_struct(t_push_swap *mystruct, int argc)
@@ -49,16 +49,49 @@ void	initialize_struct(t_push_swap *mystruct, int argc)
 	mystruct->b.n = argc - 1;
 }
 
+static void	test_for_duplicates(t_push_swap *mystruct, t_list **lst)
+{
+	t_list	*head;
+
+	if (!lst)
+		return ;
+	head = *lst;
+	while (head->next)
+	{
+		if (*(int *)(head->content) == *(int *)(head->next->content))
+		{
+			ft_lstclear(lst, ft_lstdel);
+			ft_error(mystruct);
+		}
+	}
+}
+
 void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 {
-	int	i;
+	int				i;
+	int				*nptr;
+	t_list			*sorted;
+	t_node_binary	*new;
 
 	i = 0;
+	sorted = (t_list *)0;
 	while (i < argc - 1)
 	{
-		test_is_str_valid_int(argv[argc]);
-		// mystruct->a.arr[mystruct->a.n++] = ft_atoi(argv[argc]);
-		mystruct->a.top = 
+		test_is_str_valid_int(mystruct, argv[argc]);
+		nptr = malloc(sizeof(*nptr));
+		if (!nptr)
+			ft_error(mystruct);
+		*nptr = ft_atoi(argv[i]);
+		ft_lstsortedinsert_int(sorted, ft_lstnew(nptr));
+		new = ft_nodbinnew(nptr);
+		if (!new)
+			ft_error(mystruct);
+		ft_nodbinadd_back(&mystruct->a.head, new);
+		if (++i == argc - 1)
+		{
+			new->next = mystruct->a.head;
+			mystruct->a.head->prev = new;
+		}
 	}
-	// test for duplicate input
+	test_for_duplicates(mystruct, sorted);
 }

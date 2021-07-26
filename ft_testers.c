@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:39:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 11:31:51 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,17 @@ int	is_solution(t_push_swap *mystruct)
 		if (mystruct->a.arr[i] < mystruct->a.arr[i + 1])
 			return (0);
 	return (1);
+}
+
+void	print_nodbin(t_node_binary *lst, int n)
+{
+	int	i;
+
+	i = -1;
+	while (++i < n)
+	{
+		
+	}
+	if (n == -1)
+		
 }

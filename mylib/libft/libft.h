@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 10:52:52 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 14:21:55 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,11 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 // problematic if src was pointing to other pointers that were previously
 // malloced -> it has to do a recursive freeing for src before returning null
 void			*ft_realloc(void *src, size_t size);
+// inserts 'new' into 'lst' in a way that *(int *) 'content' is in ascending
+// order
+void			ft_lstsortedinsert_int(t_list *lst, t_list *new);
+// Frees node->content and node, where node is of type t_list
+void			ft_lstdel(void *node);
 # ifndef T_NODE_BINARY
 #  define T_NODE_BINARY
 typedef struct s_node_binary
@@ -202,16 +207,18 @@ void			ft_nodbinadd_front(t_node_binary **lst, t_node_binary *new);
 int				ft_nodbinsize(t_node_binary *lst);
 // Returns the last element of the list.
 t_node_binary	*ft_nodbinlast(t_node_binary *lst);
-// Adds the element 'new' at the end of the list.
+// Adds the element 'new' at the end of the list. Sets new->prev to the
+// pointer of the element fore the last one.
 void			ft_nodbinadd_back(t_node_binary **lst, t_node_binary *new);
 // Takes as a parameter an element and frees the memory of the element's
 // content using the function 'del' given as a parameter and free the element.
 // The memory of 'next' is not freed.
 void			ft_nodbindelone(t_node_binary *lst, void (*del)(void *));
 // Deletes and frees the given element and every successor of that element,
-// using the function 'del' and free.
+// using the function 'del' and free up to 'n' elements or if 'n' is negative
+// until (*lst)->next is NULL.
 // Finally, the pointer to the list is set to NULL.
-void			ft_nodbinclear(t_node_binary **lst, void (*del)(void *));
+void			ft_nodbinclear(t_node_binary **lst, void (*del)(void *), int n);
 // Iterates the list 'lst' and applies the function 'f' to the content of each
 // element.
 void			ft_nodbiniter(t_node_binary *lst, void (*f)(void *));
@@ -221,5 +228,10 @@ void			ft_nodbiniter(t_node_binary *lst, void (*f)(void *));
 // if needed.
 t_node_binary	*ft_nodbinmap(t_node_binary *lst, void *(*f)(void *),
 					void (*del)(void *));
+// Prints out the contents of list, up to 'n' times, if 'n' is negative,
+// the functions prints out the entire list.
+void			ft_nodbinprint_int(t_node_binary *lst, int n);
+// Frees node->content and node, where node is of type t_node_binary
+void			ft_nodbindel(void *node);
 
 #endif

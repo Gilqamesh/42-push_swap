@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:30:46 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 19:06:44 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 13:44:11 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*tmp;
 
+	if (!lst)
+		return ;
 	while (*lst)
 	{
 		tmp = (*lst)->next;

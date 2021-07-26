@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_lstsortedinsert_int.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 15:04:26 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 13:53:57 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/26 14:03:47 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/26 14:11:58 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "ft_push_swap.h"
+#include "libft.h"
 
-static void	free_mystruct(t_push_swap *mystruct)
+void	ft_lstsortedinsert_int(t_list *lst, t_list *new)
 {
-	ft_nodbinclear(&mystruct->a.head, ft_nodbindel, mystruct->a.n);
-	ft_nodbinclear(&mystruct->b.head, ft_nodbindel, mystruct->b.n);
-}
+	t_list	*tmp;
 
-void	ft_error(t_push_swap *mystruct)
-{
-	write(2, "Error\n", 6);
-	free_mystruct(mystruct);
-	exit(EXIT_FAILURE);
+	if (!lst || !new)
+		return ;
+	while (lst->next && *(int *)(lst->next->content) < *(int *)(new->content))
+		lst = lst->next;
+	tmp = lst->next;
+	lst->next = new;
+	new->next = tmp;
 }

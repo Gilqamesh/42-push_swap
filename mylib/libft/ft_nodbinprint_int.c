@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_nodbinprint_int.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 15:04:26 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 13:53:57 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/26 11:32:11 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/26 13:45:37 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-#include "ft_push_swap.h"
+#include "libft.h"
+#include "../printf/ft_printf.h"
 
-static void	free_mystruct(t_push_swap *mystruct)
+void	ft_nodbinprint_int(t_node_binary *lst, int n)
 {
-	ft_nodbinclear(&mystruct->a.head, ft_nodbindel, mystruct->a.n);
-	ft_nodbinclear(&mystruct->b.head, ft_nodbindel, mystruct->b.n);
-}
-
-void	ft_error(t_push_swap *mystruct)
-{
-	write(2, "Error\n", 6);
-	free_mystruct(mystruct);
-	exit(EXIT_FAILURE);
+	if (!lst)
+	{
+		ft_printf("List is empty.\n");
+		return ;
+	}
+	while (lst && n)
+	{
+		ft_printf("%d\n", *(int *)lst->content);
+		lst = lst->next;
+		if (n > 0 && !--n)
+			break ;
+	}
 }
