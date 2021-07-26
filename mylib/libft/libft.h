@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/24 15:44:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 10:10:19 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,89 @@ void	*ft_memccpy(void *dest, const void *src, int c, size_t n);
 // Copies 'n' bytes from string 'src' to string 'dest'. The two strings may
 // overlap; the copy is always done in a non-destructive manner.
 void	*ft_memmove(void *dest, const void *src, size_t n);
-// 
+// Locates the first occurrence of 'c' (converted to unsigned char) in string
+// 's'. Returns a pointer to the byte located, NULL if no such byte exists
+// within 'n' bytes.
 void	*ft_memchr(const void *s, int c, size_t n);
+// Compares byte string 's1' against byte string 's2'. Both strings are assumed
+// to be 'n' bytes long. Returns 0 if the two strings are identical, otherwise
+// the difference between the first two differing bytes (treated as unsigned
+// char values)
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+// Computes the length of string s.
 size_t	ft_strlen(const char *s);
+// Copies up to 'size' - 1 characters from 'src' to 'dst', NUL-terminating the
+// result if 'size' is not 0. Return value is the total length of the string
+// it tried to create.
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+// Appends 'src' to the end of 'dst' It will append at most
+// 'size' - strlen(dst) - 1 characters. It will then NUL-terminate, unless
+// 'size' is 0 or the original 'dst' string was lon ger than 'size'.
+// Return value is the total length of the string it tried to create.
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+// Locates the first occurence of 'c' in the string pointed to by 's'. The
+// terminating null character is conidered to be part of the string; therefore
+// if c is '\0', the functions locates the terminating '\0'.
+// Return value is the pointer to the located character, or NULL if the
+// character does not appear in the string.
 char	*ft_strchr(const char *s, int c);
+// Locates the last occurence of 'c' in the string pointed to by 's'. The
+// terminating null character is considered to be part of the string; therefore
+// if c is '\0', the function locates the terminating '\0'.
+// Return value is the pointer to the located character, or NULL if the
+// character does not appear in the string.
 char	*ft_strrchr(const char *s, int c);
-char	*ft_strnstr(const char *s1, const char *s2, size_t len);
+// Locates the first occurence of the null-terminating string 'needle' in the
+// string 'haystack', where not more than 'len' characters are searched.
+// Characters that appear after a '\0' character are not searched.
+// If needle is an empty string, haystack is returned; if needle occurs nowhere
+// in haystack, NULL is returned; otherwise a pointer to the first character of
+// the first occurence of needle is returned.
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+// Lexicographically compare the null-terminated string 's1' and 's2'.
+// Compares not more than 'n' characters. Return an integer greater than, equal
+// to, or less than 0, according as the string 's1' is greater than, equal to,
+// or less than the string s2. The comparison is done using unsigned characters,
+// so that '\200' is greaater than '\0'.
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+// Converts the initial portion of the string pointed to by 'nptr' to int
+// representation. Returns INT_MAX or INT_MIN in case of overflow.
 int		ft_atoi(const char *nptr);
+// Tests for any character for which isupper or islower is true. (alphabetical)
+// Returns zero if the character tests false and returns 1 otherwise.
 int		ft_isalpha(int c);
 // Returns 1 if c is a digit, 0 otherwise.
 int		ft_isdigit(int c);
+// Tests for any character for which isalpha or isdigit is true. (alphanum)
+// Returns zero if the character tests false and 1 otherwise.
 int		ft_isalnum(int c);
+// Tests for an ASCII character, which is any character between 0 and octal
+// 0177 inclusive. Returns 0 if the character tests false, 1 otherwise.
 int		ft_isascii(int c);
+// Tests for any printing character, including space. The value of the argument
+// must be representable as an unsigned char or the value of EOF.
+// Returns zero if the character tests false, 1 otherwise.
 int		ft_isprint(int c);
+// Converts a lower-case letter to the corresponding upper-case letter. The
+// argument must be representable as an unsigned char or the value of EOF.
+// If the argument is a lower-case letter, it returns the corresponding
+// upper-case letter if there is one; otherwise, the argument is returned
+// unchanged.
 int		ft_toupper(int c);
+// Converts an upper-case letter to the corresponding lower-case letter. The
+// argument must be representable as an unsigned char or the value of EOF.
+// If the argument is an upper-case letter, it returns the corresponding
+// lower-case letter if there is one; otherwise, the argument is returned
+// unchanged.
 int		ft_tolower(int c);
+// Contiguously allocates enough space for 'nelem' objects that are 'elsize'
+// bytes of memory each and returns a pointer to the allocated memory. The
+// allocated memory is filled with bytes of value zero.
 void	*ft_calloc(size_t nelem, size_t elsize);
+// Allocates sufficient memory for a copy of the string 's', does the copy,
+// and returns a pointer to it. The pointer may subsequently be used as an
+// argument to the function free. If insufficient memory is available, NULL
+// is returned.
 char	*ft_strdup(const char *s);
 // Allocates and returns a substring from the string 's'
 // The substring begins at the index 'start' and is of maximum size 'len'.

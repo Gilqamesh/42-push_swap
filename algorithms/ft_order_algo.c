@@ -6,17 +6,11 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 10:15:47 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/24 13:58:54 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 09:33:43 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
-
-void	update_entropies(t_push_swap *mystruct, int *entr_a, int *entr_b)
-{
-	*entr_a = calc_entropy(&mystruct->a);
-	*entr_b = calc_entropy(&mystruct->b);
-}
 
 void	order_stack_algo(t_push_swap *mystruct)
 {

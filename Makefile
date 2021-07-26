@@ -4,7 +4,7 @@ BONUSOBJ = checker_program/ft_checker.o checker_program/initialize.o
 CC = gcc
 OBJ = ft_initialize.o ft_error.o ft_testers.o \
 stack_operations/stack_op1.o stack_operations/stack_op2.o \
-stack_operations/stack_op3.o utils/ft_entropy.o ft_order_algo.o \
+stack_operations/stack_op3.o utils/ft_entropy.o algorithms/ft_order_algo.o \
 ft_get_routes.o
 CFLAGS = 
 LIBNAME = libpush_swap.a
@@ -23,7 +23,9 @@ $(LIBNAME):
 	ar -x libmylib.a
 	ar -rs $(LIBNAME) *.o
 	ar -rs $(LIBNAME) ./stack_operations/*.o
-	cd stack_operations && rm -f *.o
+	rm -f ./stack_operations/*.o
+	ar -rs $(LIBNAME) ./algorithms/*.o
+	rm -f ./algorithms/*.o
 	ar -rs $(LIBNAME) ./utils/*.o
 	cd utils && rm -f *.o
 	rm -f *.o libmylib.a
