@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/24 15:20:10 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 10:23:05 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 typedef struct s_stack
 {
-	t_list	*top;
-	int	n;
+	t_node_binary	*head;
+	int				n;
 }	t_stack;
 
 typedef struct s_push_swap
@@ -28,7 +28,7 @@ typedef struct s_push_swap
 }	t_push_swap;
 
 void	parse_input(t_push_swap *mystruct, int argc, char **argv);
-void	ft_error(void);
+void	ft_error(t_push_swap *mystruct);
 void	initialize_struct(t_push_swap *mystruct, int argc);
 void	print_stacks(t_push_swap *mystruct);
 // swap the first 2 elements at the top of stack a

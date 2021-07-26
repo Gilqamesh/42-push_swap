@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_nodbinclear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/18 19:30:48 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 10:45:29 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/26 10:46:48 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/26 10:47:11 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+void	ft_nodbinclear(t_node_binary **lst, void (*del)(void *))
 {
-	(*del)(lst);
+	t_node_binary	*tmp;
+
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_nodbindelone(*lst, del);
+		*lst = tmp;
+	}
 }

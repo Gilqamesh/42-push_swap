@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:24:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 10:20:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	main(int argc, char **argv)
 {
 	t_push_swap	mystruct;
 
+	initialize_struct(&mystruct, argc);
 	if (argc < 2)
 		ft_error();
-	initialize_struct(&mystruct, argc);
 	parse_input(&mystruct, argc, argv);
 	// order_stack_algo(&mystruct);
 	game_loop(&mystruct);

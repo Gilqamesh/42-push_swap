@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/24 15:22:05 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 10:22:09 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,20 @@ static void	test_is_str_valid_int(char *str)
 void	initialize_struct(t_push_swap *mystruct, int argc)
 {
 	ft_bzero(mystruct, sizeof(*mystruct));
+	mystruct->a.n = argc - 1;
+	mystruct->b.n = argc - 1;
 }
 
 void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 {
-	while (--argc > 0)
+	int	i;
+
+	i = 0;
+	while (i < argc - 1)
 	{
 		test_is_str_valid_int(argv[argc]);
 		// mystruct->a.arr[mystruct->a.n++] = ft_atoi(argv[argc]);
 		mystruct->a.top = 
 	}
+	// test for duplicate input
 }
