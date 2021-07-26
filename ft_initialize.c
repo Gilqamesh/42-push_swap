@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 14:22:50 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 16:54:34 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	test_for_duplicates(t_push_swap *mystruct, t_list **lst)
 			ft_lstclear(lst, ft_lstdel);
 			ft_error(mystruct);
 		}
+		head = head->next;
 	}
 }
 
