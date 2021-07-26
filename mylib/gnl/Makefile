@@ -18,4 +18,4 @@ get_next_line_utils.o : get_next_line_utils.c get_next_line.h
 all:
 	make $(NAME)
 fclean:
-	rm -rf *.o $(NAME)
+	rm -rf *.o $(NAME) __.SYMDEF __.SYMDEF\ SORTED

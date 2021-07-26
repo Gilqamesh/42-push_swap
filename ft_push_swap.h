@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 16:22:27 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:25:57 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,6 @@ void			execute_operations(t_push_swap *mystruct, char **operations,
 // return string of operation within a range, starting from the smallest value
 // of: (number of operations - amount of entropy reduced)
 char			**get_potential_routes(t_push_swap *mystruct);
-// returns number of rotation operations needed to get the element to the top
-// of the stack after which using sa or pb would reduce entropy, direction is 1
-// for ra and 0 for rra rotation
-int				distance_from_entropy_point_on_stack(t_stack *a, int direction);
 // helper function for stack_sa and stack_sb
 void			swap_helper_case_3(t_stack *stack);
 // helper function for stack_sa and stack_sb
@@ -88,5 +84,8 @@ void			swap_helper_case_g3(t_stack *stack);
 t_node_binary	*remove_head_from_stack(t_stack *stack);
 // helper function for stack_sa and stack_pb, handles cases where n > 1
 void			push_helper(t_stack *pushed, t_stack *popped);
+// helper function 
+void			print_stacks_helper(t_node_binary *a_cur, t_node_binary *b_cur,
+								int a_counter, int b_counter);
 
 #endif

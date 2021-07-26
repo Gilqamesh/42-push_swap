@@ -21,4 +21,4 @@ $(NAME):
 all:
 	make $(NAME)
 fclean:
-	rm -rf *.o $(NAME)
+	rm -rf *.o $(NAME) __.SYMDEF __.SYMDEF\ SORTED

@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 16:54:34 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:20:40 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	contains_non_numeric(char *str)
 	return (0);
 }
 
-static void	test_is_str_valid_int(t_node_binary *mystruct, char *str)
+static void	test_is_str_valid_int(t_push_swap *mystruct, char *str)
 {
 	int	res;
 
@@ -94,5 +94,5 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 			mystruct->a.head->prev = new;
 		}
 	}
-	test_for_duplicates(mystruct, sorted);
+	test_for_duplicates(mystruct, &sorted);
 }

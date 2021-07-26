@@ -6,18 +6,19 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 13:52:40 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/23 16:38:58 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:32:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_push_swap.h"
 
-static void	destroy_operations(char ***operations, int index)
+static void	destroy_operations(t_push_swap *mystruct, char ***operations,
+int index)
 {
 	while (index--)
 		free((*operations)[index]);
 	free(*operations);
-	ft_error();
+	ft_error(mystruct);
 }
 
 static int	valid_function_name(char *str)
@@ -70,12 +71,12 @@ void	read_operations(t_push_swap *mystruct)
 		operations = ft_realloc(operations, ++op_index * sizeof(*operations));
 		read_bytes = get_next_line(0, operations + op_index - 1);
 		if (read_bytes < 0)
-			destroy_operations(&operations, op_index - 1);
+			destroy_operations(mystruct, &operations, op_index - 1);
 		if (!read_bytes)
 			break ;
 	}
 	while (read_bytes < op_index - 1)
 		if (!valid_function_name(operations[read_bytes++]))
-			destroy_operations(&operations, op_index);
+			destroy_operations(mystruct, &operations, op_index);
 	execute_operations(mystruct, operations, op_index - 1);
 }

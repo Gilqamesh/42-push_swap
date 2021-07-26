@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/07/26 14:06:03 by edavid           ###   ########.fr        #
+#    Updated: 2021/07/26 19:30:56 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 extended_sources = ft_realloc.c ft_nodbinadd_back.c ft_nodbinadd_front.c \
 ft_nodbinclear.c ft_nodbindelone.c ft_nodbiniter.c ft_nodbinlast.c \
 ft_nodbinmap.c ft_nodbinnew.c ft_nodbinsize.c ft_nodbindel.c ft_nodbinprint_int.c \
-ft_lstsortedinsert_int.c
+ft_lstsortedinsert_int.c ft_lstdel.c
 
 NAME = libft.a
 
@@ -33,7 +33,7 @@ $(NAME) : *.c
 	make clean
 .PHONY: clean bonus all fclean re
 clean :
-	rm -f *.o
+	rm -f *.o __.SYMDEF __.SYMDEF\ SORTED
 bonus :
 	$(CC) $(FLAGS) -c $(bonus_sources) $(extended_sources)
 	ar rc $(NAME) *.o

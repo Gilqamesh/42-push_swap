@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 11:31:51 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:22:39 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 
 void	print_stacks(t_push_swap *mystruct)
 {
-	int	a_index;
-	int	b_index;
+	int				a_counter;
+	int				b_counter;
+	t_node_binary	*a_cur;
+	t_node_binary	*b_cur;
 
-	a_index = mystruct->a.n - 1;
-	b_index = mystruct->b.n - 1;
+	a_counter = mystruct->a.n - 1;
+	b_counter = mystruct->b.n - 1;
+	a_cur = mystruct->a.head;
+	b_cur = mystruct->b.head;
 	ft_printf("------------------------------------------------------------\n");
-	while (a_index >= 0 && a_index > b_index)
-		ft_printf("%d\n", mystruct->a.arr[a_index--]);
-	while (b_index >= 0 && b_index > a_index)
-		ft_printf(" \t\t%d\n", mystruct->b.arr[b_index--]);
-	while (a_index >= 0)
-		ft_printf("%d\t\t%d\n", mystruct->a.arr[a_index--],
-			mystruct->b.arr[b_index--]);
+	print_stacks_helper(a_cur, b_cur, a_counter, b_counter);
 	ft_printf("_\t\t_\n");
 	ft_printf("a\t\tb\n");
 	ft_printf("entropies\n");
@@ -86,29 +84,21 @@ void	game_loop(t_push_swap *mystruct)
 
 int	is_solution(t_push_swap *mystruct)
 {
-	int	entr_a;
-	int	entr_b;
-	int	i;
+	int				entr_a;
+	int				entr_b;
+	int				i;
+	t_node_binary	*cur;
 
 	update_entropies(mystruct, &entr_a, &entr_b);
 	if (entr_a || entr_b || mystruct->b.n)
 		return (0);
+	cur = mystruct->a.head;
 	i = -1;
 	while (++i < mystruct->a.n - 1)
-		if (mystruct->a.arr[i] < mystruct->a.arr[i + 1])
-			return (0);
-	return (1);
-}
-
-void	print_nodbin(t_node_binary *lst, int n)
-{
-	int	i;
-
-	i = -1;
-	while (++i < n)
 	{
-		
+		if (*(int *)(cur->content) > *(int *)(cur->next->content))
+			return (0);
+		cur = cur->next;
 	}
-	if (n == -1)
-		
+	return (1);
 }

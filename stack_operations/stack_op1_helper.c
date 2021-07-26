@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 15:13:02 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 16:32:22 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:23:21 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	swap_helper_case_g3(t_stack *stack)
 	stack->head->prev = after_head;
 }
 
-static void	*remove_head_helper(t_stack *stack)
+static void	remove_head_helper(t_stack *stack)
 {
 	t_node_binary	*after_head;
 	t_node_binary	*prev_head;

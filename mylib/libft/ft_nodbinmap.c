@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 10:48:51 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 10:50:00 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:24:11 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void (*del)(void *))
 	{
 		tmp = ft_nodbinnew((*f)(lst->content));
 		if (!tmp)
-			ft_nodbinclear(&new_lst, del);
+			ft_nodbinclear(&new_lst, del, -1);
 		if (!head)
 		{
 			head = tmp;

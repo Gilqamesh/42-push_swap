@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 15:44:36 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/26 19:27:06 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,9 @@ void			ft_lstdel(void *node);
 #  define T_NODE_BINARY
 typedef struct s_node_binary
 {
-	void			*content;
-	t_node_binary	*next;
-	t_node_binary	*prev;
+	void					*content;
+	struct s_node_binary	*next;
+	struct s_node_binary	*prev;
 }	t_node_binary;
 # endif
 // Allocates and returns a new element. The variable 'content' is initialized
@@ -208,7 +208,7 @@ int				ft_nodbinsize(t_node_binary *lst);
 // Returns the last element of the list.
 t_node_binary	*ft_nodbinlast(t_node_binary *lst);
 // Adds the element 'new' at the end of the list. Sets new->prev to the
-// pointer of the element fore the last one.
+// pointer of the element for the last one.
 void			ft_nodbinadd_back(t_node_binary **lst, t_node_binary *new);
 // Takes as a parameter an element and frees the memory of the element's
 // content using the function 'del' given as a parameter and free the element.

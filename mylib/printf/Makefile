@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/25 20:47:25 by edavid            #+#    #+#              #
-#    Updated: 2021/07/22 15:01:38 by edavid           ###   ########.fr        #
+#    Updated: 2021/07/26 19:30:59 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ driver.o : driver.c ft_printf.h
 .PHONY: all clean fclean re bonus test
 all : $(NAME)
 clean :
-	rm -f *.o libft/*.o
+	rm -f *.o libft/*.o __.SYMDEF __.SYMDEF\ SORTED
 fclean : clean
 	rm -f $(NAME)
 	cd ../libft && rm -f libft.a
