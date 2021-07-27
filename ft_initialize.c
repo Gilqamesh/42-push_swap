@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 19:20:40 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 11:55:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	initialize_struct(t_push_swap *mystruct, int argc)
 {
 	ft_bzero(mystruct, sizeof(*mystruct));
 	mystruct->a.n = argc - 1;
-	mystruct->b.n = argc - 1;
+	mystruct->b.n = 0;
 }
 
 static void	test_for_duplicates(t_push_swap *mystruct, t_list **lst)
 {
 	t_list	*head;
 
-	if (!lst)
+	if (!lst || !*lst)
 		return ;
 	head = *lst;
 	while (head->next)
@@ -74,21 +74,21 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 	t_list			*sorted;
 	t_node_binary	*new;
 
-	i = 0;
+	i = 1;
 	sorted = (t_list *)0;
-	while (i < argc - 1)
+	while (i < argc)
 	{
-		test_is_str_valid_int(mystruct, argv[argc]);
+		test_is_str_valid_int(mystruct, argv[i]);
 		nptr = malloc(sizeof(*nptr));
 		if (!nptr)
 			ft_error(mystruct);
 		*nptr = ft_atoi(argv[i]);
-		ft_lstsortedinsert_int(sorted, ft_lstnew(nptr));
+		ft_lstsortedinsert_int(&sorted, ft_lstnew(nptr));
 		new = ft_nodbinnew(nptr);
 		if (!new)
 			ft_error(mystruct);
 		ft_nodbinadd_back(&mystruct->a.head, new);
-		if (++i == argc - 1)
+		if (++i == argc)
 		{
 			new->next = mystruct->a.head;
 			mystruct->a.head->prev = new;

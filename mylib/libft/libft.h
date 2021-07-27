@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 19:27:06 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 11:45:35 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,9 +185,12 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 void			*ft_realloc(void *src, size_t size);
 // inserts 'new' into 'lst' in a way that *(int *) 'content' is in ascending
 // order
-void			ft_lstsortedinsert_int(t_list *lst, t_list *new);
+void			ft_lstsortedinsert_int(t_list **lst, t_list *new);
 // Frees node->content and node, where node is of type *t_list
 void			ft_lstdel(void *node);
+// Prints out the contents of list, up to 'n' times, if 'n' is negative,
+// the functions prints out the entire list.
+void			ft_lstprint_int(t_list *lst, int n);
 # ifndef T_NODE_BINARY
 #  define T_NODE_BINARY
 typedef struct s_node_binary

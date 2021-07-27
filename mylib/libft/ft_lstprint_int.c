@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_driver.c                                        :+:      :+:    :+:   */
+/*   ft_lstprint_int.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 11:53:01 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/27 11:39:46 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/27 11:40:45 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_push_swap.h"
+#include "libft.h"
+#include "../printf/ft_printf.h"
 
-int	main(int argc, char **argv)
+void	ft_lstprint_int(t_list *lst, int n)
 {
-	t_push_swap	mystruct;
-
-	initialize_struct(&mystruct, argc);
-	if (argc < 2)
-		ft_error(&mystruct);
-	parse_input(&mystruct, argc, argv);
-	// order_stack_algo(&mystruct);
-	game_loop(&mystruct);
-	return (0);
+	if (!lst)
+	{
+		ft_printf("List is empty.\n");
+		return ;
+	}
+	while (lst && n)
+	{
+		ft_printf("%d\n", *(int *)lst->content);
+		lst = lst->next;
+		if (n > 0 && !--n)
+			break ;
+	}
 }
