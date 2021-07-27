@@ -1,0 +1,33 @@
+In-place sorting algorithm, meaning it is an algorithm that transforms input using no auxiliary data structure. (However, a small amount of extra storage space is allowed for auxiliary variables.
+It is a divide-and-conquer algorithm, meaning it recursively breaks down the problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly.
+The algorithm is based on a partitioning routine; the details of this partitioning can vary somewhat, so that quicksort is really a family of closely related algorithms.
+
+It works by selecting a pivot element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then
+sorted recursively. This can be done in-place, requiring small additional amounts of memory to perform the sorting.
+
+Hoare partition scheme pseudo-code: (Sorting the entire array is accomplished by quicksort(A, 0, length(A) - 1).)
+algorithm quicksort(A, lo, hi) is
+    if lo < hi then
+        p := partition(A, lo, hi)
+        quicksort(A, lo, p)
+        quicksort(A, p + 1, hi)
+
+algorithm partition(A, lo, hi) is
+    pivot := A[ floor((hi + lo) / 2) ]
+    i := lo - 1
+    j := hi + 1
+    loop forever
+        do
+            i := i + 1
+        while A[i] < pivot
+        do
+            j := j - 1
+        while A[j] > pivot
+        if i ≥ j then
+            return j
+        swap A[i] with A[j]
+
+Optimizations:
+	- When the number of elements is below some threshold (perhaps ten elements), switch to a non-recursive sorting algorithm such as insertion sort that performs fewer swaps, comparisons or other
+		operations on such small arrays. The ideal 'threshold' will vary based on the details of the specific implementation.
+	- 

@@ -1,0 +1,14 @@
+LIS (Longest Increasing Subsequence): the subsequence of a given sequence in which the elements are in sorted order, lowest to highest, and in which the subsequence is as long as possible.
+	Time complexity: O(nlogn), where 'n' denotes the length of the input sequence
+	Example: 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15
+	LIS: - 0, 2, 6, 9, 11, 15
+		 - 0, 4, 6, 9, 11, 15
+		 - 0, 2, 6, 9, 13, 15
+		 - 0, 4, 6, 9, 13, 15
+	LIS of a sequence S is the LCS of S and T, where T is the result of sorting S.
+
+LCS (Longest Common Subsequence): longest subsequence common to all sequences in a set of sequences.
+	Example: set of sequences: (ABCD) and (ACBAD)
+	5 length - 2 common subsequences: (AB), (AC), (AD), (BD), (CD)
+	2 length - 3 common subsequences: (ABD), (ACD)
+	No longer common subsequences, so (ABD) and (ACD) are the LCD of the set of sequences

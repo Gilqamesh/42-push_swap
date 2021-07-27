@@ -1,0 +1,59 @@
+In-place comparison sort, the latter meaning that it only reads the list elements through a single abstract comparison operation that determines which of two elements should occur in the final sorted list.
+It can be seen as either a generalization of sorting by exchange (bubble sort) or sorting by insertion (insertion sort).
+
+The method starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between elements to be compared. By starting with far apart elements, it can move some
+out-of-place elements into position faster than a simple nearest neighbor exchange.
+
+Shellsort is an optimization of insertion sort that allows the exchange of items that are far apart. The idea is to arrange the list of elements so that, starting anywhere, taking every hth element
+produces a sorted list. Such a list is said to be h-sorted.
+Beginning with large values of h allows elements to move long distances in the original list, reducing large amounts of disorder quickly, and leaving less work for smaller h-sort steps to do.
+If the list is then k-sorted for some smaller integer k, then the list remains h-sorted. Following this idea for a decreasing sequence of h values ending in 1 is guaranteed to leave a sorted list in the end.
+
+In simplistic terms, this means if we have an array of 1024 numbers, our first gap (h) could be 512. We then run through the list comparing each element in the first half to the element in the second half.
+Our second gap (k) is 256, which breaks the array into four sections (starting at 0,256,512,768), and we make sure the first items in each section are sorted relative to each other, then the second item
+in each section, and so on. In practice the gap sequence could be anything, but the last gap is always 1 to finish the sort (effectively finishing with an ordinary insertion sort).
+
+Example with gaps of 5 3 and 1
+				a1	a2	a3	a4	a5	a6	a7	a8	a9	a10	a11	a12
+Input data		62	83	18	53	07	17	95	86	47	69	25	28
+After 5-sorting	17	28	18	47	07	25	83	86	53	69	62	95
+After 3-sorting	17	07	18	47	28	25	69	62	53	83	86	95
+After 1-sorting	07	17	18	25	28	47	53	62	69	83	86	95
+
+The first pass, 5-sorting, performs insertion sort on five separate subarrays (a1, a6, a11), (a2, a7, a12), (a3, a8), (a4, a9), (a5, a10). For instance, it changes the subarray (a1, a6, a11) from
+(62, 17, 25) to (17, 25, 62). The next pass, 3-sorting, performs insertion sort on the three subarrays (a1, a4, a7, a10), (a2, a5, a8, a11), (a3, a6, a9, a12). The last pass, 1-sorting, is an ordinary
+insertion sort of the entire array (a1,..., a12).
+
+Pseudo code:
+# Sort an array a[0...n-1].
+gaps = [701, 301, 132, 57, 23, 10, 4, 1]
+
+# Start with the largest gap and work down to a gap of 1
+foreach (gap in gaps)
+{
+    # Do a gapped insertion sort for this gap size.
+    # The first gap elements a[0..gap-1] are already in gapped order
+    # keep adding one more element until the entire array is gap sorted
+    for (i = gap; i < n; i += 1)
+    {
+        # add a[i] to the elements that have been gap sorted
+        # save a[i] in temp and make a hole at position i
+        temp = a[i]
+        # shift earlier gap-sorted elements up until the correct location for a[i] is found
+        for (j = i; j >= gap and a[j - gap] > temp; j -= gap)
+        {
+            a[j] = a[j - gap]
+        }
+        # put temp (the original a[i]) in its correct location
+        a[j] = temp
+    }
+}
+
+Gap sequences:
+The question of deciding which gap sequence to use is difficult. Every gap sequence that contains 1 yields a correct sort (as this makes the final pass an ordinary insertion sort);
+however, the properties of thus obtained versions of Shellsort may be very different. Too few gaps slows down the passes, and too many gaps produces an overhead.
+
+Concrete gaps that are found to be most proposed:
+1, 4, 10, 23, 57, 132, 301, 701
+Or if more needed, general term to generate proposed values:
+ceil(1 / 5.0 * (9 * pow(9 / 4.0, k - 1) - 4)

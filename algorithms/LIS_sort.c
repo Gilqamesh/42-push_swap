@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_driver.c                                        :+:      :+:    :+:   */
+/*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 19:13:42 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/27 19:13:55 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_push_swap.h"
+#include "../ft_push_swap.h"
 
-int	main(int argc, char **argv)
+char	*LIS_sort(t_push_swap *mystruct)
 {
-	t_push_swap	mystruct;
-	char		*sequence;
-
-	initialize_struct(&mystruct, argc);
-	if (argc < 2)
-		ft_error(&mystruct);
-	parse_input(&mystruct, argc, argv);
-	// sequence = LIS_sort(&mystruct);
-	game_loop(&mystruct);
-	return (0);
+	return ((char *)0);
 }

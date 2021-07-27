@@ -1,0 +1,47 @@
+Simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.
+However, insertion sort provides several advantages:
+	- simple implementation
+	- efficient for (quite) small data sets, much like other quadratic sorting algorithms
+	- more efficient in practice than most other simple quadratic algorithms such as selection sort or bubble sort
+	- adaptive, i.e., efficient for data sets that are already substantially sorted: the time complexity is O(kn) when each element in the input is no more than k places away from its sorted position
+	- stable, i.e., does not change the relative order of elements with equal keys
+	- in-place, i.e., only requires a constant amount O(1) of additional memory space
+	- online, i.e., can sort a list as it receives it
+
+Algorithm: Iterates, consuming one input element each repetition, and grows a sorted output list. At each iteration, insertion sort removes one element from the input data, finds the location it belongs
+	within the sorted list, and inserts it there. It repeats until no input elements remain.
+
+Implementation in C:
+struct LIST * SortList1(struct LIST * pList) 
+{
+    // zero or one element in list
+    if (pList == NULL || pList->pNext == NULL)
+        return pList;
+    // head is the first element of resulting sorted list
+    struct LIST * head = NULL;
+    while (pList != NULL) {
+        struct LIST * current = pList;
+        pList = pList->pNext;
+        if (head == NULL || current->iValue < head->iValue) {
+            // insert into the head of the sorted list
+            // or as the first element into an empty sorted list
+            current->pNext = head;
+            head = current;
+        } else {
+            // insert current element into proper position in non-empty sorted list
+            struct LIST * p = head;
+            while (p != NULL) {
+                if (p->pNext == NULL || // last element of the sorted list
+                    current->iValue < p->pNext->iValue) // middle of the list
+                {
+                    // insert into middle of the sorted list or as the last element
+                    current->pNext = p->pNext;
+                    p->pNext = current;
+                    break; // done
+                }
+                p = p->pNext;
+            }
+        }
+    }
+    return head;
+}

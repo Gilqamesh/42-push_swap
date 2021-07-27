@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 13:22:02 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 19:12:41 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ void			game_loop(t_push_swap *mystruct);
 // refers to ascending ordering from the top of the stack, 0 entropy means
 // the stack is ordered but might need extra rotations for the final asc order
 int				calc_entropy(t_stack *stack);
-// orders all the elements that has been parsed with the operations available,
-// end result is the ordered elements in an ascending order on stack a
-void			order_stack_algo(t_push_swap *mystruct);
 void			read_operations(t_push_swap *mystruct);
 // updates entr_a and entr_b based on the entropy of stack a and stack b
 void			update_entropies(t_push_swap *mystruct, int *entr_a,
@@ -72,9 +69,6 @@ int				is_solution(t_push_swap *mystruct);
 // executes the operation functions on the stacks a and b
 void			execute_operations(t_push_swap *mystruct, char **operations,
 		int number_of_ops);
-// return string of operation within a range, starting from the smallest value
-// of: (number of operations - amount of entropy reduced)
-char			**get_potential_routes(t_push_swap *mystruct);
 // helper function for stack_sa and stack_sb
 void			swap_helper_case_3(t_stack *stack);
 // helper function for stack_sa and stack_sb
@@ -89,5 +83,9 @@ void			print_stacks_helper(t_node_binary *a_cur, t_node_binary *b_cur,
 								int a_counter, int b_counter);
 // swaps two *t_node_binary type
 void			swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b);
+// Using the concept of Longest Increasing Subsequence, this algorithm first
+// uses stack A to stack LIS groups and then merges them together for the final sorted
+// list. Return value is a string consisting of the sequence of operations.
+char			*LIS_sort(t_push_swap *mystruct);
 
 #endif
