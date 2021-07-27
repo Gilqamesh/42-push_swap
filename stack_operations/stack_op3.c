@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 18:27:29 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 16:31:08 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 14:10:52 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	stack_rra(t_push_swap *mystruct)
 {
-	mystruct->a.head = mystruct->a.head->next;
+	if (mystruct->a.n > 1)
+		mystruct->a.head = mystruct->a.head->prev;
 }
 
 void	stack_rrb(t_push_swap *mystruct)
 {
-	mystruct->b.head = mystruct->b.head->next;
+	if (mystruct->b.n > 1)
+		mystruct->b.head = mystruct->b.head->prev;
 }
 
 void	stack_rrr(t_push_swap *mystruct)

@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 19:25:57 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 13:22:02 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ void			push_helper(t_stack *pushed, t_stack *popped);
 // helper function 
 void			print_stacks_helper(t_node_binary *a_cur, t_node_binary *b_cur,
 								int a_counter, int b_counter);
+// swaps two *t_node_binary type
+void			swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b);
 
 #endif

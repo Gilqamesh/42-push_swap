@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 18:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 16:24:47 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/27 14:20:25 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	stack_ss(t_push_swap *mystruct)
 
 void	stack_pa(t_push_swap *mystruct)
 {
-	t_node_binary	*prev_head;
-	t_node_binary	*after_head;
+	t_node_binary	*cur_head;
 
 	if (!mystruct->b.n)
 		return ;
@@ -53,21 +52,21 @@ void	stack_pa(t_push_swap *mystruct)
 		mystruct->a.head = remove_head_from_stack(&mystruct->b);
 	else if (mystruct->a.n == 1)
 	{
-		prev_head = mystruct->a.head;
+		cur_head = mystruct->a.head;
 		mystruct->a.head = remove_head_from_stack(&mystruct->b);
-		prev_head->next = mystruct->a.head;
-		prev_head->prev = mystruct->a.head;
-		mystruct->a.head->next = prev_head;
-		mystruct->a.head->prev = prev_head;
+		cur_head->next = mystruct->a.head;
+		cur_head->prev = mystruct->a.head;
+		mystruct->a.head->next = cur_head;
+		mystruct->a.head->prev = cur_head;
 	}
 	else
 		push_helper(&mystruct->a, &mystruct->b);
+	mystruct->a.n++;
 }
 
 void	stack_pb(t_push_swap *mystruct)
 {
-	t_node_binary	*prev_head;
-	t_node_binary	*after_head;
+	t_node_binary	*cur_head;
 
 	if (!mystruct->a.n)
 		return ;
@@ -75,13 +74,14 @@ void	stack_pb(t_push_swap *mystruct)
 		mystruct->b.head = remove_head_from_stack(&mystruct->a);
 	else if (mystruct->b.n == 1)
 	{
-		prev_head = mystruct->b.head;
+		cur_head = mystruct->b.head;
 		mystruct->b.head = remove_head_from_stack(&mystruct->a);
-		prev_head->next = mystruct->b.head;
-		prev_head->prev = mystruct->b.head;
-		mystruct->b.head->next = prev_head;
-		mystruct->b.head->prev = prev_head;
+		cur_head->next = mystruct->b.head;
+		cur_head->prev = mystruct->b.head;
+		mystruct->b.head->next = cur_head;
+		mystruct->b.head->prev = cur_head;
 	}
 	else
 		push_helper(&mystruct->b, &mystruct->a);
+	mystruct->b.n++;
 }
