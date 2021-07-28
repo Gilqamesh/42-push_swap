@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 16:07:37 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 17:39:00 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,27 @@ int n)
 	LIS = find_LCS_of_two_sequences(first_seq, second_seq);
 }
 
+static int	get_unique_LCS_groups_count(t_LCS_array *ptr1, t_LCS_array *ptr2)
+{
+	int		unique_counter;
+	int		i;
+	int		j;
+	char	**arr_str1;
+	char	**arr_str2;
 
+	arr_str1 = ft_calloc(ptr1->size_arr, sizeof(*arr_str1));
+	arr_str2 = ft_calloc(ptr2->size_arr, sizeof(*arr_str2));
+	i = -1;
+	while (++i < ptr1->size_arr)
+	{
+		j = 0;
+		arr_str1[i] = ft_itoa();
+		while (++j < ptr1->arr->size_elements)
+		{
+			
+		}
+	}
+}
 
 t_LCS_group	find_LCS_of_two_sequences(t_LCS_group first_seq,
 t_LCS_group second_seq)
@@ -78,6 +98,9 @@ t_LCS_group second_seq)
 			{
 				// append table[i][j] with first_seq.elements[i - 1]
 				// and set table[i + 1][j + 1] to it
+				table[i + 1][j + 1].size_arr = table[i][j].size_arr;
+				table[i + 1][j + 1].arr = malloc(table[i][j].size_arr
+					* sizeof(*(table[i + 1][j + 1].arr)));
 				k = -1;
 				while (++k < table[i][j].size_arr)
 				{
@@ -99,15 +122,48 @@ t_LCS_group second_seq)
 				if (table[i + 1][j].arr->size_elements
 					== table[i][j + 1].arr->size_elements)
 					// combine the two
-					;
+				{
+					table[i + 1][j + 1].size_arr = get_unique_LCS_groups_count(
+						&table[i + 1][j], &table[i][j + 1]);
+				}
 				else if (table[i + 1][j].arr->size_elements
 					> table[i][j + 1].arr->size_elements)
 					// save table[i + 1][j] into table[i + 1][j + 1]
-					;
+				{
+					table[i + 1][j + 1].size_arr = table[i + 1][j].size_arr;
+					table[i + 1][j + 1].arr = malloc(table[i + 1][j].size_arr
+						* sizeof(*(table[i + 1][j + 1].arr)));
+					k = -1;
+					while (++k < table[i + 1][j].size_arr)
+					{
+						table[i + 1][j + 1].arr[k].size_elements =
+							table[i + 1][j].arr[k].size_elements;
+						table[i + 1][j + 1].arr[k].elements = malloc(
+							table[i + 1][j].arr[k].size_elements * sizeof(int));
+						ft_memcpy(table[i + 1][j + 1].arr[k].elements,
+							table[i + 1][j].arr[k].elements,
+							table[i + 1][j].arr[k].size_elements * sizeof(int));
+					}
+				}
 				else if (table[i + 1][j].arr->size_elements
 					< table[i][j + 1].arr->size_elements)
 					// save table[i][j + 1] into table[i + 1][j + 1]
-					;
+				{
+					table[i + 1][j + 1].size_arr = table[i][j + 1].size_arr;
+					table[i + 1][j + 1].arr = malloc(table[i][j + 1].size_arr
+						* sizeof(*(table[i + 1][j + 1].arr)));
+					k = -1;
+					while (++k < table[i][j + 1].size_arr)
+					{
+						table[i + 1][j + 1].arr[k].size_elements =
+							table[i][j + 1].arr[k].size_elements;
+						table[i + 1][j + 1].arr[k].elements = malloc(
+							table[i][j + 1].arr[k].size_elements * sizeof(int));
+						ft_memcpy(table[i + 1][j + 1].arr[k].elements,
+							table[i][j + 1].arr[k].elements,
+							table[i][j + 1].arr[k].size_elements * sizeof(int));
+					}
+				}
 			}
 		}
 	}
