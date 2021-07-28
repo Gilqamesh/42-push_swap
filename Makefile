@@ -4,9 +4,9 @@ BONUSOBJ = checker_program/ft_checker.o checker_program/initialize.o
 CC = gcc
 OBJ = ft_initialize.o ft_error.o ft_testers.o \
 stack_operations/stack_op1.o stack_operations/stack_op2.o \
-stack_operations/stack_op3.o utils/ft_entropy.o algorithms/LIS_sort.c \
+stack_operations/stack_op3.o utils/ft_entropy.o algorithms/LIS/LIS_sort.o \
 ft_get_routes.o stack_operations/stack_op1_helper.o ft_testers_helper.o \
-utils/ft_utils.o
+utils/ft_utils.o algorithms/LIS/LIS_utils.c
 CFLAGS = 
 LIBNAME = libpush_swap.a
 LIBPATH = /Users/edavid/Desktop/Repo/MyProjects/push_swap/$(LIBNAME)

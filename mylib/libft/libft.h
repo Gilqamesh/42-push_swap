@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 11:45:35 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 13:23:43 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,5 +236,31 @@ t_node_binary	*ft_nodbinmap(t_node_binary *lst, void *(*f)(void *),
 void			ft_nodbinprint_int(t_node_binary *lst, int n);
 // Frees node->content and node, where node is of type *t_node_binary
 void			ft_nodbindel(void *node);
+# ifndef T_2_INT
+#  define T_2_INT
+typedef struct s_2_int
+{
+	int	a;
+	int	b;
+}	t_2_int;
+# endif
+# ifndef T_3_INT
+#  define T_3_INT
+typedef struct s_3_int
+{
+	int	a;
+	int	b;
+	int	c;
+}	t_3_int;
+# endif
+// Uses merge sort algorithm to sort 'array' from 'start_index' to 'end_index'
+// with the help of 'helper_array' function that must be at least size of
+// end_index - start_index
+// Ex. usage: int arr[10], int helper[10]
+// ft_merge_sort_int(arr, (t_2_int){0, 10}, helper);
+void			ft_merge_sort_int(int *array, t_2_int start_end_indexes,
+					int *helper);
+// Returns the absolute value of an integer. INT_MIN -> INT_MAX
+int				ft_abs_int(int a);
 
 #endif

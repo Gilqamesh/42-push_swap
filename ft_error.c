@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 15:04:26 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/26 13:53:57 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 10:39:29 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 static void	free_mystruct(t_push_swap *mystruct)
 {
+	// incorrect, the address of mystruct is a different pointer than the original
 	ft_nodbinclear(&mystruct->a.head, ft_nodbindel, mystruct->a.n);
 	ft_nodbinclear(&mystruct->b.head, ft_nodbindel, mystruct->b.n);
+	ft_lstclear(&mystruct->sorted, ft_lstdel);
 }
 
 void	ft_error(t_push_swap *mystruct)

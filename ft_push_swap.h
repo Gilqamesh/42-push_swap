@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 19:12:41 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 15:31:02 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 # define FT_PUSH_SWAP_H
 
 # include "mylib/mylib.h"
+
+typedef struct s_LCS_group
+{
+	int	*elements;
+	int	size_elements;
+}	t_LCS_group;
+
+typedef struct s_LCS_array
+{
+	t_LCS_group	*arr;
+	int			size_arr;
+}	t_LCS_array;
 
 typedef struct s_stack
 {
@@ -25,6 +37,7 @@ typedef struct s_push_swap
 {
 	t_stack	a;
 	t_stack	b;
+	t_list	*sorted;
 }	t_push_swap;
 
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
@@ -84,8 +97,22 @@ void			print_stacks_helper(t_node_binary *a_cur, t_node_binary *b_cur,
 // swaps two *t_node_binary type
 void			swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b);
 // Using the concept of Longest Increasing Subsequence, this algorithm first
-// uses stack A to stack LIS groups and then merges them together for the final sorted
-// list. Return value is a string consisting of the sequence of operations.
+// uses stack A to stack LIS groups and then merges them together for the final
+// sorted list. Return value is a string consisting of the sequence of
+// operations.
 char			*LIS_sort(t_push_swap *mystruct);
+// 
+int				is_sublist_ordered(t_node_binary *p, int n);
+// Returns 1 if stack is sorted from smallest to highest, 0 otherwise.
+// The position of the head does not matter.
+int				is_stack_sorted(t_stack *stack);
+// Finds the Largest Increasing Subsequence starting from head, the number of
+// elements are 'n'. If 'n' is positive, the traveling direction is positive,
+// i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.
+t_LCS_group		find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
+								int n);
+// Finds the Largest Common Subsequence between two sequences
+t_LCS_group		find_LCS_of_two_sequences(t_LCS_group first_seq,
+								t_LCS_group second_seq);
 
 #endif

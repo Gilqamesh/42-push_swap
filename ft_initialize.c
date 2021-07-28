@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 11:55:14 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 10:22:54 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 		}
 	}
 	test_for_duplicates(mystruct, &sorted);
+	mystruct->sorted = sorted;
 }

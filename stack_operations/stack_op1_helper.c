@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 15:13:02 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 14:29:31 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/28 11:13:25 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	swap_helper_case_g3(t_stack *stack)
 	cur_head = stack->head;
 	after_head = cur_head->next;
 	before_head = cur_head->prev;
-	after_after_head = before_head->prev;
+	after_after_head = after_head->next;
 	after_after_head->prev = cur_head;
 	before_head->next = after_head;
 	cur_head->next = after_after_head;
