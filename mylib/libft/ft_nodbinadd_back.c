@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 10:43:52 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 11:36:56 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/29 16:41:11 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_nodbinadd_back(t_node_binary **lst, t_node_binary *new)
 {
 	t_node_binary	*cur;
 
-	if (!new)
+	if (!new || !lst)
 		return ;
 	if (!*lst)
 	{

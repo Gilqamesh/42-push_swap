@@ -6,20 +6,23 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/29 12:27:36 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/29 16:47:01 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../ft_push_swap.h"
 
-t_LCS_group	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
+t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 int n)
 {
 	t_LCS_group	first_seq;
 	t_LCS_group	second_seq;
-	int	*helper;
-	int	i;
+	t_INT_array	unordered;
+	int			*helper;
+	int			i;
+	int			j;
+	int			found;
 
 	first_seq.elements = malloc(n * sizeof(*first_seq.elements));
 	first_seq.size_elements = n;
@@ -52,6 +55,29 @@ int n)
 	// Find LCS of arr and sorted. It will be the LIS
 	t_LCS_group	LIS;
 	LIS = find_LCS_of_two_sequences(first_seq, second_seq);
+	unordered.size_elements = 0;
+	unordered.elements = malloc((first_seq.size_elements - LIS.size_elements)
+		* sizeof(int));
+	i = -1;
+	while (++i < first_seq.size_elements)
+	{
+		j = -1;
+		found = 0;
+		while (++j < LIS.size_elements)
+		{
+			if (first_seq.elements[i] == LIS.elements[j])
+			{
+				found = 1;
+				break ;
+			}
+		}
+		if (!found)
+			unordered.elements[unordered.size_elements++]
+				= first_seq.elements[i];
+	}
+	free(first_seq.elements);
+	free(second_seq.elements);
+	return ((t_INT_array2){LIS, unordered});
 }
 
 static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
@@ -65,6 +91,7 @@ static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
 	char		*tmp;
 	char		*tmp2;
 	t_LCS_group	*LCS_group_arr;
+	int			LCS_index;
 
 	arr_str = ft_calloc(ptr1->size_arr + ptr2->size_arr, sizeof(*arr_str));
 	helper = ft_calloc(ptr1->size_arr + ptr2->size_arr, sizeof(*helper));
@@ -115,6 +142,7 @@ static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
 	{
 		LCS_group_arr[i].elements = malloc(ptr1->arr->size_elements
 			* sizeof(int));
+		LCS_group_arr[i].size_elements = ptr1->arr->size_elements;
 		if (!j)
 			tmp = arr_str[j];
 		else
@@ -123,20 +151,25 @@ static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
 				;
 			tmp = arr_str[j];
 		}
-		// break down tmp into numbers and store them LCS_group_arr[i].elements
+		LCS_index = 0;
+		LCS_group_arr[i].elements[LCS_index] = ft_atoi(tmp);
+		while (++LCS_index < ptr1->arr->size_elements)
+			while (*tmp++ != '.')
+				LCS_group_arr[i].elements[LCS_index] = ft_atoi(tmp);
 	}
 	i = -1;
 	while (++i < ptr1->size_arr + ptr2->size_arr)
 		free(arr_str[i]);
 	free(arr_str);
 	free(helper);
-	return (unique_counter);
+	return ((t_LCS_array){LCS_group_arr, unique_counter});
 }
 
 t_LCS_group	find_LCS_of_two_sequences(t_LCS_group first_seq,
 t_LCS_group second_seq)
 {
 	t_LCS_array	**table;
+	t_LCS_group	result;
 	int			i;
 	int			j;
 	int			k;
@@ -222,5 +255,30 @@ t_LCS_group second_seq)
 			}
 		}
 	}
-	// return table[first_seq.size_elements][second_seq.size_elements];
+	result.size_elements =
+		table[first_seq.size_elements][second_seq.size_elements].arr->size_elements;
+	result.elements = malloc(result.size_elements * sizeof(int));
+	ft_memcpy(result.elements,
+		table[first_seq.size_elements][second_seq.size_elements].arr->elements,
+		result.size_elements * sizeof(int));
+	return (result);
+}
+
+void	construct_stack_from_arr(t_stack *stack, t_INT_array *arr)
+{
+	int				i;
+	int				*tmp;
+	t_node_binary	*head;
+
+	*stack = (t_stack){(t_node_binary *)0, 0};
+	i = -1;
+	while (++i < arr->size_elements)
+	{
+		tmp = malloc(sizeof(*tmp));
+		*tmp = arr->elements[i];
+		ft_nodbinadd_front(&stack->head, ft_nodbinnew(tmp));
+		if (!i)
+			head = stack->head;
+	}
+	head->
 }

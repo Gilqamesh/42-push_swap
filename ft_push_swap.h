@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 15:31:02 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/29 16:16:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,19 @@
 
 # include "mylib/mylib.h"
 
-typedef struct s_LCS_group
+typedef struct s_INT_array
 {
 	int	*elements;
 	int	size_elements;
-}	t_LCS_group;
+}	t_INT_array;
+
+typedef t_INT_array t_LCS_group;
+
+typedef struct s_INT_array2
+{
+	t_INT_array	arr1;
+	t_INT_array	arr2;
+}	t_INT_array2;
 
 typedef struct s_LCS_array
 {
@@ -109,7 +117,7 @@ int				is_stack_sorted(t_stack *stack);
 // Finds the Largest Increasing Subsequence starting from head, the number of
 // elements are 'n'. If 'n' is positive, the traveling direction is positive,
 // i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.
-t_LCS_group		find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
+t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 								int n);
 // Finds the Largest Common Subsequence between two sequences
 t_LCS_group		find_LCS_of_two_sequences(t_LCS_group first_seq,
