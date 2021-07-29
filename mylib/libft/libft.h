@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 13:23:43 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/29 11:52:55 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ typedef struct s_3_int
 }	t_3_int;
 # endif
 // Uses merge sort algorithm to sort 'array' from 'start_index' to 'end_index'
-// with the help of 'helper_array' function that must be at least size of
+// with the help of 'helper_array' that must be at least size of
 // end_index - start_index
 // Ex. usage: int arr[10], int helper[10]
 // ft_merge_sort_int(arr, (t_2_int){0, 10}, helper);
@@ -262,5 +262,18 @@ void			ft_merge_sort_int(int *array, t_2_int start_end_indexes,
 					int *helper);
 // Returns the absolute value of an integer. INT_MIN -> INT_MAX
 int				ft_abs_int(int a);
+// Lexicographically compare the null-terminated strings 's1' and 's2'. 
+// Return an integer greater than, equal to, or less than 0, according as the
+// string 's1' is greater than, equal to, or less than the string 's2'. 
+// The comparison is done using unsigned characters, so that '\200' is greater
+// than '\0'.
+int				ft_strcmp(const char *s1, const char *s2);
+// Uses merge sort algorithm to sort 'array' from 'start_index' to 'end_index'
+// with the help of 'helper_array' that must be at least size of
+// end_index - start_index
+// Ex. usage: char *arr[10], int *helper[10]
+// ft_merge_sort_str(arr, (t_2_int){0, 10}, helper);
+void			ft_merge_sort_str(char **array, t_2_int start_end_indexes,
+					char **helper_array);
 
 #endif

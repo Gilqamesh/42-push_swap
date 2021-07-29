@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/07/28 13:21:48 by edavid           ###   ########.fr        #
+#    Updated: 2021/07/29 11:46:44 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ extended_sources = ft_realloc.c ft_nodbinadd_back.c ft_nodbinadd_front.c \
 ft_nodbinclear.c ft_nodbindelone.c ft_nodbiniter.c ft_nodbinlast.c \
 ft_nodbinmap.c ft_nodbinnew.c ft_nodbinsize.c ft_nodbindel.c ft_nodbinprint_int.c \
 ft_lstsortedinsert_int.c ft_lstdel.c ft_lstprint_int.c ft_merge_sort_int.c \
-ft_abs_int.c
+ft_abs_int.c ft_merge_sort_str.c ft_strcmp.c
 
 NAME = libft.a
 
