@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/30 17:03:20 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/30 20:23:23 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,18 +284,34 @@ void	construct_stack_from_arr(t_stack *stack, t_INT_array *arr)
 }
 
 char	*construct_seq_of_operations(t_stack *original_stack, 
-t_stack *pushed_stack)
+t_stack *pushed_stack, char pushed_to_stack)
 {
 	t_node_binary	*cur_origin;
 	t_node_binary	*cur_pushed;
 	char			*result;
 	int				i;
 
+	result = ft_strdup("");
 	i = -1;
 	cur_origin = original_stack->head;
 	cur_pushed = pushed_stack->head;
-	while (++i < pushed_stack->n)
+	while (++i < original_stack->n)
 	{
-		
+		if (*(int *)cur_origin->content == *(int *)cur_pushed)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
+			else
+				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
+			cur_pushed = cur_pushed->next;
+		}
+		else
+		{
+			if (pushed_to_stack == 'b')
+				result = ft_strjoin_free(result, ft_strjoin(" r", "a"));
+			else
+				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
+		}
+		cur_origin = cur_origin->next;
 	}
 }
