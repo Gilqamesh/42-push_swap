@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:03:30 by edavid            #+#    #+#             */
-/*   Updated: 2021/06/25 20:29:39 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/30 16:32:48 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
+# include "../libft/libft.h"
+
 int		get_next_line(int fd, char **line);
-size_t	ft_strlen(const char *s);
 int		contains_newline(char *str, size_t n);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-char	*ft_strjoin_v3(char **s1, char **s2);
+// Allocates a new string that is the result of joining together 's1' and 's2'
+// Also frees s1 and s2 as a side effect
+char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strdup_v2(const char *s, int n);
 
 #endif

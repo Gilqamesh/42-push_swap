@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/29 16:47:01 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/30 17:03:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,17 +268,34 @@ void	construct_stack_from_arr(t_stack *stack, t_INT_array *arr)
 {
 	int				i;
 	int				*tmp;
-	t_node_binary	*head;
+	t_node_binary	*cur;
 
-	*stack = (t_stack){(t_node_binary *)0, 0};
-	i = -1;
-	while (++i < arr->size_elements)
+	*stack = (t_stack){(t_node_binary *)0, arr->size_elements};
+	i = arr->size_elements;
+	while (i--)
 	{
 		tmp = malloc(sizeof(*tmp));
 		*tmp = arr->elements[i];
-		ft_nodbinadd_front(&stack->head, ft_nodbinnew(tmp));
-		if (!i)
-			head = stack->head;
+		cur = ft_nodbinnew(tmp);
+		ft_nodbinadd_back(&stack->head, cur);
 	}
-	head->
+	stack->head->prev = cur;
+	cur->next = stack->head;
+}
+
+char	*construct_seq_of_operations(t_stack *original_stack, 
+t_stack *pushed_stack)
+{
+	t_node_binary	*cur_origin;
+	t_node_binary	*cur_pushed;
+	char			*result;
+	int				i;
+
+	i = -1;
+	cur_origin = original_stack->head;
+	cur_pushed = pushed_stack->head;
+	while (++i < pushed_stack->n)
+	{
+		
+	}
 }

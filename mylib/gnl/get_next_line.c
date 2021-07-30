@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:10:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/01 13:57:26 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/30 16:29:44 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char **line, int fd)
 		return (reset_ret((char **)0, tmp_index, &buf[fd]));
 	}
 	buf[fd][tmp_index] = '\0';
-	buf[fd] = ft_strjoin_v3(&tmp_str, &buf[fd]);
+	buf[fd] = ft_strjoin_free(&tmp_str, &buf[fd]);
 	return (get_next_line(fd, line));
 }
 

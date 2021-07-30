@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "../libft/libft.h"
 
 int	contains_newline(char *str, size_t n)
 {
@@ -27,7 +26,7 @@ int	contains_newline(char *str, size_t n)
 	return (index_of_newline);
 }
 
-char	*ft_strjoin_v3(char **s1, char **s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -35,20 +34,22 @@ char	*ft_strjoin_v3(char **s1, char **s2)
 	char	*r;
 	char	*tmp;
 
-	s1_len = ft_strlen(*s1);
-	s2_len = ft_strlen(*s2);
+	if (!s1 || !s2)
+		return ;
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
 	new = (char *)malloc(s1_len + s2_len + 1);
 	if (!new)
 		return ((char *)0);
 	r = new;
-	tmp = *s1;
+	tmp = s1;
 	while (s1_len--)
 		*r++ = *tmp++;
-	free(*s1);
-	tmp = *s2;
+	free(s1);
+	tmp = s2;
 	while (s2_len--)
 		*r++ = *tmp++;
-	free(*s2);
+	free(s2);
 	*r = '\0';
 	return (new);
 }

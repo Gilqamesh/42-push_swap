@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/29 16:16:20 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/30 16:40:30 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,11 @@ t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 // Finds the Largest Common Subsequence between two sequences
 t_LCS_group		find_LCS_of_two_sequences(t_LCS_group first_seq,
 								t_LCS_group second_seq);
+// Allocates and constructs circular stack from arr
+void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr);
+// Construct a string consisting of a sequence of operation that is the result
+// Of pushing and rotating from the original stack to the pushed stack
+char			*construct_seq_of_operations(t_stack *original_stack, 
+								t_stack *pushed_stack);
 
 #endif
