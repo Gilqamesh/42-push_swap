@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/31 12:13:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 16:50:50 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ char	*LIS_sort(t_push_swap *mystruct)
 		* sizeof(*A_LIS_groups));
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
+	ft_printf("arr1: \n");
+	for (int l = 0; l < LIS_ord_unord.arr1.size_elements; l++)
+		ft_printf("%d\n", LIS_ord_unord.arr1.elements[l]);
+	ft_printf("arr2: \n");
+	for (int l = 0; l < LIS_ord_unord.arr2.size_elements; l++)
+		ft_printf("%d\n", LIS_ord_unord.arr2.elements[l]);
 	PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1);
