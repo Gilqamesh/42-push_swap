@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/31 16:48:42 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 18:22:26 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int n)
 	PRINT_HERE();
 	t_LCS_group	LIS;
 	LIS = find_LCS_of_two_sequences(first_seq, second_seq);
+	ft_printf("seq size: %d %d\n", first_seq.size_elements, second_seq.size_elements);
+	ft_printf("LIS.size_elements: %d\n", LIS.size_elements);
+	ft_printintarr(LIS.elements, LIS.size_elements);
 	PRINT_HERE();
 	unordered.size_elements = 0;
 	unordered.elements = malloc((first_seq.size_elements - LIS.size_elements)
@@ -214,6 +217,8 @@ t_LCS_group second_seq)
 	int			j;
 	int			k;
 
+	ft_printf("Size of first_seq and second_seq: %d %d\n", first_seq.size_elements,
+		second_seq.size_elements);
 	table = malloc((first_seq.size_elements + 1) * sizeof(*table));
 	i = -1;
 	while (++i < first_seq.size_elements + 1)
@@ -238,9 +243,20 @@ t_LCS_group second_seq)
 				PRINT_HERE();
 				// append table[i][j] with first_seq.elements[i - 1]
 				// and set table[i + 1][j + 1] to it
-				table[i][j].size_arr = table[i - 1][j - 1].size_arr;
-				table[i][j].arr = malloc(table[i - 1][j - 1].size_arr
-					* sizeof(*(table[i][j].arr)));
+				if (table[i - 1][j - 1].size_arr)
+				{
+					table[i][j].size_arr = table[i - 1][j - 1].size_arr;
+					table[i][j].arr = malloc(table[i - 1][j - 1].size_arr
+						* sizeof(*(table[i][j].arr)));
+				}
+				else
+				{
+					table[i][j].size_arr = 1;
+					table[i][j].arr = malloc(sizeof(*table[i][j].arr));
+					table[i][j].arr->elements = malloc(sizeof(int));
+					table[i][j].size_arr = 1;
+					*table[i][j].arr->elements = first_seq.elements[i - 1];
+				}
 				k = -1;
 				while (++k < table[i - 1][j - 1].size_arr)
 				{
@@ -321,12 +337,18 @@ t_LCS_group second_seq)
 		}
 	}
 	PRINT_HERE();
+	ft_printf("In: %s\n", __FILENAME__);
+	ft_printf("This is the end result:\n");
+	ft_printintarr(table[first_seq.size_elements][second_seq.size_elements].arr->elements,
+		table[first_seq.size_elements][second_seq.size_elements].arr->size_elements);
 	result.size_elements =
 		table[first_seq.size_elements][second_seq.size_elements].arr->size_elements;
 	result.elements = malloc(result.size_elements * sizeof(int));
 	ft_memcpy(result.elements,
 		table[first_seq.size_elements][second_seq.size_elements].arr->elements,
 		result.size_elements * sizeof(int));
+	ft_printf("result.size_elements: %d\n", result.size_elements);
+	ft_printintarr(result.elements, result.size_elements);
 	return (result);
 }
 
