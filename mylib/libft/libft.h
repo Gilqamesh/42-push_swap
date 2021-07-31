@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/29 11:52:55 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 11:53:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,5 +275,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 // ft_merge_sort_str(arr, (t_2_int){0, 10}, helper);
 void			ft_merge_sort_str(char **array, t_2_int start_end_indexes,
 					char **helper_array);
+// Allocates and returns integer pointer to 'd'
+int				*ft_intdup(int d);
 
 #endif

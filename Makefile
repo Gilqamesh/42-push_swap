@@ -6,7 +6,7 @@ OBJ = ft_initialize.o ft_error.o ft_testers.o \
 stack_operations/stack_op1.o stack_operations/stack_op2.o \
 stack_operations/stack_op3.o utils/ft_entropy.o algorithms/LIS/LIS_sort.o \
 ft_get_routes.o stack_operations/stack_op1_helper.o ft_testers_helper.o \
-utils/ft_utils.o algorithms/LIS/LIS_utils.c
+utils/ft_utils.o algorithms/LIS/LIS_utils.o algorithms/LIS/LIS_sort.o
 CFLAGS = 
 LIBNAME = libpush_swap.a
 LIBPATH = /Users/edavid/Desktop/Repo/MyProjects/push_swap/$(LIBNAME)
@@ -25,8 +25,8 @@ $(LIBNAME):
 	ar -rs $(LIBNAME) *.o
 	ar -rs $(LIBNAME) ./stack_operations/*.o
 	rm -f ./stack_operations/*.o
-	ar -rs $(LIBNAME) ./algorithms/*.o
-	rm -f ./algorithms/*.o
+	ar -rs $(LIBNAME) ./algorithms/LIS/*.o
+	rm -f ./algorithms/LIS/*.o
 	ar -rs $(LIBNAME) ./utils/*.o
 	cd utils && rm -f *.o
 	rm -f *.o libmylib.a

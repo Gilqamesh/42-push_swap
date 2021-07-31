@@ -26,6 +26,15 @@ int	contains_newline(char *str, size_t n)
 	return (index_of_newline);
 }
 
+static char	*strjoin_return_helper(char *s1, char *s2)
+{
+	if (!s1 && s2)
+		return (s2);
+	if (s1 && !s2)
+		return (s1);
+	return ((char *)0);
+}
+
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	size_t	s1_len;
@@ -35,7 +44,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	char	*tmp;
 
 	if (!s1 || !s2)
-		return ;
+		return (strjoin_return_helper(s1, s2));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	new = (char *)malloc(s1_len + s2_len + 1);

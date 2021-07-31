@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/30 20:23:23 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 12:23:39 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int n)
 	second_seq.elements = malloc(n * sizeof(*second_seq.elements));
 	helper = malloc(n * sizeof(*helper));
 	second_seq.size_elements = n;
+	PRINT_HERE();
 	if (!first_seq.elements || !second_seq.elements || !helper)
 		ft_error(mystruct);
 	i = -1;
@@ -43,6 +44,7 @@ int n)
 	}
 	else
 	{
+		PRINT_HERE();
 		while (++i < n)
 		{
 			first_seq.elements[i++] = *(int *)head->content;
@@ -50,11 +52,14 @@ int n)
 			head = head->next;
 		}
 	}
+	PRINT_HERE();
 	ft_merge_sort_int(second_seq.elements, (t_2_int){0, ft_abs_int(n)}, helper);
 	free(helper);
 	// Find LCS of arr and sorted. It will be the LIS
+	PRINT_HERE();
 	t_LCS_group	LIS;
 	LIS = find_LCS_of_two_sequences(first_seq, second_seq);
+	PRINT_HERE();
 	unordered.size_elements = 0;
 	unordered.elements = malloc((first_seq.size_elements - LIS.size_elements)
 		* sizeof(int));
@@ -125,7 +130,7 @@ static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
 			free(tmp);
 			free(tmp2);
 		}
-		arr_str_index;
+		arr_str_index++;
 	}
 	ft_merge_sort_str(arr_str, (t_2_int){0, ptr1->size_arr + ptr2->size_arr},
 		helper);
@@ -147,7 +152,8 @@ static t_LCS_array	combine_two_LCS_array(t_LCS_array *ptr1, t_LCS_array *ptr2)
 			tmp = arr_str[j];
 		else
 		{
-			while (!ft_strcmp(arr_str[++j], arr_str[j - 1]))
+			j++;
+			while (!ft_strcmp(arr_str[j], arr_str[j - 1]))
 				;
 			tmp = arr_str[j];
 		}
@@ -179,13 +185,16 @@ t_LCS_group second_seq)
 	while (++i < second_seq.size_elements)
 		table[i] = ft_calloc(second_seq.size_elements + 1, sizeof(**table));
 	i = 0;
+	PRINT_HERE();
 	while (++i < first_seq.size_elements + 1)
 	{
 		j = 0;
 		while (++j < second_seq.size_elements + 1)
 		{
+			PRINT_HERE();
 			if (first_seq.elements[i - 1] == second_seq.elements[j - 1])
 			{
+				PRINT_HERE();
 				// append table[i][j] with first_seq.elements[i - 1]
 				// and set table[i + 1][j + 1] to it
 				table[i + 1][j + 1].size_arr = table[i][j].size_arr;
@@ -194,6 +203,7 @@ t_LCS_group second_seq)
 				k = -1;
 				while (++k < table[i][j].size_arr)
 				{
+					PRINT_HERE();
 					table[i + 1][j + 1].arr[k].size_elements =
 						table[i][j].arr[k].size_elements + 1;
 					table[i + 1][j + 1].arr[k].elements = malloc(
@@ -207,17 +217,24 @@ t_LCS_group second_seq)
 			}
 			else
 			{
+				PRINT_HERE();
 				// table[i + 1][j + 1] will be max of table[i + 1, j] and
 				// table[i][j + 1]
+				// ERROR HAPPENS HERE
 				if (table[i + 1][j].arr->size_elements
 					== table[i][j + 1].arr->size_elements)
 					// combine the two
+				{
+					PRINT_HERE();
 					table[i + 1][j + 1] = combine_two_LCS_array(
 						&table[i + 1][j],&table[i][j + 1]);
+					PRINT_HERE();
+				}
 				else if (table[i + 1][j].arr->size_elements
 					> table[i][j + 1].arr->size_elements)
 					// save table[i + 1][j] into table[i + 1][j + 1]
 				{
+					PRINT_HERE();
 					table[i + 1][j + 1].size_arr = table[i + 1][j].size_arr;
 					table[i + 1][j + 1].arr = malloc(table[i + 1][j].size_arr
 						* sizeof(*(table[i + 1][j + 1].arr)));
@@ -243,6 +260,7 @@ t_LCS_group second_seq)
 					k = -1;
 					while (++k < table[i][j + 1].size_arr)
 					{
+						PRINT_HERE();
 						table[i + 1][j + 1].arr[k].size_elements =
 							table[i][j + 1].arr[k].size_elements;
 						table[i + 1][j + 1].arr[k].elements = malloc(
@@ -255,6 +273,7 @@ t_LCS_group second_seq)
 			}
 		}
 	}
+	PRINT_HERE();
 	result.size_elements =
 		table[first_seq.size_elements][second_seq.size_elements].arr->size_elements;
 	result.elements = malloc(result.size_elements * sizeof(int));
@@ -314,4 +333,5 @@ t_stack *pushed_stack, char pushed_to_stack)
 		}
 		cur_origin = cur_origin->next;
 	}
+	return (result);
 }

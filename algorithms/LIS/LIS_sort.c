@@ -6,11 +6,11 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/30 17:00:37 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 12:13:49 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ft_push_swap.h"
+#include "../../ft_push_swap.h"
 
 // char	*LIS_sort(t_push_swap *mystruct)
 // {
@@ -62,7 +62,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 	stack_tmp = (t_stack){(t_node_binary *)0, 0};
 	if (is_stack_sorted(&mystruct->a))
 		// rotate into right position and return with the str of ops
+		return (result_seq_of_ops);
 		;
+	PRINT_HERE();
 	// find LIS of the sublist and store it in LIS_group array
 	A_LIS_groups = (t_stack *)0;
 	B_LIS_groups = (t_stack *)0;
@@ -72,6 +74,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		* sizeof(*A_LIS_groups));
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
+	PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1);
 	// LIS_order_unord.arr2 contains the elements that are not part of LIS
@@ -80,7 +83,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
 	result_seq_of_ops =
 		ft_strjoin_free(result_seq_of_ops,
-		construct_seq_of_operations(&mystruct->a, &stack_tmp));
+		construct_seq_of_operations(&mystruct->a, &stack_tmp, 'b'));
 	// Destroy LIS_ord_unord
 	if (is_stack_sorted(&stack_tmp))
 	{
@@ -89,6 +92,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
 		B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
+		return (result_seq_of_ops);
 	}
 	while (1)
 	{
@@ -102,7 +106,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
 		result_seq_of_ops =
 			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &stack_tmp));
+			construct_seq_of_operations(&original, &stack_tmp, 'a'));
 		// destroy previous stack
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		// Destroy LIS_ord_unord
@@ -112,6 +116,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 			A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
 				* sizeof(*A_LIS_groups));
 			A_LIS_groups[n_of_A_LIS_groups - 1] = stack_tmp;
+			return (result_seq_of_ops);
 		}
 		original = stack_tmp;
 		A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
@@ -123,7 +128,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
 		result_seq_of_ops =
 			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &stack_tmp));
+			construct_seq_of_operations(&original, &stack_tmp, 'b'));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		// Destroy LIS_ord_unord
 		if (is_stack_sorted(&stack_tmp))
@@ -133,6 +138,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 			B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
 				* sizeof(*B_LIS_groups));
 			B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
+			return (result_seq_of_ops);
 		}
 	}
 }

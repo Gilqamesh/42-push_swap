@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 10:22:54 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 11:53:23 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,19 @@ void	initialize_struct(t_push_swap *mystruct, int argc)
 	mystruct->b.n = 0;
 }
 
-static void	test_for_duplicates(t_push_swap *mystruct, t_list **lst)
+static void	test_for_duplicates(t_push_swap *mystruct)
 {
 	t_list	*head;
+	t_list	**lst;
 
+	lst = &mystruct->sorted;
 	if (!lst || !*lst)
 		return ;
 	head = *lst;
 	while (head->next)
 	{
 		if (*(int *)(head->content) == *(int *)(head->next->content))
-		{
-			ft_lstclear(lst, ft_lstdel);
 			ft_error(mystruct);
-		}
 		head = head->next;
 	}
 }
@@ -84,7 +83,7 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 			ft_error(mystruct);
 		*nptr = ft_atoi(argv[i]);
 		ft_lstsortedinsert_int(&sorted, ft_lstnew(nptr));
-		new = ft_nodbinnew(nptr);
+		new = ft_nodbinnew(ft_intdup(*nptr));
 		if (!new)
 			ft_error(mystruct);
 		ft_nodbinadd_back(&mystruct->a.head, new);
@@ -94,6 +93,6 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 			mystruct->a.head->prev = new;
 		}
 	}
-	test_for_duplicates(mystruct, &sorted);
 	mystruct->sorted = sorted;
+	test_for_duplicates(mystruct);
 }

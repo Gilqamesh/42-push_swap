@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 10:40:00 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 11:55:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		ft_error(&mystruct);
 	parse_input(&mystruct, argc, argv);
-	// sequence = LIS_sort(&mystruct);
-	game_loop(&mystruct);
+	sequence = LIS_sort(&mystruct);
+	ft_printf("Sequence: %s\n", sequence);
+	// game_loop(&mystruct);
 	return (0);
 }

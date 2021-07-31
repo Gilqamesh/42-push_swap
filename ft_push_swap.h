@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/30 16:40:30 by edavid           ###   ########.fr       */
+/*   Updated: 2021/07/31 12:20:07 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 # define FT_PUSH_SWAP_H
 
 # include "mylib/mylib.h"
+# ifndef __FILENAME__
+#  define __FILENAME__ (ft_strrchr(__FILE__, '/') ? ft_strrchr(__FILE__, '/') + 1 : __FILE__)
+# endif
+# ifndef __func__
+#  ifdef __FUNCTION__
+#   define __func__ __FUNCTION__
+#  else
+#   define __func__ ""
+#  endif
+# endif
+# define PRINT_HERE() (ft_printf("File: %s, function: %s, line: %d\n", __FILENAME__, __func__, __LINE__))
 
 typedef struct s_INT_array
 {
@@ -84,12 +95,12 @@ int				calc_entropy(t_stack *stack);
 void			read_operations(t_push_swap *mystruct);
 // updates entr_a and entr_b based on the entropy of stack a and stack b
 void			update_entropies(t_push_swap *mystruct, int *entr_a,
-					int *entr_b);
+								int *entr_b);
 // returns 1 if stack a is sorted and b has no elements, 0 otherwise
 int				is_solution(t_push_swap *mystruct);
 // executes the operation functions on the stacks a and b
 void			execute_operations(t_push_swap *mystruct, char **operations,
-		int number_of_ops);
+								int number_of_ops);
 // helper function for stack_sa and stack_sb
 void			swap_helper_case_3(t_stack *stack);
 // helper function for stack_sa and stack_sb
@@ -127,6 +138,6 @@ void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr);
 // Construct a string consisting of a sequence of operation that is the result
 // Of pushing and rotating from the original stack to the pushed stack
 char			*construct_seq_of_operations(t_stack *original_stack, 
-								t_stack *pushed_stack);
+								t_stack *pushed_stack, char pushed_to_stack);
 
 #endif

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsortedinsert_int.c                           :+:      :+:    :+:   */
+/*   ft_intdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/26 14:03:47 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/31 11:40:00 by edavid           ###   ########.fr       */
+/*   Created: 2021/07/31 11:50:15 by edavid            #+#    #+#             */
+/*   Updated: 2021/07/31 11:51:57 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-void	ft_lstsortedinsert_int(t_list **lst, t_list *new)
+int	*ft_intdup(int d)
 {
-	t_list	**tail;
+	int	*result;
 
-	if (!new || !lst)
-		return ;
-	tail = lst;
-	while (*tail && *(int *)new->content > *(int *)(*tail)->content)
-		tail = &(*tail)->next;
-	new->next = (*tail);
-	(*tail) = new;
+	result = malloc(sizeof(*result));
+	if (!result)
+		return ((int *)0);
+	*result = d;
+	return (result);
 }
