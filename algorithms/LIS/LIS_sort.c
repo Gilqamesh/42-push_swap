@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 21:51:04 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/02 22:16:31 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,12 @@ char	*LIS_sort(t_push_swap *mystruct)
 	// PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1);
+	ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
 	// LIS_order_unord.arr2 contains the elements that are not part of LIS
 	// construct a stack from this array and check if this stack is sorted
 	// or not...
 	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
+	ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
 	result_seq_of_ops =
 		ft_strjoin_free(result_seq_of_ops,
 		construct_seq_of_operations(&mystruct->a, &stack_tmp, 'b'));
