@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 20:40:47 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/02 22:06:59 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int n)
 	int			j;
 	int			found;
 
-	first_arr.elements = malloc(n * sizeof(*first_arr.elements));
-	first_arr.size_elements = n;
-	second_arr.elements = malloc(n * sizeof(*second_arr.elements));
-	helper = malloc(n * sizeof(*helper));
-	second_arr.size_elements = n;
+	first_arr.elements = malloc((n > 0 ? n : -n) * sizeof(*first_arr.elements));
+	first_arr.size_elements = n > 0 ? n : -n;
+	second_arr.elements = malloc((n > 0 ? n : -n) * sizeof(*second_arr.elements));
+	helper = malloc((n > 0 ? n : -n) * sizeof(*helper));
+	second_arr.size_elements = n > 0 ? n : -n;
 	// PRINT_HERE();
 	if (!first_arr.elements || !second_arr.elements || !helper)
 		ft_error(mystruct);
@@ -37,8 +37,8 @@ int n)
 	{
 		while (++i < -n)
 		{
-			first_arr.elements[i++] = *(int *)head->content;
-			second_arr.elements[i++] = *(int *)head->content;
+			first_arr.elements[i] = *(int *)head->content;
+			second_arr.elements[i] = *(int *)head->content;
 			head = head->prev;
 		}
 	}
@@ -47,8 +47,8 @@ int n)
 		// PRINT_HERE();
 		while (++i < n)
 		{
-			first_arr.elements[i++] = *(int *)head->content;
-			second_arr.elements[i++] = *(int *)head->content;
+			first_arr.elements[i] = *(int *)head->content;
+			second_arr.elements[i] = *(int *)head->content;
 			head = head->next;
 		}
 	}
@@ -58,6 +58,8 @@ int n)
 	// Find LCS of arr and sorted. It will be the LIS
 	// PRINT_HERE();
 	t_INT_array	LIS;
+	// ft_printintarr(first_arr.elements, first_arr.size_elements);
+	// ft_printintarr(second_arr.elements, second_arr.size_elements);
 	LIS = find_LCS_of_two_sequences(first_arr, second_arr);
 	// ft_printf("seq size: %d %d\n", first_arr.size_elements, second_arr.size_elements);
 	// ft_printf("LIS.size_elements: %d\n", LIS.size_elements);
@@ -85,6 +87,8 @@ int n)
 	}
 	free(first_arr.elements);
 	free(second_arr.elements);
+	// ft_printintarr(LIS.elements, LIS.size_elements);
+	// ft_printintarr(unordered.elements, unordered.size_elements);
 	return ((t_INT_array2){LIS, unordered});
 }
 

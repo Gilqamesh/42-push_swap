@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 20:41:45 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/02 21:51:04 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*LIS_sort(t_push_swap *mystruct)
 	n_of_B_LIS_groups = 0;
 	A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
 		* sizeof(*A_LIS_groups));
+	// ft_printf("lst: ");
+	// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
 	// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
