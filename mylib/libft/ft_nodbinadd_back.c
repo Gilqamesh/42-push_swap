@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../printf/ft_printf.h"
 
 void	ft_nodbinadd_back(t_node_binary **lst, t_node_binary *new)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/31 17:53:38 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/01 19:18:56 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,5 +279,17 @@ void			ft_merge_sort_str(char **array, t_2_int start_end_indexes,
 int				*ft_intdup(int d);
 // Prints 'n' integers from 'arr' as integers
 void			ft_printintarr(int *arr, int n);
+// Returns the number of digits in 'd'
+int				ft_intlen(int d);
+// Returns the minimum integer out of 'a' and 'b'
+int				ft_minofint(int a, int b);
+// Writes string 's' up to 'n' characters to 'fd' file descriptor
+void			ft_putnstr_fd(char *s, int n, int fd);
+// Returns the maximum integer out of 'a' and 'b'
+int				ft_maxofint(int a, int b);
+// Returns the number of digits in 'n' after converted to 'base' > 1
+int				ft_baselen(unsigned long n, int base);
+// Converts 'n' to 'base' > 1 and returns the allocated string
+char			*ft_itobase(unsigned long n, int base);
 
 #endif

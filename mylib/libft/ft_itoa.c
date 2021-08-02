@@ -27,21 +27,6 @@ static char	*ft_initstr(char **str, int len, int is_negative, int is_zero)
 	return (*str);
 }
 
-static int	ft_intlen(int n)
-{
-	int	len;
-
-	if (!n)
-		return (1);
-	len = 0;
-	while (n)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
 char	*ft_itoa(int n)
 {
 	int		len;

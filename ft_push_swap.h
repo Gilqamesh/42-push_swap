@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/31 12:20:07 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/02 19:50:48 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,17 @@ typedef struct s_INT_array
 	int	size_elements;
 }	t_INT_array;
 
-typedef t_INT_array t_LCS_group;
-
 typedef struct s_INT_array2
 {
 	t_INT_array	arr1;
 	t_INT_array	arr2;
 }	t_INT_array2;
 
-typedef struct s_LCS_array
+typedef struct s_INT_array_of_arrays
 {
-	t_LCS_group	*arr;
+	t_INT_array	*arr;
 	int			size_arr;
-}	t_LCS_array;
+}	t_INT_array_of_arrays;
 
 typedef struct s_stack
 {
@@ -131,13 +129,18 @@ int				is_stack_sorted(t_stack *stack);
 t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 								int n);
 // Finds the Largest Common Subsequence between two sequences
-t_LCS_group		find_LCS_of_two_sequences(t_LCS_group first_seq,
-								t_LCS_group second_seq);
+t_INT_array		find_LCS_of_two_sequences(t_INT_array first_seq,
+								t_INT_array second_seq);
 // Allocates and constructs circular stack from arr
 void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr);
 // Construct a string consisting of a sequence of operation that is the result
 // Of pushing and rotating from the original stack to the pushed stack
 char			*construct_seq_of_operations(t_stack *original_stack, 
 								t_stack *pushed_stack, char pushed_to_stack);
+// Allocates and returns a t_INT_array that is the result of going over the
+// t_list from *head
+t_INT_array		construct_intarr_from_lst(t_list *lst);
+// Exactly
+t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_array_of_arrays *ARR2);
 
 #endif

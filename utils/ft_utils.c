@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 13:21:21 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/02 18:19:23 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,25 @@ int	is_stack_sorted(t_stack *stack)
 	}
 	return (1);
 }
+
+/* Allocates and returns a t_INT_array that is the result of going over the
+** t_list from *head
+*/
+t_INT_array	construct_intarr_from_lst(t_list *lst)
+{
+	int	*result_arr;
+	int	arrLen;
+
+	arrLen = 0;
+	if (!lst)
+		return ((t_INT_array){(int *)0, 0});
+	result_arr = (int *)0;
+	while (lst)
+	{
+		result_arr = ft_realloc(result_arr, ++arrLen * sizeof(*result_arr));
+		result_arr[arrLen - 1] = *(int *)lst->content;
+		lst = lst->next;
+	}
+	return ((t_INT_array){result_arr, arrLen});
+}
+
