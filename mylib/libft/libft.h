@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/01 19:18:56 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 18:39:17 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,5 +291,9 @@ int				ft_maxofint(int a, int b);
 int				ft_baselen(unsigned long n, int base);
 // Converts 'n' to 'base' > 1 and returns the allocated string
 char			*ft_itobase(unsigned long n, int base);
+// Counts the number of words in 's' with a delimiter character of 'c'
+int				ft_n_of_words_by_delim(char *s, char c);
+// Frees the char **str array and sets it to NULL
+void			ft_destroy_str_arr(char ***str);
 
 #endif

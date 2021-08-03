@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 22:06:59 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 18:12:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,55 +383,145 @@ t_INT_array second_arr)
 	return (result);
 }
 
-void	construct_stack_from_arr(t_stack *stack, t_INT_array *arr)
+void	construct_stack_from_arr(t_stack *stack, t_INT_array *arr,
+int direction)
 {
 	int				i;
 	int				*tmp;
 	t_node_binary	*cur;
 
 	*stack = (t_stack){(t_node_binary *)0, arr->size_elements};
-	i = arr->size_elements;
-	while (i--)
+	if (direction >= 0)
+		i = arr->size_elements - 1;
+	else
+		i = 0;
+	while (1)
 	{
 		tmp = malloc(sizeof(*tmp));
 		*tmp = arr->elements[i];
 		cur = ft_nodbinnew(tmp);
 		ft_nodbinadd_back(&stack->head, cur);
+		if (direction >= 0)
+		{
+			if (--i < 0)
+				break ;
+		}
+		else
+		{
+			if (++i == arr->size_elements)
+				break ;
+		}
 	}
 	stack->head->prev = cur;
 	cur->next = stack->head;
 }
 
 char	*construct_seq_of_operations(t_stack *original_stack, 
-t_stack *pushed_stack, char pushed_to_stack)
+t_stack *LIS, char pushed_to_stack)
 {
 	t_node_binary	*cur_origin;
-	t_node_binary	*cur_pushed;
+	int				pushed_counter;
 	char			*result;
-	int				i;
 
 	result = ft_strdup("");
-	i = -1;
 	cur_origin = original_stack->head;
-	cur_pushed = pushed_stack->head;
-	while (++i < original_stack->n)
+	pushed_counter = 0;
+	while (pushed_counter != original_stack->n - LIS->n)
 	{
-		if (*(int *)cur_origin->content == *(int *)cur_pushed)
-		{
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
-			else
-				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
-			cur_pushed = cur_pushed->next;
-		}
-		else
+		if (*(int *)cur_origin->content == *(int *)LIS->head->content)
 		{
 			if (pushed_to_stack == 'b')
 				result = ft_strjoin_free(result, ft_strjoin(" r", "a"));
 			else
+				result = ft_strjoin_free(result, ft_strjoin(" r", "b"));
+			LIS->head = LIS->head->next;
+		}
+		else
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
+			else
 				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
+			pushed_counter++;	
 		}
 		cur_origin = cur_origin->next;
+	}
+	return (result);
+}
+
+char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
+{
+	char			*result;
+	t_node_binary	*min;
+	t_node_binary	*cur;
+	int				i;
+
+	min = stack->head;
+	cur = stack->head;
+	i = 0;
+	while (++i < stack->n)
+	{
+		cur = cur->next;
+		if (*(int *)cur->content < *(int *)min->content)
+			min = cur;
+	}
+	cur = stack->head;
+	i = -1;
+	while (++i < stack->n)
+	{
+		if (cur == min)
+			break ;
+		cur = cur->next;
+	}
+	result = ft_strdup("");
+	if (i > stack->n / 2)
+	{
+		i = stack->n - i;
+		if (stack_name == 'a')
+			while (i-- > 0)
+				result = ft_strjoin_free(result, ft_strdup(" rra"));
+		else
+			while (i-- > 0)
+				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+	}
+	else
+	{
+		if (stack_name == 'a')
+			while (i-- > 0)
+				result = ft_strjoin_free(result, ft_strdup(" ra"));
+		else
+			while (i-- > 0)
+				result = ft_strjoin_free(result, ft_strdup(" rb"));
+	}
+	return (result);
+}
+
+char	*merge_LIS_groups(t_stack *from_stack, t_stack *to_stack,
+char pushed_to_stack)
+{
+	char			*result;
+	int				i;
+
+	result = ft_strdup("");
+	while (from_stack->n)
+	{
+		stack_push(from_stack, to_stack);
+		if (!is_stack_sorted(to_stack, 0))
+		{
+			stack_push(to_stack, from_stack);
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" ra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rb"));
+			to_stack->head = to_stack->head->next;
+		}
+		else
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" pa"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" pb"));
+		}
 	}
 	return (result);
 }

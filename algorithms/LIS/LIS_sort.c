@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 22:16:31 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 18:12:16 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,99 +57,103 @@ char	*LIS_sort(t_push_swap *mystruct)
 	t_stack			stack_tmp;
 	t_stack			original;
 	int				i;
+	char			left_at_stack;
 
 	result_seq_of_ops = ft_strdup("");
 	stack_tmp = (t_stack){(t_node_binary *)0, 0};
-	if (is_stack_sorted(&mystruct->a))
-		// rotate into right position and return with the str of ops
-		return (result_seq_of_ops);
-		;
-	// PRINT_HERE();
-	// find LIS of the sublist and store it in LIS_group array
+	if (is_stack_sorted(&mystruct->a, 0))
+	{
+		result_seq_of_ops = ft_strjoin(result_seq_of_ops,
+			construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
+		return (result_seq_of_ops);       
+	}
 	A_LIS_groups = (t_stack *)0;
 	B_LIS_groups = (t_stack *)0;
 	n_of_A_LIS_groups = 0;
 	n_of_B_LIS_groups = 0;
-	A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
+	A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 		* sizeof(*A_LIS_groups));
-	// ft_printf("lst: ");
-	// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
-	// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
-	// ft_printf("arr1: \n");
-	// for (int l = 0; l < LIS_ord_unord.arr1.size_elements; l++)
-	// 	ft_printf("%d\n", LIS_ord_unord.arr1.elements[l]);
-	// ft_printf("arr2: \n");
-	// for (int l = 0; l < LIS_ord_unord.arr2.size_elements; l++)
-	// 	ft_printf("%d\n", LIS_ord_unord.arr2.elements[l]);
-	// PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
-		&LIS_ord_unord.arr1);
-	ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
-	// LIS_order_unord.arr2 contains the elements that are not part of LIS
-	// construct a stack from this array and check if this stack is sorted
-	// or not...
-	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
-	ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
+		&LIS_ord_unord.arr1, -1);
+	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
 	result_seq_of_ops =
 		ft_strjoin_free(result_seq_of_ops,
-		construct_seq_of_operations(&mystruct->a, &stack_tmp, 'b'));
-	// Destroy LIS_ord_unord
-	if (is_stack_sorted(&stack_tmp))
+		construct_seq_of_operations(&mystruct->a, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
+	destroy_t_INT_array2(&LIS_ord_unord);
+	if (is_stack_sorted(&stack_tmp, 0))
 	{
-		// rotate into right position and merge with LIS group on the other
-		// stack
-		B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
+		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
 		B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
-		return (result_seq_of_ops);
+		left_at_stack = 'b';
 	}
+	else
 	while (1)
 	{
 		original = stack_tmp;
-		B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
+		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
 			original.n);
 		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
-			&LIS_ord_unord.arr1);
-		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
+			&LIS_ord_unord.arr1, -1);
+		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
 		result_seq_of_ops =
 			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &stack_tmp, 'a'));
-		// destroy previous stack
+			construct_seq_of_operations(&original, &B_LIS_groups[n_of_B_LIS_groups - 1], 'a'));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
-		// Destroy LIS_ord_unord
-		if (is_stack_sorted(&stack_tmp))
+		destroy_t_INT_array2(&LIS_ord_unord);
+		if (is_stack_sorted(&stack_tmp, 0))
 		{
-			// rotate into right position and merge..
-			A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
+			A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 				* sizeof(*A_LIS_groups));
 			A_LIS_groups[n_of_A_LIS_groups - 1] = stack_tmp;
-			return (result_seq_of_ops);
+			left_at_stack = 'a';
+			break ;
 		}
 		original = stack_tmp;
-		A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
+		A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 			* sizeof(*A_LIS_groups));
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
 			original.n);
 		construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
-			&LIS_ord_unord.arr1);
-		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2);
+			&LIS_ord_unord.arr1, -1);
+		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
 		result_seq_of_ops =
 			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &stack_tmp, 'b'));
+			construct_seq_of_operations(&original, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
-		// Destroy LIS_ord_unord
-		if (is_stack_sorted(&stack_tmp))
+		destroy_t_INT_array2(&LIS_ord_unord);
+		if (is_stack_sorted(&stack_tmp, 0))
 		{
-			// rotate into right position and merge with LIS group on the other
-			// stack
-			B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
+			B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 				* sizeof(*B_LIS_groups));
 			B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
-			return (result_seq_of_ops);
+			left_at_stack = 'b';
+			break ;
 		}
 	}
+	if (left_at_stack == 'b')
+	{
+		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
+			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
+				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
+		n_of_B_LIS_groups--;
+	}
+	while (n_of_A_LIS_groups > 1)
+	{
+		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
+			merge_LIS_groups(&A_LIS_groups[n_of_A_LIS_groups - 1],
+				&B_LIS_groups[n_of_B_LIS_groups - 1], 'b'));
+		n_of_A_LIS_groups--;
+		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
+			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
+				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
+		n_of_B_LIS_groups--;
+	}
+	result_seq_of_ops = ft_strjoin(result_seq_of_ops,
+			construct_minimum_rotations_needed_ops(&A_LIS_groups[0], 'a'));
+	return (result_seq_of_ops);
 }

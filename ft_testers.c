@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 10:52:36 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 16:27:15 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	print_stacks(t_push_swap *mystruct)
 	ft_printf("%d\t\t%d\n", calc_entropy(&mystruct->a),
 		calc_entropy(&mystruct->b));
 	ft_printf("sorted\n");
-	ft_printf("%d\t\t%d\n", is_stack_sorted(&mystruct->a),
-		is_stack_sorted(&mystruct->b));
+	ft_printf("%d\t\t%d\n", is_stack_sorted(&mystruct->a, 0),
+		is_stack_sorted(&mystruct->b, 0));
 	ft_printf("n of elements\n");
 	ft_printf("%d\t\t%d\n", mystruct->a.n, mystruct->b.n);
 	ft_printf("------------------------------------------------------------\n");
@@ -73,10 +73,10 @@ void	game_loop(t_push_swap *mystruct)
 	input = 1;
 	while (input)
 	{
-		ft_putstr_fd("q - swap a, w - swap b, e - swap both\n", 0);
-		ft_putstr_fd("a - push a, s - push b\n", 0);
-		ft_putstr_fd("z - rotate a, x - rotate b, c - rotate both\n", 0);
-		ft_putstr_fd("r - rev rot a, t - rev rot b, y - rev rot both\n", 0);
+		ft_putstr_fd("q - sa, w - sb, e - ss\n", 0);
+		ft_putstr_fd("a - pa, s - pb\n", 0);
+		ft_putstr_fd("z - ra, x - rb, c - rr\n", 0);
+		ft_putstr_fd("r - rra, t - rrb, y - rrr\n", 0);
 		ft_putstr_fd("Enter operation: ", 0);
 		read(1, &input, 1);
 		read(1, 0, 1);

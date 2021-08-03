@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/02 19:50:48 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 17:07:38 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,11 @@ void			swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b);
 char			*LIS_sort(t_push_swap *mystruct);
 // 
 int				is_sublist_ordered(t_node_binary *p, int n);
-// Returns 1 if stack is sorted from smallest to highest, 0 otherwise.
+// If 'check_for_both_dirs' is 1, checks if the stack is sorted in either
+// directions, if its 0 then it only checks if its forward sorted.
+// Returns 1 if stack is sorted, 0 if its not.
 // The position of the head does not matter.
-int				is_stack_sorted(t_stack *stack);
+int				is_stack_sorted(t_stack *stack, int check_for_both_dirs);
 // Finds the Largest Increasing Subsequence starting from head, the number of
 // elements are 'n'. If 'n' is positive, the traveling direction is positive,
 // i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.
@@ -132,15 +134,37 @@ t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 t_INT_array		find_LCS_of_two_sequences(t_INT_array first_seq,
 								t_INT_array second_seq);
 // Allocates and constructs circular stack from arr
-void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr);
+// 'direction' reversed compared to the array when positive, otherwise
+// it keeps the original order of the array if non-negative
+void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr,
+								int direction);
 // Construct a string consisting of a sequence of operation that is the result
 // Of pushing and rotating from the original stack to the pushed stack
+// Second argument is the stack constructed from the LIS
+// As a side effect rotate LIS until all elements are pushed from original
 char			*construct_seq_of_operations(t_stack *original_stack, 
-								t_stack *pushed_stack, char pushed_to_stack);
+								t_stack *LIS, char pushed_to_stack);
 // Allocates and returns a t_INT_array that is the result of going over the
 // t_list from *head
 t_INT_array		construct_intarr_from_lst(t_list *lst);
-// Exactly
-t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_array_of_arrays *ARR2);
+// Combines two t_INT_array_of_arrays type, only keeping the unique ones.
+// The combination is sorted lexicographically as well between each elements.
+t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1,
+								t_INT_array_of_arrays *ARR2);
+// Allocates and returns the number of rotations needed for head to be sorted
+char					*construct_minimum_rotations_needed_ops(t_stack *stack,
+								char stack_name);
+// Free memory associated with 'arr' and initializes everything to 0
+void					destroy_t_INT_array2(t_INT_array2 *arr);
+// CURRENTLY ONLY WORKS WITH FORWARD-SORTED STACKS!!
+// Merges from_stack into to_stack, both stacks have to be forward-/backward
+// sorted.
+// Allocates and returns the sequence of operations in order to do this.
+char					*merge_LIS_groups(t_stack *from_stack,
+								t_stack *to_stack, char pushed_to_stack);
+// Returns the pointer to t_node_binary that has the minimum content in 'stack'
+t_node_binary			*get_min_from_stack(t_stack *stack);
+// Pushes head element from 'from' to 'to' stack
+void					stack_push(t_stack *from, t_stack *to);
 
 #endif

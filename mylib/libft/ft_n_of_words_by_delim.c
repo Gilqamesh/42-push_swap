@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinprint_int.c                               :+:      :+:    :+:   */
+/*   ft_n_of_words_by_delim.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/26 11:32:11 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 12:02:15 by edavid           ###   ########.fr       */
+/*   Created: 2021/08/03 18:16:44 by edavid            #+#    #+#             */
+/*   Updated: 2021/08/03 18:16:55 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../printf/ft_printf.h"
 
-void	ft_nodbinprint_int(t_node_binary *lst, int n)
+int	ft_n_of_words_by_delim(char *s, char c)
 {
-	if (!lst)
+	int	in_word;
+	int	n_of_words;
+
+	n_of_words = 0;
+	in_word = 0;
+	while (*s)
 	{
-		ft_printf("List is empty.\n");
-		return ;
+		if (*s != c)
+		{
+			if (!in_word)
+			{
+				in_word = 1;
+				n_of_words++;
+			}
+		}
+		else
+			in_word = 0;
+		s++;
 	}
-	ft_printf("List: ");
-	while (lst && n)
-	{
-		ft_printf("%d ", *(int *)lst->content);
-		lst = lst->next;
-		if (n > 0 && !--n)
-			break ;
-	}
-	ft_printf("\n");
+	return (n_of_words);
 }

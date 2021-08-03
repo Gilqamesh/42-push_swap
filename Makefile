@@ -11,7 +11,7 @@ CFLAGS =
 LIBNAME = libpush_swap.a
 LIBPATH = ./$(LIBNAME)
 
-$(NAME): fclean $(OBJ) ft_driver.o
+$(NAME): $(OBJ) ft_driver.o
 	make library
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBPATH)
 	make clean
