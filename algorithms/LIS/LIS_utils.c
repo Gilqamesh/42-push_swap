@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 18:12:53 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 20:59:44 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 int n)
 {
-	t_INT_array	first_arr;
-	t_INT_array	second_arr;
-	t_INT_array	unordered;
-	int			*helper;
-	int			i;
-	int			j;
-	int			found;
+	t_INT_array		first_arr;
+	t_INT_array		second_arr;
+	t_INT_array		unordered;
+	t_node_binary	*cur;
+	int				*helper;
+	int				i;
+	int				j;
+	int				found;
 
 	first_arr.elements = malloc((n > 0 ? n : -n) * sizeof(*first_arr.elements));
 	first_arr.size_elements = n > 0 ? n : -n;
@@ -32,14 +33,15 @@ int n)
 	// PRINT_HERE();
 	if (!first_arr.elements || !second_arr.elements || !helper)
 		ft_error(mystruct);
+	cur = head;
 	i = -1;
 	if (n < 0)
 	{
 		while (++i < -n)
 		{
-			first_arr.elements[i] = *(int *)head->content;
-			second_arr.elements[i] = *(int *)head->content;
-			head = head->prev;
+			first_arr.elements[i] = *(int *)cur->content;
+			second_arr.elements[i] = *(int *)cur->content;
+			cur = cur->prev;
 		}
 	}
 	else
@@ -47,11 +49,13 @@ int n)
 		// PRINT_HERE();
 		while (++i < n)
 		{
-			first_arr.elements[i] = *(int *)head->content;
-			second_arr.elements[i] = *(int *)head->content;
-			head = head->next;
+			first_arr.elements[i] = *(int *)cur->content;
+			second_arr.elements[i] = *(int *)cur->content;
+			cur = cur->next;
 		}
 	}
+	// ft_printf("n: %d print_arr: ", n);
+	// ft_printintarr(first_arr.elements, first_arr.size_elements);
 	// PRINT_HERE();
 	ft_merge_sort_int(second_arr.elements, (t_2_int){0, ft_abs_int(n)}, helper);
 	free(helper);
@@ -390,7 +394,7 @@ int direction)
 	int				*tmp;
 	t_node_binary	*cur;
 
-	*stack = (t_stack){(t_node_binary *)0, arr->size_elements};
+	*stack = (t_stack){(t_node_binary *)0, 0};
 	if (direction >= 0)
 		i = arr->size_elements - 1;
 	else
@@ -401,6 +405,7 @@ int direction)
 		*tmp = arr->elements[i];
 		cur = ft_nodbinnew(tmp);
 		ft_nodbinadd_back(&stack->head, cur);
+		stack->n++;
 		if (direction >= 0)
 		{
 			if (--i < 0)
@@ -422,10 +427,12 @@ t_stack *LIS, char pushed_to_stack)
 	t_node_binary	*cur_origin;
 	int				pushed_counter;
 	char			*result;
+	int				reverse_needed;
 
 	result = ft_strdup("");
 	cur_origin = original_stack->head;
 	pushed_counter = 0;
+	reverse_needed = 0;
 	while (pushed_counter != original_stack->n - LIS->n)
 	{
 		if (*(int *)cur_origin->content == *(int *)LIS->head->content)
@@ -435,6 +442,7 @@ t_stack *LIS, char pushed_to_stack)
 			else
 				result = ft_strjoin_free(result, ft_strjoin(" r", "b"));
 			LIS->head = LIS->head->next;
+			reverse_needed++;
 		}
 		else
 		{
@@ -445,6 +453,15 @@ t_stack *LIS, char pushed_to_stack)
 			pushed_counter++;	
 		}
 		cur_origin = cur_origin->next;
+	}
+	// CHECK IF THIS IS CORRECT OR NOT
+	while (reverse_needed--)
+	{
+		if (pushed_to_stack == 'b')
+				result = ft_strjoin_free(result, ft_strjoin(" rr", "a"));
+			else
+				result = ft_strjoin_free(result, ft_strjoin(" rr", "b"));
+			LIS->head = LIS->head->prev;
 	}
 	return (result);
 }
@@ -501,8 +518,10 @@ char pushed_to_stack)
 {
 	char			*result;
 	int				i;
+	int				reverse_needed;
 
 	result = ft_strdup("");
+	reverse_needed = 0;
 	while (from_stack->n)
 	{
 		stack_push(from_stack, to_stack);
@@ -514,6 +533,7 @@ char pushed_to_stack)
 			else
 				result = ft_strjoin_free(result, ft_strdup(" rb"));
 			to_stack->head = to_stack->head->next;
+			reverse_needed++;
 		}
 		else
 		{
@@ -522,6 +542,18 @@ char pushed_to_stack)
 			else
 				result = ft_strjoin_free(result, ft_strdup(" pb"));
 		}
+	}
+	// rotate back to_stack so that its sorted from min element
+	// Maybe this can be worked around by adding the rotated elements from
+	// to_stack
+	// the LIS_group[0]
+	while (reverse_needed--)
+	{
+		if (pushed_to_stack == 'a')
+			result = ft_strjoin_free(result, ft_strdup(" rra"));
+		else
+			result = ft_strjoin_free(result, ft_strdup(" rrb"));
+		to_stack->head = to_stack->head->prev;
 	}
 	return (result);
 }

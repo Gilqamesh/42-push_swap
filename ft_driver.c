@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 18:30:06 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 20:58:06 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,3 @@ int	main(int argc, char **argv)
 	// game_loop(&mystruct);
 	return (0);
 }
-// 1 3 2 -5 6 4 0 -23
-// ra pb ra pb pb ra pb pb rb pa pa rb rb pb rb rb rb pb pa ra ra ra pa ra ra pa ra pa ra pa rra

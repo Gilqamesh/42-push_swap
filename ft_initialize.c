@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 18:57:47 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 19:12:03 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static void	test_is_str_valid_int(t_push_swap *mystruct, char *str)
 void	initialize_struct(t_push_swap *mystruct, int argc)
 {
 	ft_bzero(mystruct, sizeof(*mystruct));
-	mystruct->a.n = argc - 1;
-	mystruct->b.n = 0;
 }
 
 static void	test_for_duplicates(t_push_swap *mystruct)
@@ -77,24 +75,22 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 
 	i = 1;
 	sorted = (t_list *)0;
-	ft_printf("argc: %d\n", argc);
 	while (i < argc)
 	{
 		str_arr = ft_split(argv[i], ' ');
 		j = -1;
 		while (str_arr[++j])
 		{
-			ft_printf("%s\n", str_arr[j]);
 			test_is_str_valid_int(mystruct, str_arr[j]);
 			nptr = malloc(sizeof(*nptr));
 			if (!nptr)
 				ft_error(mystruct);
 			*nptr = ft_atoi(str_arr[j]);
-			ft_lstsortedinsert_int(&sorted, ft_lstnew(nptr));
 			new = ft_nodbinnew(ft_intdup(*nptr));
 			if (!new)
 				ft_error(mystruct);
 			ft_nodbinadd_back(&mystruct->a.head, new);
+			mystruct->a.n++;
 		}
 		ft_destroy_str_arr(&str_arr);
 		if (++i == argc)
@@ -104,6 +100,5 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 		}
 	}
 	mystruct->sorted = sorted;
-	ft_lstprint_int(mystruct->sorted, -1);
 	test_for_duplicates(mystruct);
 }

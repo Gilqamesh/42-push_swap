@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 18:12:16 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/03 20:58:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ char	*LIS_sort(t_push_swap *mystruct)
 		original = stack_tmp;
 		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
+		// ft_nodbinprint_int(original.head, original.n);
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
 			original.n);
+		// PRINT_HERE();
+		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
 		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
 			&LIS_ord_unord.arr1, -1);
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
@@ -135,12 +138,22 @@ char	*LIS_sort(t_push_swap *mystruct)
 			break ;
 		}
 	}
+	// ft_printf("A: ");
+	// for (int i = 0; i < n_of_A_LIS_groups; i++)
+		// ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	// ft_printf("B: ");
+	// for (int i = 0; i < n_of_B_LIS_groups; i++)
+		// ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	// ft_printf("Result seq_of_ops so far at line %d: %s\n", __LINE__, result_seq_of_ops);
+	// ft_printf("Merging:\n");
 	if (left_at_stack == 'b')
 	{
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
 			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
 				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
 		n_of_B_LIS_groups--;
+		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
+		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
 	}
 	while (n_of_A_LIS_groups > 1)
 	{
@@ -148,12 +161,55 @@ char	*LIS_sort(t_push_swap *mystruct)
 			merge_LIS_groups(&A_LIS_groups[n_of_A_LIS_groups - 1],
 				&B_LIS_groups[n_of_B_LIS_groups - 1], 'b'));
 		n_of_A_LIS_groups--;
+		// ft_printf("After merging a to b: %s\n", result_seq_of_ops);
+		// ft_nodbinprint_int(B_LIS_groups[n_of_B_LIS_groups - 1].head, B_LIS_groups[n_of_B_LIS_groups - 1].n);
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
 			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
 				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
 		n_of_B_LIS_groups--;
+		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
+		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
 	}
 	result_seq_of_ops = ft_strjoin(result_seq_of_ops,
 			construct_minimum_rotations_needed_ops(&A_LIS_groups[0], 'a'));
 	return (result_seq_of_ops);
 }
+
+// pb
+// pb
+// ra
+// ra
+// pb
+// ra
+// ra
+// ra
+// pb
+// pb
+// pa
+// pa
+// pa
+// pb
+// ra
+// pa
+// pb
+// rb
+// pb
+// rb
+// rb
+// pb
+// ra
+// pa
+// ra
+// ra
+// pa
+// ra
+// ra
+// pa
+// ra
+// pa
+// ra
+// ra
+// ra
+// ra
+// pa
+// rra
