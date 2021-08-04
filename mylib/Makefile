@@ -1,24 +1,28 @@
 NAME = libmylib.a
+LIBFT = libft/libft.a
+LIBPRINTF = printf/libftprintf.a
+LIBGNL = gnl/libgnl.a
 
-$(NAME):
-	cd libft && $(MAKE) all
-	cp libft/libft.a .
-	cd libft && $(MAKE) fclean
+$(NAME): $(LIBFT) $(LIBPRINTF) $(LIBGNL)
+	cp $(LIBFT) .
 	ar -x libft.a
-	cd printf && $(MAKE) all
-	cp printf/libftprintf.a .
-	cd printf && $(MAKE) fclean
+	cp $(LIBPRINTF) .
 	ar -x libftprintf.a
-	cd gnl && $(MAKE) all
-	cp gnl/libgnl.a .
-	cd gnl && $(MAKE) fclean
+	cp $(LIBGNL) .
 	ar -x libgnl.a
 	rm -rf *.a
 	ar -rs $(NAME) *.o
 	rm -rf *.o
-
+$(LIBFT):
+	$(MAKE) --directory=libft
+$(LIBPRINTF):
+	$(MAKE) --directory=printf
+$(LIBGNL):
+	$(MAKE) --directory=gnl
 .PHONY: all fclean
-all:
-	make $(NAME)
+all: $(NAME)
+clean:
+	rm -rf *.o __.SYMDEF __.SYMDEF\ SORTED
 fclean:
-	rm -rf *.o $(NAME) __.SYMDEF __.SYMDEF\ SORTED
+	make clean
+	rm -rf $(NAME)

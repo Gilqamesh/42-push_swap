@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
+#    By: edavid <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/08/04 20:43:52 by edavid           ###   ########.fr        #
+#    Updated: 2021/08/04 22:55:49 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 sources = ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 ft_memchr.c ft_memcmp.c ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c \
 ft_strrchr.c ft_strnstr.c ft_strncmp.c ft_atoi.c ft_isdigit.c ft_isalpha.c \
@@ -32,20 +32,16 @@ ft_lstmallocwrapper.c ft_lstmallocfree.c
 NAME = libft.a
 
 $(NAME) : *.c
-	$(CC) $(FLAGS) -c $(sources)
+	$(CC) $(CFLAGS) -c $(sources)
 	ar rc $@ *.o
-	make clean
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
 .PHONY: clean bonus all fclean re
 clean :
 	rm -f *.o __.SYMDEF __.SYMDEF\ SORTED
-bonus :
-	$(CC) $(FLAGS) -c $(bonus_sources) $(extended_sources)
-	ar rc $(NAME) *.o
-	make clean
-all :
-	make $(NAME)
-	make bonus
-	make clean
+bonus : $(bonus_sources:.c=.o) $(extended_sources:.c=.o)
+	ar rc $(NAME) $(bonus_sources:.c=.o) $(extended_sources:.c=.o)
+all : $(NAME) bonus
 fclean :
 	make clean
 	rm -f $(NAME)

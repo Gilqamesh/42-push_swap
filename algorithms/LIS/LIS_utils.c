@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 22:01:30 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 22:45:19 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,9 +251,6 @@ t_INT_array second_arr)
 	int						j;
 	int						k;
 	t_list					*alloced_ptrs;
-	// clock_t					start;
-	// clock_t					start2;
-	// clock_t					start3;
 
 	alloced_ptrs = NULL;
 	table = ft_lstmallocwrapper(&alloced_ptrs,
@@ -277,11 +274,9 @@ t_INT_array second_arr)
 			sizeof(*table[0][i].arr), true);
 	}
 	i = 0;
-	// start = clock();
-	// start2 = 0;
 	while (++i < first_arr.size_elements + 1)
 	{
-		ft_printf("%d\n", i);
+		// ft_printf("%d\n", i);
 		j = 0;
 		while (++j < second_arr.size_elements + 1)
 		{
@@ -333,8 +328,6 @@ t_INT_array second_arr)
 				else if (table[i][j - 1].arr->size_elements
 					== table[i - 1][j].arr->size_elements)
 					// combine the two
-					// Instead of combining and saving, use combination of
-					// references to other arrays
 				{
 					table[i][j] = combine_two_LCS_array(
 						&table[i][j - 1], &table[i - 1][j], &alloced_ptrs);
@@ -352,12 +345,6 @@ t_INT_array second_arr)
 					{
 						table[i][j].arr[k].size_elements =
 							table[i][j - 1].arr[k].size_elements;
-						// table[i][j].arr[k].elements = ft_calloc(
-						// 	table[i][j - 1].arr[k].size_elements, sizeof(int));
-						// ft_memcpy(table[i][j].arr[k].elements,
-						// 	table[i][j - 1].arr[k].elements,
-						// 	table[i][j - 1].arr[k].size_elements * sizeof(int));
-
 						table[i][j].arr[k].elements
 							= table[i][j - 1].arr[k].elements;
 					}
@@ -375,32 +362,19 @@ t_INT_array second_arr)
 					{
 						table[i][j].arr[k].size_elements =
 							table[i - 1][j].arr[k].size_elements;
-						// table[i][j].arr[k].elements = ft_calloc(
-						// 	table[i - 1][j].arr[k].size_elements, sizeof(int));
-						// ft_memcpy(table[i][j].arr[k].elements,
-						// 	table[i - 1][j].arr[k].elements,
-						// 	table[i - 1][j].arr[k].size_elements * sizeof(int));
-						
 						table[i][j].arr[k].elements
 							= table[i - 1][j].arr[k].elements;
 					}
 				}
 			}
-			// start += clock() - start;
-			// printf("combine_two_LCS_array proportion to while loop: %f%%\n",
-				// 100 * (float)start2 / start);
 		}
 	}
-	PRINT_HERE();
 	result.size_elements =
 		table[first_arr.size_elements][second_arr.size_elements].arr->size_elements;
-	PRINT_HERE();
 	result.elements = malloc(result.size_elements * sizeof(int));
-	PRINT_HERE();
 	ft_memcpy(result.elements,
 		table[first_arr.size_elements][second_arr.size_elements].arr->elements,
 		result.size_elements * sizeof(int));
-	PRINT_HERE();
 	ft_lstmallocfree(&alloced_ptrs);
 	return (result);
 }
