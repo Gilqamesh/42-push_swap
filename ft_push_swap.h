@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 08:51:15 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 14:12:52 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,16 @@ void					destroy_t_INT_array2(t_INT_array2 *arr);
 // Merges from_stack into to_stack, both stacks have to be forward-/backward
 // sorted.
 // Allocates and returns the sequence of operations in order to do this.
-char					*merge_LIS_groups(t_stack *from_stack,
-								t_stack *to_stack, char pushed_to_stack);
+char					*merge_LIS_groups(t_push_swap *mystruct,
+								t_stack *from_stack, t_stack *to_stack,
+								char pushed_to_stack, t_stack *LIS_group,
+								int cur_LIS_group_index);
 // Returns the pointer to t_node_binary that has the minimum content in 'stack'
 t_node_binary			*get_min_from_stack(t_stack *stack);
 // Pushes head element from 'from' to 'to' stack
 void					stack_push(t_stack *from, t_stack *to);
+// Get index of relative position for 'element' compared to all the input els.
+int						get_relative_position(t_push_swap *mystruct,
+								int element);
 
 #endif

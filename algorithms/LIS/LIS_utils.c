@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 09:11:28 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 16:10:30 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int n)
 	t_INT_array	LIS;
 	// ft_printintarr(first_arr.elements, first_arr.size_elements);
 	// ft_printintarr(second_arr.elements, second_arr.size_elements);
+	// PRINT_HERE();
 	LIS = find_LCS_of_two_sequences(first_arr, second_arr);
 	// ft_printf("seq size: %d %d\n", first_arr.size_elements, second_arr.size_elements);
 	// ft_printf("LIS.size_elements: %d\n", LIS.size_elements);
@@ -98,16 +99,17 @@ int n)
 
 t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_array_of_arrays *ARR2)
 {
-	int			unique_counter;
-	int			i;
-	int			j;
-	char		**arr_str;
-	char		**helper;
-	int			arr_str_index;
-	char		*tmp;
-	char		*tmp2;
-	t_INT_array	*LCS_group_arr;
-	int			LCS_index;
+	int				unique_counter;
+	int				i;
+	int				j;
+	char			**arr_str;
+	char			**helper;
+	int				arr_str_index;
+	char			*tmp;
+	char			*tmp2;
+	t_INT_array		*LCS_group_arr;
+	int				LCS_index;
+	t_node_binary	*need_to_join;
 
 	if (!ARR1 || !ARR2 || (!ARR1->size_arr && !ARR2->size_arr))
 	{
@@ -120,10 +122,12 @@ t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_a
 	// PRINT_HERE();
 	arr_str_index = 0;
 	i = -1;
+	need_to_join = (t_node_binary *)0;
 	while (++i < ARR1->size_arr)
 	{
 		j = 0;
 		arr_str[arr_str_index] = ft_itoa(ARR1->arr[i].elements[j]);
+		// ft_nodbinadd_front(&need_to_join, ft_nodbinnew(ft_itoa(ARR1->arr[i].elements[j])));
 		// PRINT_HERE();
 		while (++j < ARR1->arr->size_elements)
 		{
@@ -253,10 +257,12 @@ t_INT_array second_arr)
 	// PRINT_HERE();
 	while (++i < first_arr.size_elements + 1)
 	{
+		ft_printf("%d\n", i);
+		// ft_printf("%d %d\n", first_arr.size_elements, second_arr.size_elements);
+		// PRINT_HERE();
 		j = 0;
 		while (++j < second_arr.size_elements + 1)
 		{
-			// PRINT_HERE();
 			// I think this works
 			if (first_arr.elements[i - 1] == second_arr.elements[j - 1])
 			{
@@ -516,17 +522,26 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 
 // Currently operating under the assumption that both LIS are sorted from
 // the top.
-char	*merge_LIS_groups(t_stack *from_stack, t_stack *to_stack,
-char pushed_to_stack)
+char	*merge_LIS_groups(t_push_swap *mystruct, t_stack *from_stack,
+t_stack *to_stack, char pushed_to_stack, t_stack *LIS_group,
+int cur_LIS_group_index)
 {
 	char			*result;
 	int				i;
 	int				reverse_needed;
+	t_node_binary	*min;
+	t_node_binary	*cur;
+	t_stack			tmp;
 
 	result = ft_strdup("");
 	reverse_needed = 0;
 	while (from_stack->n)
 	{
+		// PRINT_HERE();
+		// ft_printf("%d\n", from_stack->n);
+		// if (get_relative_position(mystruct, *(int *)from_stack->head->content)
+		// 	< get_relative_position(mystruct, *(int *)to_stack->head->content))
+		// if (! *(int *)from_stack->head->content > *(int *)to_stack->head->content)
 		stack_push(from_stack, to_stack);
 		if (!is_stack_sorted(to_stack, 0, 0))
 		{
@@ -540,19 +555,81 @@ char pushed_to_stack)
 		}
 		else
 		{
+			// ft_printf("hey\n");
+			// stack_push(from_stack, to_stack);
 			if (pushed_to_stack == 'a')
 				result = ft_strjoin_free(result, ft_strdup(" pa"));
 			else
 				result = ft_strjoin_free(result, ft_strdup(" pb"));
 		}
 	}
-	while (reverse_needed--)
+	// If rotating to the next LIS would take less operations with
+	// Forward rotate rather than reverse, do that and also
+	// In that case we will have to swap our current merged LIS group
+	// with the bottom one as it'll reside there now.
+	min = get_min_from_stack(to_stack);
+	cur = to_stack->head;
+	i = -1;
+	while (++i < to_stack->n)
 	{
-		if (pushed_to_stack == 'a')
-			result = ft_strjoin_free(result, ft_strdup(" rra"));
-		else
-			result = ft_strjoin_free(result, ft_strdup(" rrb"));
-		to_stack->head = to_stack->head->prev;
+		if (cur == min)
+			break ;
+		cur = cur->next;
 	}
+	// Idea: instead of just rotating, why not push the elements that can be
+	// pushed to 'from_stack' somehow in the meanwhile
+	if (reverse_needed <= to_stack->n / 2)
+	{
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" rra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+			to_stack->head = to_stack->head->prev;
+		}
+	}
+	else
+	{
+		reverse_needed = to_stack->n - reverse_needed;
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" ra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rb"));
+			to_stack->head = to_stack->head->next;
+		}
+		// PRINT_HERE();
+		// INSERTING FROM THE BOTTOM
+		tmp = LIS_group[cur_LIS_group_index];
+		i = cur_LIS_group_index + 1;
+		while (--i > 0)
+			LIS_group[i] = LIS_group[i - 1];
+		LIS_group[0] = tmp;
+	}
+	
+	
+	// while (reverse_needed--)
+	// {
+	// 	if (pushed_to_stack == 'a')
+	// 		result = ft_strjoin_free(result, ft_strdup(" rra"));
+	// 	else
+	// 		result = ft_strjoin_free(result, ft_strdup(" rrb"));
+	// 	to_stack->head = to_stack->head->prev;
+	// }
 	return (result);
+}
+
+int	get_relative_position(t_push_swap *mystruct, int element)
+{
+	int	i;
+
+	i = -1;
+	while (++i < mystruct->relative_pos.n)
+	{
+		if (mystruct->relative_pos.number_pos[i].a == element)
+			return (mystruct->relative_pos.number_pos[i].b);
+	}
+	return (-1);
 }

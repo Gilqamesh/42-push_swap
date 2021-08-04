@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_driver.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 09:09:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 15:07:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int argc, char **argv)
 	i = -1;
 	// while (sequence_arr[++i])
 	// 	ft_printf("%s\n", sequence_arr[i]);
-	// ft_printf("Sequence: %s\n", sequence);
-	// ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
+	ft_printf("Sequence: %s\n", sequence);
+	ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
 	// game_loop(&mystruct);
 	return (0);
 }

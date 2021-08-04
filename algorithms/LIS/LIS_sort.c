@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 09:25:46 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 16:00:04 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 	n_of_B_LIS_groups = 0;
 	A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 		* sizeof(*A_LIS_groups));
+	// PRINT_HERE();
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
+	// PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1, -1);
 	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
@@ -98,8 +100,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
 		// ft_nodbinprint_int(original.head, original.n);
+		// PRINT_HERE();
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
 			original.n);
+		// PRINT_HERE();
 		// PRINT_HERE();
 		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
 		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
@@ -154,26 +158,34 @@ char	*LIS_sort(t_push_swap *mystruct)
 	// 1. Create a big stack with all the LIS on top of each other
 	// Have a merging algorithm that rotates the two stacks and inserts each
 	// Element to its right position
+	// PRINT_HERE();
 	if (left_at_stack == 'b')
 	{
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
-				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
+			merge_LIS_groups(mystruct, &B_LIS_groups[n_of_B_LIS_groups - 1],
+				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a',
+				A_LIS_groups, n_of_A_LIS_groups - 1));
 		n_of_B_LIS_groups--;
 		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
 		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
 	}
+	// static int n_of_calls;
 	while (n_of_A_LIS_groups > 1)
 	{
+		// ft_printf("n_of_merges: %d\n", n_of_calls++);
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(&A_LIS_groups[n_of_A_LIS_groups - 1],
-				&B_LIS_groups[n_of_B_LIS_groups - 1], 'b'));
+			merge_LIS_groups(mystruct, &A_LIS_groups[n_of_A_LIS_groups - 1],
+				&B_LIS_groups[n_of_B_LIS_groups - 1], 'b',
+				B_LIS_groups, n_of_B_LIS_groups - 1));
 		n_of_A_LIS_groups--;
+		// ft_printf("n_of_A, n_of_B groups: %d %d\n", n_of_A_LIS_groups, n_of_B_LIS_groups);
 		// ft_printf("After merging a to b: %s\n", result_seq_of_ops);
 		// ft_nodbinprint_int(B_LIS_groups[n_of_B_LIS_groups - 1].head, B_LIS_groups[n_of_B_LIS_groups - 1].n);
+		// ft_printf("n_of_merges: %d\n", n_of_calls++);
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(&B_LIS_groups[n_of_B_LIS_groups - 1],
-				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a'));
+			merge_LIS_groups(mystruct, &B_LIS_groups[n_of_B_LIS_groups - 1],
+				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a',
+				A_LIS_groups, n_of_A_LIS_groups - 1));
 		n_of_B_LIS_groups--;
 		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
 		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
