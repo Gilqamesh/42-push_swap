@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 17:07:38 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 08:51:15 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,18 @@ typedef struct s_stack
 	int				n;
 }	t_stack;
 
+typedef struct s_relative_pos
+{
+	t_2_int	*number_pos;
+	int		n;
+}	t_relative_pos;
+
 typedef struct s_push_swap
 {
-	t_stack	a;
-	t_stack	b;
-	t_list	*sorted;
+	t_stack			a;
+	t_stack			b;
+	t_list			*sorted;
+	t_relative_pos	relative_pos;
 }	t_push_swap;
 
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
@@ -123,8 +130,8 @@ int				is_sublist_ordered(t_node_binary *p, int n);
 // If 'check_for_both_dirs' is 1, checks if the stack is sorted in either
 // directions, if its 0 then it only checks if its forward sorted.
 // Returns 1 if stack is sorted, 0 if its not.
-// The position of the head does not matter.
-int				is_stack_sorted(t_stack *stack, int check_for_both_dirs);
+int				is_stack_sorted(t_stack *stack, int check_for_both_dirs,
+								int position_of_head_matters);
 // Finds the Largest Increasing Subsequence starting from head, the number of
 // elements are 'n'. If 'n' is positive, the traveling direction is positive,
 // i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.

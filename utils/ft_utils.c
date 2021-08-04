@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 15:59:56 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 07:55:57 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,17 @@ int	is_sublist_ordered(t_node_binary *p, int n)
 	return (0);
 }
 
-int	is_stack_sorted(t_stack *stack, int check_for_both_dirs)
+int	is_stack_sorted(t_stack *stack, int check_for_both_dirs,
+int position_of_head_matters)
 {
 	t_node_binary	*head;
-	t_node_binary	*min;
 	int				i;
 
 	if (!stack->n)
 		return (1);
 	head = stack->head;
-	min = head;
-	i = 0;
-	while (++i < stack->n)
-	{
-		head = head->next;
-		if (*(int *)head->content < *(int *)min->content)
-			min = head;
-	}
-	head = min;
+	if (!position_of_head_matters)
+		head = get_min_from_stack(stack);
 	i = 0;
 	while (++i < stack->n)
 	{

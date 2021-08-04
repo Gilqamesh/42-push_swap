@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 20:58:20 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 09:16:03 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 
 	result_seq_of_ops = ft_strdup("");
 	stack_tmp = (t_stack){(t_node_binary *)0, 0};
-	if (is_stack_sorted(&mystruct->a, 0))
+	if (is_stack_sorted(&mystruct->a, 0, 0))
 	{
 		result_seq_of_ops = ft_strjoin(result_seq_of_ops,
 			construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
@@ -82,7 +82,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 		ft_strjoin_free(result_seq_of_ops,
 		construct_seq_of_operations(&mystruct->a, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
 	destroy_t_INT_array2(&LIS_ord_unord);
-	if (is_stack_sorted(&stack_tmp, 0))
+	// Currently the last LIS (as well as the others) has to be sorted from
+	// the top.
+	if (is_stack_sorted(&stack_tmp, 0, 1))
 	{
 		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
@@ -108,7 +110,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 			construct_seq_of_operations(&original, &B_LIS_groups[n_of_B_LIS_groups - 1], 'a'));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&stack_tmp, 0))
+		if (is_stack_sorted(&stack_tmp, 0, 1))
 		{
 			A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 				* sizeof(*A_LIS_groups));
@@ -129,7 +131,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 			construct_seq_of_operations(&original, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&stack_tmp, 0))
+		if (is_stack_sorted(&stack_tmp, 0, 1))
 		{
 			B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 				* sizeof(*B_LIS_groups));
@@ -146,6 +148,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		// ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	// ft_printf("Result seq_of_ops so far at line %d: %s\n", __LINE__, result_seq_of_ops);
 	// ft_printf("Merging:\n");
+	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
 	if (left_at_stack == 'b')
 	{
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,

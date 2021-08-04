@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 20:59:44 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 09:11:28 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,22 +446,23 @@ t_stack *LIS, char pushed_to_stack)
 		}
 		else
 		{
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
-			else
+			if (pushed_to_stack == 'b')
 				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
+			else
+				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
 			pushed_counter++;	
 		}
 		cur_origin = cur_origin->next;
 	}
-	// CHECK IF THIS IS CORRECT OR NOT
+	// Maybe works with construct_minimum_rotations_needed_ops
+	// construct_minimum_rotations_needed_ops(LIS, pushed_to_stack == 'a' ? 'b' : 'a');
 	while (reverse_needed--)
 	{
 		if (pushed_to_stack == 'b')
-				result = ft_strjoin_free(result, ft_strjoin(" rr", "a"));
-			else
-				result = ft_strjoin_free(result, ft_strjoin(" rr", "b"));
-			LIS->head = LIS->head->prev;
+			result = ft_strjoin_free(result, ft_strjoin(" rr", "a"));
+		else
+			result = ft_strjoin_free(result, ft_strjoin(" rr", "b"));
+		LIS->head = LIS->head->prev;
 	}
 	return (result);
 }
@@ -513,6 +514,8 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 	return (result);
 }
 
+// Currently operating under the assumption that both LIS are sorted from
+// the top.
 char	*merge_LIS_groups(t_stack *from_stack, t_stack *to_stack,
 char pushed_to_stack)
 {
@@ -525,7 +528,7 @@ char pushed_to_stack)
 	while (from_stack->n)
 	{
 		stack_push(from_stack, to_stack);
-		if (!is_stack_sorted(to_stack, 0))
+		if (!is_stack_sorted(to_stack, 0, 0))
 		{
 			stack_push(to_stack, from_stack);
 			if (pushed_to_stack == 'a')
@@ -543,10 +546,6 @@ char pushed_to_stack)
 				result = ft_strjoin_free(result, ft_strdup(" pb"));
 		}
 	}
-	// rotate back to_stack so that its sorted from min element
-	// Maybe this can be worked around by adding the rotated elements from
-	// to_stack
-	// the LIS_group[0]
 	while (reverse_needed--)
 	{
 		if (pushed_to_stack == 'a')
