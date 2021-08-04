@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 14:12:52 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 20:20:13 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,11 @@ void					stack_push(t_stack *from, t_stack *to);
 // Get index of relative position for 'element' compared to all the input els.
 int						get_relative_position(t_push_swap *mystruct,
 								int element);
+// Lexicographically compares the two pointer to t_INT_array.
+// Returns greater than, equal to, or less than 0, according as 'arr1' is
+// greater than, equal to, or less than 'arr2'.
+int						ft_intarrcmp(t_INT_array *arr1, t_INT_array *arr2);
+// Returns 1 if 'ptr' as an address is already contained in 'lst', 0 otherwise
+int						ft_lstiscontained(t_list *lst, void *ptr);
 
 #endif

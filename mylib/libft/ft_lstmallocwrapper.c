@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinadd_front.c                               :+:      :+:    :+:   */
+/*   ft_lstmallocwrapper.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/26 10:33:12 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 16:46:14 by edavid           ###   ########.fr       */
+/*   Created: 2021/08/04 20:34:21 by edavid            #+#    #+#             */
+/*   Updated: 2021/08/04 20:45:41 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	ft_nodbinadd_front(t_node_binary **lst, t_node_binary *new)
+// Malloc instead it also adds the address into 'lst'
+// Use ft_lstmallocfree to free all the saved addresses
+void	*ft_lstmallocwrapper(t_list **lst, size_t size, bool is_calloc)
 {
-	if (!new || !lst)
-		return ;
-	new->next = *lst;
-	*lst = new;
-	if (new->next)
-		new->next->prev = new;
-	new->prev = (t_node_binary *)0;
+	void	*new;
+
+	if (!lst)
+		return (NULL);
+	if (is_calloc)
+		new = ft_calloc(1, size);
+	else
+		new = malloc(size);
+	if (!new)
+		return (NULL);
+	ft_lstadd_front(lst, new);
+	return (new);
 }

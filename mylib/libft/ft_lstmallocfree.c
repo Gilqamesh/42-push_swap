@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nodbinadd_front.c                               :+:      :+:    :+:   */
+/*   ft_lstmallocfree.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/26 10:33:12 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 16:46:14 by edavid           ###   ########.fr       */
+/*   Created: 2021/08/04 20:38:19 by edavid            #+#    #+#             */
+/*   Updated: 2021/08/04 20:40:50 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	ft_nodbinadd_front(t_node_binary **lst, t_node_binary *new)
+// Free all addresses stored in 'lst' then clears lst and sets
+// it to NULL
+void	ft_lstmallocfree(t_list **lst)
 {
-	if (!new || !lst)
-		return ;
-	new->next = *lst;
-	*lst = new;
-	if (new->next)
-		new->next->prev = new;
-	new->prev = (t_node_binary *)0;
+	ft_lstclear(lst, ft_lstdel);
 }

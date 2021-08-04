@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 10:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/03 18:39:17 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 20:46:43 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stddef.h>
+# include <stdbool.h>
 // Writes 'n' bytes of value 'c' to the string 's'
 void			*ft_memset(void *s, int c, size_t n);
 // Writes 'n' zeroed bytes to the string 's'
@@ -295,5 +296,14 @@ char			*ft_itobase(unsigned long n, int base);
 int				ft_n_of_words_by_delim(char *s, char c);
 // Frees the char **str array and sets it to NULL
 void			ft_destroy_str_arr(char ***str);
+// Allocates and returns a string that is the concatenation of going through
+// the list's str contents
+char			*ft_nodbinstrjoin_from_back(t_node_binary *list);
+// Free all addresses stored in 'lst' then clears lst and sets
+// it to NULL
+void			ft_lstmallocfree(t_list **lst);
+// Malloc instead it also adds the address into 'lst'
+// Use ft_lstmallocfree to free all the saved addresses
+void			*ft_lstmallocwrapper(t_list **lst, size_t size, bool is_calloc);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 07:55:57 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 20:25:05 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,38 @@ t_node_binary	*get_min_from_stack(t_stack *stack)
 			min = cur;
 	}
 	return (min);
+}
+
+// Lexicographically compares the two pointer to t_INT_array.
+// Returns greater than, equal to, or less than 0, according as 'arr1' is
+// greater than, equal to, or less than 'arr2'.
+int	ft_intarrcmp(t_INT_array *arr1, t_INT_array *arr2)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	while (++i < arr1->size_elements && ++j < arr2->size_elements)
+	{
+		if (arr1->elements[i] < arr2->elements[j])
+			return (-1);
+		else if (arr1->elements[i] > arr2->elements[j])
+			return (1);
+	}
+	return (0);
+}
+
+int	ft_lstiscontained(t_list *lst, void *ptr)
+{
+	t_list	*cur;
+
+	cur = lst;
+	while (cur)
+	{
+		if (cur->content == ptr)
+			return (1);
+		cur = cur->next;
+	}
+	return (0);
 }
