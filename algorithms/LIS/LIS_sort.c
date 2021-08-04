@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 09:16:03 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 09:25:46 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,11 @@ char	*LIS_sort(t_push_swap *mystruct)
 	// ft_printf("Result seq_of_ops so far at line %d: %s\n", __LINE__, result_seq_of_ops);
 	// ft_printf("Merging:\n");
 	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
+	
+	// TODOs
+	// 1. Create a big stack with all the LIS on top of each other
+	// Have a merging algorithm that rotates the two stacks and inserts each
+	// Element to its right position
 	if (left_at_stack == 'b')
 	{
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
