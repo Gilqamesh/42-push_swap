@@ -2,22 +2,23 @@ NAME = push_swap
 BONUSNAME = checker
 BONUSOBJ = checker_program/ft_checker.o checker_program/initialize.o
 CC = gcc
-OBJ = ft_initialize.o ft_error.o ft_testers.o \
-stack_operations/stack_op1.o stack_operations/stack_op2.o \
-stack_operations/stack_op3.o utils/ft_entropy.o algorithms/LIS/LIS_sort.o \
-ft_get_routes.o stack_operations/stack_op1_helper.o ft_testers_helper.o \
-utils/ft_utils.o algorithms/LIS/LIS_utils.o algorithms/LIS/LIS_sort.o
+SRC = ft_initialize.c ft_error.c ft_testers.c \
+stack_operations/stack_op1.c stack_operations/stack_op2.c \
+stack_operations/stack_op3.c utils/ft_entropy.c algorithms/LIS/LIS_sort.c \
+ft_get_routes.c stack_operations/stack_op1_helper.c ft_testers_helper.c \
+utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c
 CFLAGS = 
 LIBNAME = libpush_swap.a
 LIBPATH = ./$(LIBNAME)
 MYLIB = ./mylib/libmylib.a
 
-$(NAME): $(OBJ) ft_driver.o $(LIBNAME)
+$(NAME): $(SRC:.c=.o) ft_driver.o $(LIBNAME)
 	ar -d $(LIBNAME) ft_checker.o tester.o
 	ar -rs $(LIBNAME) ft_driver.o
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBPATH)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
+	ar -rs $(LIBNAME) $@
 $(LIBNAME):
 	$(MAKE) --directory=mylib
 	cp $(MYLIB) .
@@ -43,13 +44,13 @@ re:
 	make fclean
 	make all
 all: $(NAME)
-bonus: $(OBJ) $(BONUSOBJ)
+bonus: $(SRC:.c=.o) $(BONUSOBJ)
 	make library
 	ar -d $(LIBNAME) tester.o driver.o
 	ar -rs $(LIBNAME) checker_program/*.o
 	$(CC) $(CFLAGS) -o $(BONUSNAME) $(LIBNAME)
 library: $(LIBNAME)
-tester: $(OBJ) tester.o
+tester: $(SRC:.c=.o) tester.o
 	rm -rf $(LIBNAME)
 	make library
 	ar -d $(LIBNAME) ft_driver.o ft_checker.o tester.o

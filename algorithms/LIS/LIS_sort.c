@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 16:00:04 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 00:14:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,10 +146,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 	}
 	// ft_printf("A: ");
 	// for (int i = 0; i < n_of_A_LIS_groups; i++)
-		// ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	// 	ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
 	// ft_printf("B: ");
 	// for (int i = 0; i < n_of_B_LIS_groups; i++)
-		// ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	// ft_printf("Result seq_of_ops so far at line %d: %s\n", __LINE__, result_seq_of_ops);
 	// ft_printf("Merging:\n");
 	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
@@ -192,6 +192,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 	}
 	result_seq_of_ops = ft_strjoin(result_seq_of_ops,
 			construct_minimum_rotations_needed_ops(&A_LIS_groups[0], 'a'));
+	// ft_printf("Final seq_of_ops: %s\n", result_seq_of_ops);
 	return (result_seq_of_ops);
 }
 
