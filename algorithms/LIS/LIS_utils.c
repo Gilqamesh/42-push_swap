@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 20:53:54 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 22:01:30 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int n)
 	return ((t_INT_array2){LIS, unordered});
 }
 
-t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_array_of_arrays *ARR2)
+t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1,
+t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 {
 	int				unique_counter;
 	int				i;
@@ -110,7 +111,8 @@ t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_a
 
 	if (!ARR1 || !ARR2 || (!ARR1->size_arr && !ARR2->size_arr))
 	{
-		LCS_group_arr = ft_calloc(1, sizeof(*LCS_group_arr));
+		LCS_group_arr = ft_lstmallocwrapper(alloced_ptrs, sizeof(*LCS_group_arr),
+			true);
 		return ((t_INT_array_of_arrays){LCS_group_arr, 0});
 	}
 	unique_counter = 0;
@@ -145,7 +147,8 @@ t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1, t_INT_a
 		else
 			break ;
 	}
-	LCS_group_arr = ft_calloc(unique_counter, sizeof(*LCS_group_arr));
+	LCS_group_arr = ft_lstmallocwrapper(alloced_ptrs,
+		unique_counter * sizeof(*LCS_group_arr), true);
 	i = 0;
 	j = 0;
 	LCS_index = -1;
@@ -324,7 +327,8 @@ t_INT_array second_arr)
 					// Set to empty array
 				{
 					table[i][j].size_arr = 0;
-					table[i][j].arr = ft_calloc(1, sizeof(*table[i][j].arr));
+					table[i][j].arr = ft_lstmallocwrapper(&alloced_ptrs,
+						sizeof(*table[i][j].arr), true);
 				}
 				else if (table[i][j - 1].arr->size_elements
 					== table[i - 1][j].arr->size_elements)
@@ -333,7 +337,7 @@ t_INT_array second_arr)
 					// references to other arrays
 				{
 					table[i][j] = combine_two_LCS_array(
-						&table[i][j - 1], &table[i - 1][j]);
+						&table[i][j - 1], &table[i - 1][j], &alloced_ptrs);
 				}
 				else if (table[i][j - 1].arr->size_elements
 					> table[i - 1][j].arr->size_elements)
@@ -387,70 +391,16 @@ t_INT_array second_arr)
 				// 100 * (float)start2 / start);
 		}
 	}
+	PRINT_HERE();
 	result.size_elements =
 		table[first_arr.size_elements][second_arr.size_elements].arr->size_elements;
+	PRINT_HERE();
 	result.elements = malloc(result.size_elements * sizeof(int));
+	PRINT_HERE();
 	ft_memcpy(result.elements,
 		table[first_arr.size_elements][second_arr.size_elements].arr->elements,
 		result.size_elements * sizeof(int));
-	// When setting a pointer to NULL, we also have to set all the pointers
-	// that used the same pointer as a reference to NULL
-	// t_list	*already_freed = NULL;
-	// i = -1;
-	// while (++i < first_arr.size_elements + 1)
-	// {
-	// 	j = -1;
-	// 	while (++j < second_arr.size_elements + 1)
-	// 	{
-	// 		k = -1;
-	// 		while (++k < table[i][j].size_arr)
-	// 		{
-	// 			if (table[i][j].arr[k].elements)
-	// 			{
-	// 				// PRINT_HERE();
-	// 				if (!ft_lstiscontained(already_freed, table[i][j].arr[k].elements))
-	// 				{
-	// 					free(table[i][j].arr[k].elements);
-	// 					ft_lstsortedinsert_int(&already_freed,
-	// 						ft_lstnew(table[i][j].arr[k].elements));
-	// 				}
-	// 				// PRINT_HERE();
-	// 				// table[i][j].arr[k].elements = NULL;
-	// 			}
-	// 		}
-	// 		if (!k && table[i][j].arr)
-	// 		{
-	// 			if (table[i][j].arr->elements)
-	// 			{
-	// 				// PRINT_HERE();
-	// 				if (!ft_lstiscontained(already_freed, table[i][j].arr->elements))
-	// 				{
-	// 					free(table[i][j].arr->elements);
-	// 					ft_lstsortedinsert_int(&already_freed,
-	// 						ft_lstnew(table[i][j].arr->elements));
-	// 				}
-	// 				// PRINT_HERE();
-	// 				// table[i][j].arr->elements = NULL;
-	// 			}
-	// 		}
-	// 		if (table[i][j].arr)
-	// 		{
-	// 			// PRINT_HERE();
-	// 			free(table[i][j].arr);
-	// 			// PRINT_HERE();
-	// 			// table[i][j].arr = NULL;
-	// 		}
-	// 	}
-	// 	if (table[i])
-	// 	{
-	// 		// PRINT_HERE();
-	// 		free(table[i]);
-	// 		// PRINT_HERE();
-	// 		// table[i] = NULL;
-	// 	}
-	// }
-	// if (table)
-	// 	free(table);
+	PRINT_HERE();
 	ft_lstmallocfree(&alloced_ptrs);
 	return (result);
 }

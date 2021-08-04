@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 20:20:13 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/04 21:56:12 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,10 @@ char			*construct_seq_of_operations(t_stack *original_stack,
 t_INT_array		construct_intarr_from_lst(t_list *lst);
 // Combines two t_INT_array_of_arrays type, only keeping the unique ones.
 // The combination is sorted lexicographically as well between each elements.
+// Uses ft_mallocwrapper for 'allocated_ptr'.
 t_INT_array_of_arrays	combine_two_LCS_array(t_INT_array_of_arrays *ARR1,
-								t_INT_array_of_arrays *ARR2);
+								t_INT_array_of_arrays *ARR2,
+								t_list **alloced_ptrs);
 // Allocates and returns the number of rotations needed for head to be sorted
 char					*construct_minimum_rotations_needed_ops(t_stack *stack,
 								char stack_name);
