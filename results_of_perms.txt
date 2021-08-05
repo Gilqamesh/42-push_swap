@@ -1,0 +1,360 @@
+Sequence: 
+Number of arguments: 5
+Number of operations: 0
+Sequence:  ra ra ra pb rra rra rra ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra ra pb rra rra ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  ra ra ra ra pb rra rra rra rra ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  ra ra pb pb rra rra ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra ra pb rra rra ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  ra pb rra ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 8
+Sequence:  ra pb ra pb rra rra pa rb pb rrb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  ra ra ra pb rra rra rra ra pa rra
+Number of arguments: 5
+Number of operations: 10
+Sequence:  ra ra ra ra pb rra rra rra rra ra pa rra
+Number of arguments: 5
+Number of operations: 12
+Sequence:  ra ra pb ra pb rra rra rra ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra pb pb rra pa rb pb rrb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra pb pb rra ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  ra pb ra ra pb rra rra rra ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra pb rra ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  ra pb ra pb rra rra pa rb pb rrb ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  ra pb pb rra pa rb pb rrb ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra ra ra pb pb rra rra rra ra pa ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  ra pb ra ra pb rra rra rra ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra pb pb rra ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  ra pb pb pb rra ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra pb pb rra ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  ra pb ra pb rra rra ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra pb rra ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb ra pa rra
+Number of arguments: 5
+Number of operations: 4
+Sequence:  pb ra ra pb rra rra pa rb pb rrb ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb ra pb rra pa rb pb rrb ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra ra ra pb rra rra rra pa rb pb rrb ra pa ra pa rra rra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb ra pb pb rra rb rb pa rrb rrb pb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 19
+Sequence:  pb ra pb rra pa rb pb rrb ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra ra pb rra rra pa
+Number of arguments: 5
+Number of operations: 6
+Sequence:  ra ra pb pb rra rra pa rb pb rrb pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  ra ra ra pb rra rra rra pa
+Number of arguments: 5
+Number of operations: 8
+Sequence:  rra
+Number of arguments: 5
+Number of operations: 1
+Sequence:  ra ra pb ra pb rra rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra ra pb pb rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra pb ra pb rra rra pa ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra pb ra ra pb rra rra rra pa ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pa rb pb rrb ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra ra pb ra pb rra rra rra pa rb pb rrb pa ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  ra ra ra pb pb rra rra rra pa rb pb rrb pa ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  ra ra ra pb pb rra rra rra pa ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  ra pb ra ra pb rra rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  ra pb ra pb rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra pb pb ra pb rra rra pa ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pb rb rb pa rrb rrb pb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb pb ra pb rra rb rb pa rrb rrb pb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 19
+Sequence:  pb pb pa rb pb rrb ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb pb ra pa ra pa rra rra
+Number of arguments: 5
+Number of operations: 8
+Sequence:  pb pb ra pb rra pa rb rb pb rb ra pa ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb ra ra pb rra rra pa ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 12
+Sequence:  pb ra ra ra pb rra rra rra pa ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  pb ra pb ra pb rra rra rb pa rrb rb rb pb rb pa ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 22
+Sequence:  pb pb pb pa rb rb pb rb ra pa ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 16
+Sequence:  pb ra ra pa rra rra
+Number of arguments: 5
+Number of operations: 6
+Sequence:  pb ra ra pb rra rra pa rb pb rrb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb ra pb rra pa rb pb rrb ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra ra ra pb rra rra rra ra pa ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  pb ra pb pb rra rb rb pa rrb rrb pb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 19
+Sequence:  pb ra pb rra pa rb pb rrb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pa rb pb rrb ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra ra pb ra pb rra rra rra pa rb pb rrb pa ra pa rra
+Number of arguments: 5
+Number of operations: 16
+Sequence:  ra ra pb pb rra rra pa ra pa rra
+Number of arguments: 5
+Number of operations: 10
+Sequence:  ra ra pb ra pb rra rra rra pa ra pa rra
+Number of arguments: 5
+Number of operations: 12
+Sequence:  ra ra ra pb pb rra rra rra pa ra pa rra
+Number of arguments: 5
+Number of operations: 12
+Sequence:  rra rra
+Number of arguments: 5
+Number of operations: 2
+Sequence:  pb pb ra pb rra rb rb pa rrb rrb pb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 19
+Sequence:  pb pb pa rb pb rrb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb pb pb rb rb pa rrb rrb pb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  ra pb ra pb pb rra rra pa ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb ra ra pb rra rra rb pa rrb rb rb pb rb pa ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 22
+Sequence:  pb pb pb rb pa rrb rb rb pb rb ra pa ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb ra ra pb rra rra pa ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb ra ra ra pb rra rra rra pa ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb pb ra pb rra pa rb rb pb rb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb pb pb pa rb rb pb rb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 16
+Sequence:  pb ra pb ra pb rra rra rb pa rrb rb rb pb rb pa ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 22
+Sequence:  pb pb pb ra pa ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb pb ra ra pb rra rra pa ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb pb ra pb rra pa rb rb pb rb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb pb pb pa rb rb pb rb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 16
+Sequence:  pb ra ra pb pb rra rra pa ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra pb rra ra ra pa ra pa ra ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb ra ra ra pb rra rra rra ra pa ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra ra ra pa ra ra
+Number of arguments: 5
+Number of operations: 7
+Sequence:  pb ra ra pb rra rra pa rb pb rrb ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb ra pb rra pa rb pb rrb ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra pb pb rra rb pa rrb rb rb pb rb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 20
+Sequence:  pb pb pb rb pa rrb rb rb pb rb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  ra ra pb pb pb rra rra pa ra pa ra pa rra rra
+Number of arguments: 5
+Number of operations: 14
+Sequence:  pb pb ra pb rra rb pa rrb rb rb pb rb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 20
+Sequence:  ra ra
+Number of arguments: 5
+Number of operations: 2
+Sequence:  pb pb pb rb pa rrb rb rb pb rb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 18
+Sequence:  pb pb ra ra pb rra rra rb pa rrb rb rb pb rb pa ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 22
+Sequence:  pb ra ra ra pb rra rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra ra pb rra rra pa ra ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb ra pb ra pb rra rra pa ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pb pa rb pb rrb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb ra pb rra pa rb pb rrb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb pb ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb pb ra ra pb rra rra pa ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pb ra pa ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb ra ra pb pb rra rra pa ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pb pa rb pb rrb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb ra pb rra pa rb pb rrb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 17
+Sequence:  pb pb ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb pb pb pb ra pa ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb pb pb ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb pb ra ra pb rra rra pa ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb pb pb ra pa ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb pb ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 9
+Sequence:  pb pb ra pb rra ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb ra ra ra pb rra rra rra ra pa ra ra ra pa ra
+Number of arguments: 5
+Number of operations: 15
+Sequence:  pb ra pb rra ra ra pa ra ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb ra pb pb rra ra ra pa ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  pb ra pb rra ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 11
+Sequence:  pb ra ra pb rra rra ra ra ra pa ra pa ra
+Number of arguments: 5
+Number of operations: 13
+Sequence:  ra
+Number of arguments: 5
+Number of operations: 1

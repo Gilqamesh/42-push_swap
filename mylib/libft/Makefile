@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edavid <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/08/04 22:55:49 by edavid           ###   ########.fr        #
+#    Updated: 2021/08/05 10:38:21 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ NAME = libft.a
 
 $(NAME) : *.c
 	$(CC) $(CFLAGS) -c $(sources)
-	ar rc $@ *.o
+	ar rc $(NAME) *.o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 .PHONY: clean bonus all fclean re

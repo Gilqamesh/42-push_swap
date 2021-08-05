@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 21:56:12 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 13:33:45 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,5 +186,10 @@ int						get_relative_position(t_push_swap *mystruct,
 int						ft_intarrcmp(t_INT_array *arr1, t_INT_array *arr2);
 // Returns 1 if 'ptr' as an address is already contained in 'lst', 0 otherwise
 int						ft_lstiscontained(t_list *lst, void *ptr);
+// With big stack
+char					*merge_LIS_groups2(t_stack *from, t_stack *to,
+								char pushed_to_stack,
+								t_stack *LIS_group, int cur_LIS_group_index,
+								t_stack *from_stack);
 
 #endif

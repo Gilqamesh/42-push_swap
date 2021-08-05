@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 20:25:05 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 11:35:46 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,22 @@ int	is_stack_sorted(t_stack *stack, int check_for_both_dirs,
 int position_of_head_matters)
 {
 	t_node_binary	*head;
+	t_node_binary	*min;
 	int				i;
 
 	if (!stack->n)
 		return (1);
 	head = stack->head;
 	if (!position_of_head_matters)
-		head = get_min_from_stack(stack);
+	{
+		min = get_min_from_stack(stack);
+		head = min;
+	}
 	i = 0;
 	while (++i < stack->n)
 	{
 		if (*(int *)head->content > *(int *)head->next->content)
 		{
-			i = -1;
 			if (!check_for_both_dirs)
 				return (0);
 			else
@@ -50,8 +53,11 @@ int position_of_head_matters)
 		}
 		head = head->next;
 	}
-	if (i != -1)
+	if (!check_for_both_dirs)
 		return (1);
+	head = stack->head;
+	if (!position_of_head_matters)
+		head = min;
 	i = 0;
 	while (++i < stack->n)
 	{
@@ -59,7 +65,7 @@ int position_of_head_matters)
 			return (0);
 		head = head->prev;
 	}
-	return (-1);
+	return (1);
 }
 
 /* Allocates and returns a t_INT_array that is the result of going over the

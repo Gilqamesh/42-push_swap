@@ -26,3 +26,4 @@ clean:
 fclean:
 	make clean
 	rm -rf $(NAME)
+	rm -f $(LIBFT) $(LIBPRINTF) $(LIBGNL)

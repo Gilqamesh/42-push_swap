@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_driver.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 00:14:41 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 17:17:37 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@ int	main(int argc, char **argv)
 		ft_error(&mystruct);
 	parse_input(&mystruct, argc, argv);
 	sequence = LIS_sort(&mystruct);
+	// sequence = LIS_sort2(&mystruct);
 	sequence_arr = ft_split(sequence, ' ');
 	i = -1;
 	while (sequence_arr[++i])
 		ft_printf("%s\n", sequence_arr[i]);
 	// ft_printf("Sequence: %s\n", sequence);
+	// ft_printf("Number of arguments: %d\n", mystruct.a.n);
 	// ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
 	// game_loop(&mystruct);
+	free(sequence);
+	i = -1;
+	while (sequence_arr[++i])
+		free(sequence_arr[i]);
+	free(sequence_arr);
+	// system("leaks push_swap");
 	return (0);
 }

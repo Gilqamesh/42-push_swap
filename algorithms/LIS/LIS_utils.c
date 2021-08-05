@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 22:45:19 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 15:52:52 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,8 @@ t_INT_array second_arr)
 			}
 		}
 	}
+	// Could choose between multiple unique LIS solutions
+	// Not sure how this affects the final n sequence of ops
 	result.size_elements =
 		table[first_arr.size_elements][second_arr.size_elements].arr->size_elements;
 	result.elements = malloc(result.size_elements * sizeof(int));
@@ -508,104 +510,102 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 
 // Currently operating under the assumption that both LIS are sorted from
 // the top.
-char	*merge_LIS_groups(t_push_swap *mystruct, t_stack *from_stack,
-t_stack *to_stack, char pushed_to_stack, t_stack *LIS_group,
-int cur_LIS_group_index)
-{
-	char			*result;
-	int				i;
-	int				reverse_needed;
-	t_node_binary	*min;
-	t_node_binary	*cur;
-	t_stack			tmp;
+// char	*merge_LIS_groups(t_push_swap *mystruct, t_stack *from_stack,
+// t_stack *to_stack, char pushed_to_stack, t_stack *LIS_group,
+// int cur_LIS_group_index)
+// {
+// 	char			*result;
+// 	int				i;
+// 	int				reverse_needed;
+// 	t_node_binary	*min;
+// 	t_node_binary	*cur;
+// 	t_stack			tmp;
 
-	result = ft_strdup("");
-	reverse_needed = 0;
-	while (from_stack->n)
-	{
-		// PRINT_HERE();
-		// ft_printf("%d\n", from_stack->n);
-		// if (get_relative_position(mystruct, *(int *)from_stack->head->content)
-		// 	< get_relative_position(mystruct, *(int *)to_stack->head->content))
-		// if (! *(int *)from_stack->head->content > *(int *)to_stack->head->content)
-		stack_push(from_stack, to_stack);
-		if (!is_stack_sorted(to_stack, 0, 0))
-		{
-			stack_push(to_stack, from_stack);
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" ra"));
-			else
-				result = ft_strjoin_free(result, ft_strdup(" rb"));
-			to_stack->head = to_stack->head->next;
-			reverse_needed++;
-		}
-		else
-		{
-			// ft_printf("hey\n");
-			// stack_push(from_stack, to_stack);
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" pa"));
-			else
-				result = ft_strjoin_free(result, ft_strdup(" pb"));
-		}
-	}
-	// If rotating to the next LIS would take less operations with
-	// Forward rotate rather than reverse, do that and also
-	// In that case we will have to swap our current merged LIS group
-	// with the bottom one as it'll reside there now.
-	min = get_min_from_stack(to_stack);
-	cur = to_stack->head;
-	i = -1;
-	while (++i < to_stack->n)
-	{
-		if (cur == min)
-			break ;
-		cur = cur->next;
-	}
-	// Idea: instead of just rotating, why not push the elements that can be
-	// pushed to 'from_stack' somehow in the meanwhile
-	if (reverse_needed <= to_stack->n / 2)
-	{
-		while (reverse_needed-- > 0)
-		{
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" rra"));
-			else
-				result = ft_strjoin_free(result, ft_strdup(" rrb"));
-			to_stack->head = to_stack->head->prev;
-		}
-	}
-	else
-	{
-		reverse_needed = to_stack->n - reverse_needed;
-		while (reverse_needed-- > 0)
-		{
-			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" ra"));
-			else
-				result = ft_strjoin_free(result, ft_strdup(" rb"));
-			to_stack->head = to_stack->head->next;
-		}
-		// PRINT_HERE();
-		// INSERTING FROM THE BOTTOM
-		tmp = LIS_group[cur_LIS_group_index];
-		i = cur_LIS_group_index + 1;
-		while (--i > 0)
-			LIS_group[i] = LIS_group[i - 1];
-		LIS_group[0] = tmp;
-	}
+// 	result = ft_strdup("");
+// 	while (from_stack->n)
+// 	{
+// 		// PRINT_HERE();
+// 		// ft_printf("%d\n", from_stack->n);
+// 		// if (get_relative_position(mystruct, *(int *)from_stack->head->content)
+// 		// 	< get_relative_position(mystruct, *(int *)to_stack->head->content))
+// 		// if (! *(int *)from_stack->head->content > *(int *)to_stack->head->content)
+// 		stack_push(from_stack, to_stack);
+// 		if (!is_stack_sorted(to_stack, 0, 0))
+// 		{
+// 			stack_push(to_stack, from_stack);
+// 			if (pushed_to_stack == 'a')
+// 				result = ft_strjoin_free(result, ft_strdup(" ra"));
+// 			else
+// 				result = ft_strjoin_free(result, ft_strdup(" rb"));
+// 			to_stack->head = to_stack->head->next;
+// 		}
+// 		else
+// 		{
+// 			// ft_printf("hey\n");
+// 			// stack_push(from_stack, to_stack);
+// 			if (pushed_to_stack == 'a')
+// 				result = ft_strjoin_free(result, ft_strdup(" pa"));
+// 			else
+// 				result = ft_strjoin_free(result, ft_strdup(" pb"));
+// 		}
+// 	}
+// 	// If rotating to the next LIS would take less operations with
+// 	// Forward rotate rather than reverse, do that and also
+// 	// In that case we will have to swap our current merged LIS group
+// 	// with the bottom one as it'll reside there now.
+// 	min = get_min_from_stack(to_stack);
+// 	cur = to_stack->head;
+// 	reverse_needed = -1;
+// 	while (++reverse_needed < to_stack->n)
+// 	{
+// 		if (cur == min)
+// 			break ;
+// 		cur = cur->next;
+// 	}
+// 	// Idea: instead of just rotating, why not push the elements that can be
+// 	// pushed to 'from_stack' somehow in the meanwhile
+// 	if (reverse_needed > to_stack->n / 2)
+// 	{
+// 		reverse_needed = to_stack->n - reverse_needed;
+// 		while (reverse_needed-- > 0)
+// 		{
+// 			if (pushed_to_stack == 'a')
+// 				result = ft_strjoin_free(result, ft_strdup(" rra"));
+// 			else
+// 				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+// 			to_stack->head = to_stack->head->prev;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		while (reverse_needed-- > 0)
+// 		{
+// 			if (pushed_to_stack == 'a')
+// 				result = ft_strjoin_free(result, ft_strdup(" ra"));
+// 			else
+// 				result = ft_strjoin_free(result, ft_strdup(" rb"));
+// 			to_stack->head = to_stack->head->next;
+// 		}
+// 		// PRINT_HERE();
+// 		// INSERTING FROM THE BOTTOM
+// 		tmp = LIS_group[cur_LIS_group_index];
+// 		i = cur_LIS_group_index + 1;
+// 		while (--i > 0)
+// 			LIS_group[i] = LIS_group[i - 1];
+// 		LIS_group[0] = tmp;
+// 	}
 	
 	
-	// while (reverse_needed--)
-	// {
-	// 	if (pushed_to_stack == 'a')
-	// 		result = ft_strjoin_free(result, ft_strdup(" rra"));
-	// 	else
-	// 		result = ft_strjoin_free(result, ft_strdup(" rrb"));
-	// 	to_stack->head = to_stack->head->prev;
-	// }
-	return (result);
-}
+// 	// while (reverse_needed--)
+// 	// {
+// 	// 	if (pushed_to_stack == 'a')
+// 	// 		result = ft_strjoin_free(result, ft_strdup(" rra"));
+// 	// 	else
+// 	// 		result = ft_strjoin_free(result, ft_strdup(" rrb"));
+// 	// 	to_stack->head = to_stack->head->prev;
+// 	// }
+// 	return (result);
+// }
 
 int	get_relative_position(t_push_swap *mystruct, int element)
 {
@@ -618,4 +618,83 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 			return (mystruct->relative_pos.number_pos[i].b);
 	}
 	return (-1);
+}
+
+// With big stack
+char	*merge_LIS_groups2(t_stack *from, t_stack *to, char pushed_to_stack,
+t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
+{
+	char	*result;
+	int		reverse_needed;
+	int		tmp;
+	int		i;
+
+	reverse_needed = 0;
+	i = LIS_group[cur_LIS_group_index].n;
+	result = ft_strdup("");
+	while (from_stack->n)
+	{
+		// PRINT_HERE();
+		if (*(int *)from->head->content < *(int *)to->head->content
+			|| !i)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" pa"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" pb"));
+			// PRINT_HERE();
+			stack_push(from, to);
+			from_stack->n--;
+			i++;
+			LIS_group[cur_LIS_group_index].n++;
+		}
+		else
+		{
+			// PRINT_HERE();
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" ra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rb"));
+			to->head = to->head->next;
+			reverse_needed++;
+			i--;
+		}
+		// PRINT_HERE();
+	}
+	if (reverse_needed <= LIS_group[cur_LIS_group_index].n / 2)
+	{
+		// PRINT_HERE();
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" rra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+			to->head = to->head->prev;
+		}
+		// PRINT_HERE();
+	}
+	else
+	{
+		reverse_needed = LIS_group[cur_LIS_group_index].n - reverse_needed;
+		// PRINT_HERE();
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'a')
+				result = ft_strjoin_free(result, ft_strdup(" ra"));
+			else
+				result = ft_strjoin_free(result, ft_strdup(" rb"));
+			to->head = to->head->next;
+		}
+		// PRINT_HERE();
+		// INSERTING FROM THE BOTTOM
+		// PRINT_HERE();
+		tmp = LIS_group[cur_LIS_group_index].n;
+		i = cur_LIS_group_index + 1;
+		while (--i > 0)
+			LIS_group[i].n = LIS_group[i - 1].n;
+		LIS_group[0].n = tmp;
+		// PRINT_HERE();
+	}
+	return (result);
 }

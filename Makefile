@@ -13,21 +13,14 @@ LIBPATH = ./$(LIBNAME)
 MYLIB = ./mylib/libmylib.a
 
 $(NAME): $(SRC:.c=.o) ft_driver.o $(LIBNAME)
-	ar -d $(LIBNAME) ft_checker.o tester.o
+	make library
+	-ar -d $(LIBNAME) ft_checker.o tester.o
 	ar -rs $(LIBNAME) ft_driver.o
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBPATH)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	ar -rs $(LIBNAME) $@
-$(LIBNAME):
-	$(MAKE) --directory=mylib
-	cp $(MYLIB) .
-	ar -x libmylib.a
-	ar -rs $(LIBNAME) *.o
-	ar -rs $(LIBNAME) ./stack_operations/*.o
-	ar -rs $(LIBNAME) ./algorithms/LIS/*.o
-	ar -rs $(LIBNAME) ./utils/*.o
-	rm -f libmylib.a
+$(LIBNAME): $(MYLIB)
 $(MYLIB):
 	$(MAKE) --directory=mylib
 .PHONY: clean fclean re all bonus library tester
@@ -39,17 +32,24 @@ clean:
 	cd algorithms/LIS && rm -f *.o
 fclean:
 	make clean
-	rm -f $(LIBNAME) 
+	rm -f $(LIBNAME)
 re:
 	make fclean
 	make all
 all: $(NAME)
 bonus: $(SRC:.c=.o) $(BONUSOBJ)
 	make library
-	ar -d $(LIBNAME) tester.o driver.o
-	ar -rs $(LIBNAME) checker_program/*.o
+	-ar -d $(LIBNAME) tester.o driver.o
+	ar -rs $(LIBNAME) $(BONUSOBJ)
 	$(CC) $(CFLAGS) -o $(BONUSNAME) $(LIBNAME)
-library: $(LIBNAME)
+library:
+	make $(LIBNAME)
+	cp $(MYLIB) .
+	ar -x libmylib.a
+	ar -rs $(LIBNAME) *.o
+	ar -rs $(LIBNAME) ./stack_operations/*.o
+	ar -rs $(LIBNAME) ./algorithms/LIS/*.o
+	ar -rs $(LIBNAME) ./utils/*.o
 tester: $(SRC:.c=.o) tester.o
 	rm -rf $(LIBNAME)
 	make library

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 00:14:14 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 17:17:05 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,49 +150,99 @@ char	*LIS_sort(t_push_swap *mystruct)
 	// ft_printf("B: ");
 	// for (int i = 0; i < n_of_B_LIS_groups; i++)
 	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
-	// ft_printf("Result seq_of_ops so far at line %d: %s\n", __LINE__, result_seq_of_ops);
 	// ft_printf("Merging:\n");
 	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
 	
+	// result_seq_of_ops = NULL;
 	// TODOs
 	// 1. Create a big stack with all the LIS on top of each other
 	// Have a merging algorithm that rotates the two stacks and inserts each
 	// Element to its right position
-	// PRINT_HERE();
+
+	t_stack			big_stack_A;
+	t_stack			big_stack_B;
+	t_node_binary	*bottom_A;
+	t_node_binary	*bottom_B;
+
+	bottom_A = A_LIS_groups[0].head->prev;
+	bottom_B = B_LIS_groups[0].head->prev;
+	big_stack_A.n = A_LIS_groups[0].n;
+	big_stack_B.n = B_LIS_groups[0].n;
+	A_LIS_groups[0].head->prev->next
+		= A_LIS_groups[n_of_A_LIS_groups - 1].head;
+	i = 0;
+	while (++i < n_of_A_LIS_groups)
+	{
+		big_stack_A.n += A_LIS_groups[i].n;
+		A_LIS_groups[i - 1].head->prev = A_LIS_groups[i].head->prev;
+		A_LIS_groups[i].head->prev->next = A_LIS_groups[i - 1].head;
+	}
+	A_LIS_groups[n_of_A_LIS_groups - 1].head->prev
+		= bottom_A;
+	big_stack_A.head = A_LIS_groups[n_of_A_LIS_groups - 1].head;
+
+	B_LIS_groups[0].head->prev->next
+		= B_LIS_groups[n_of_B_LIS_groups - 1].head;
+	i = 0;
+	while (++i < n_of_B_LIS_groups)
+	{
+		big_stack_B.n += B_LIS_groups[i].n;
+		B_LIS_groups[i - 1].head->prev = B_LIS_groups[i].head->prev;
+		B_LIS_groups[i].head->prev->next = B_LIS_groups[i - 1].head;
+	}
+	B_LIS_groups[n_of_B_LIS_groups - 1].head->prev
+		= bottom_B;
+	big_stack_B.head = B_LIS_groups[n_of_B_LIS_groups - 1].head;
+	
+	// ft_printf("Big stacks: \n");
+	// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n + 5);
+	// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n + 5);
+	// ft_printf("\n\n");
+	
+	//
 	if (left_at_stack == 'b')
 	{
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(mystruct, &B_LIS_groups[n_of_B_LIS_groups - 1],
-				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a',
-				A_LIS_groups, n_of_A_LIS_groups - 1));
+			merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
+				A_LIS_groups, n_of_A_LIS_groups - 1,
+				B_LIS_groups + n_of_B_LIS_groups - 1));
 		n_of_B_LIS_groups--;
-		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
-		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
+		// ft_printf("Big stacks: \n");
+		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
+		// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n);
+		// ft_printf("Seq after mergin from b to a: %s\n", result_seq_of_ops);
+		// ft_printf("\n\n");
 	}
-	// static int n_of_calls;
 	while (n_of_A_LIS_groups > 1)
 	{
-		// ft_printf("n_of_merges: %d\n", n_of_calls++);
+		// result_seq_of_ops = NULL;
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(mystruct, &A_LIS_groups[n_of_A_LIS_groups - 1],
-				&B_LIS_groups[n_of_B_LIS_groups - 1], 'b',
-				B_LIS_groups, n_of_B_LIS_groups - 1));
+			merge_LIS_groups2(&big_stack_A, &big_stack_B, 'b',
+				B_LIS_groups, n_of_B_LIS_groups - 1,
+				A_LIS_groups + n_of_A_LIS_groups - 1));
 		n_of_A_LIS_groups--;
-		// ft_printf("n_of_A, n_of_B groups: %d %d\n", n_of_A_LIS_groups, n_of_B_LIS_groups);
-		// ft_printf("After merging a to b: %s\n", result_seq_of_ops);
-		// ft_nodbinprint_int(B_LIS_groups[n_of_B_LIS_groups - 1].head, B_LIS_groups[n_of_B_LIS_groups - 1].n);
-		// ft_printf("n_of_merges: %d\n", n_of_calls++);
+		// ft_printf("Big stacks: \n");
+		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
+		// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n);
+		// ft_printf("Seq after mergin from a to b: %s\n", result_seq_of_ops);
+		// ft_printf("\n\n");
+		// result_seq_of_ops = NULL;
 		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups(mystruct, &B_LIS_groups[n_of_B_LIS_groups - 1],
-				&A_LIS_groups[n_of_A_LIS_groups - 1], 'a',
-				A_LIS_groups, n_of_A_LIS_groups - 1));
+			merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
+				A_LIS_groups, n_of_A_LIS_groups - 1,
+				B_LIS_groups + n_of_B_LIS_groups - 1));
 		n_of_B_LIS_groups--;
-		// ft_printf("After merging b to a: %s\n", result_seq_of_ops);
-		// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head, A_LIS_groups[n_of_A_LIS_groups - 1].n);
+		// ft_printf("Big stacks: \n");
+		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
+		// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n);
+		// ft_printf("Seq after mergin from b to a: %s\n", result_seq_of_ops);
+		// ft_printf("\n\n");
 	}
-	result_seq_of_ops = ft_strjoin(result_seq_of_ops,
-			construct_minimum_rotations_needed_ops(&A_LIS_groups[0], 'a'));
-	// ft_printf("Final seq_of_ops: %s\n", result_seq_of_ops);
+	// result_seq_of_ops = NULL;
+	result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
+		construct_minimum_rotations_needed_ops(&big_stack_A, 'a'));
+	ft_nodbinclear(&big_stack_A.head, ft_nodbindel, big_stack_A.n);
+	ft_nodbinclear(&big_stack_B.head, ft_nodbindel, big_stack_B.n);
 	return (result_seq_of_ops);
 }
 
