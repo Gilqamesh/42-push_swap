@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 15:52:52 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 22:28:24 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -697,4 +697,120 @@ t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 		// PRINT_HERE();
 	}
 	return (result);
+}
+
+char	*push_unordered_away(t_push_swap *mystruct, t_INT_array2 *ord_unord,
+char direction_from, char to_stack, char direction_to)
+{
+	int				cur_ord;
+	int				cur_unord;
+	t_node_binary	*result_lst;
+	char			*result_str;
+
+	result_lst = NULL;
+	cur_unord = 0;
+	cur_ord = 0;
+	if (to_stack == 'b')
+	while (cur_unord < ord_unord->arr2.size_elements)
+	{
+			if (*(int *)mystruct->a.head->content
+				== ord_unord->arr2.elements[cur_unord])
+			{
+				stack_pb(mystruct);
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
+				cur_unord++;
+			}
+			else
+			{
+				stack_ra(mystruct);
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
+			}
+	}
+	else
+	while (cur_ord < ord_unord->arr1.size_elements)
+	{
+		if (*(int *)mystruct->b.head->content
+			!= ord_unord->arr2.elements[cur_unord])
+		{
+			stack_pa(mystruct);
+			// not efficient
+			int ra_counter = 0;
+			int rra_counter = 0;
+			while (!is_stack_sorted(&mystruct->a, 0, 0))
+			{
+				stack_pb(mystruct);
+				stack_ra(mystruct);
+				ra_counter++;
+				// if (direction_to == 'u')
+				// {
+				// 	stack_ra(mystruct);
+				// 	ft_nodbinadd_front(&result_lst,
+				// 		ft_nodbinnew(ft_strdup(" ra")));
+				// }
+				// else
+				// {
+				// 	stack_rra(mystruct);
+				// 	ft_nodbinadd_front(&result_lst,
+				// 		ft_nodbinnew(ft_strdup(" rra")));
+				// }
+				stack_pa(mystruct);
+			}
+			stack_pb(mystruct);
+			int tmp = ra_counter;
+			while (tmp--)
+				stack_rra(mystruct);
+			stack_pa(mystruct);
+			while (!is_stack_sorted(&mystruct->a, 0, 0))
+			{
+				stack_pb(mystruct);
+				stack_rra(mystruct);
+				rra_counter++;
+				stack_pa(mystruct);
+			}
+			stack_pb(mystruct);
+			tmp = rra_counter;
+			while (tmp--)
+				stack_ra(mystruct);
+			if (ra_counter > rra_counter)
+			{
+				while (rra_counter--)
+				{
+					stack_rra(mystruct);
+					ft_nodbinadd_front(&result_lst,
+						ft_nodbinnew(ft_strdup(" rra")));
+				}
+			}
+			else
+			{
+				while (ra_counter--)
+				{
+					stack_ra(mystruct);
+					ft_nodbinadd_front(&result_lst,
+						ft_nodbinnew(ft_strdup(" ra")));
+				}
+			}
+			stack_pa(mystruct);
+			//
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pa")));
+			cur_ord++;
+		}
+		else
+		{
+			if (direction_from == 'u')
+			{
+				stack_rrb(mystruct);
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rrb")));
+			}
+			else
+			{
+				stack_rb(mystruct);
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rb")));
+			}
+		}
+	}
+	result_str = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_str);
 }

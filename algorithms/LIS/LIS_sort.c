@@ -6,45 +6,11 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 17:17:05 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 22:04:29 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../ft_push_swap.h"
-
-// char	*LIS_sort(t_push_swap *mystruct)
-// {
-// 	// Extraction of LIS groups
-// 	//
-// 	// Check if A is ordered or not.
-// 	//		- If its not, find the LIS of the list and pb the rest of the elements.
-// 	//		  Rotate or reverse rotate until head is either the lowest or highest
-// 	//		  element from the LIS.
-// 	//		- If it is, then rotate into right position and we are done.
-// 	// Check if the new list that was created from the previous step is ordered or not.
-// 	// 		- If it is not ordered, then do the same process we did at first, namely,
-// 	//		  find the LIS of the new list in B and pa away the rest. Also rotate or reverse
-// 	//		  rotate stack B until head is either the lowest or highest element of the LIS.
-// 	//		- If it is ordered, then go to merging step and start the merge from stack B.
-// 	// Check if the new list created in A is ordered or not.
-// 	//		- If not keep repeating the same process.
-// 	//		- If it is ordered, then go to merging step and start the merge from stack A.
-// 	// Eventually one of the new lists are going to be ordered and we move to the merging
-// 	// 		process and start the merge from the stack that we have finished creating the
-// 	//		new LIS group in.
-
-
-// 	// Merging of LIS groups
-// 	//
-// 	// At this point we should have LIS groups stacked on top of each other in stack A
-// 	// 		and in stack B
-// 	// During merging, start the merge from the stack where we left off the extraction of
-// 	//		LIS groups process.
-// 	// After a merge either Rotate or Reverse rotate the stack that we merged into,
-// 	//		whichever takes lower amounts of operation. It does not really matter which
-// 	//		LIS group we merge into each other as each LIS groups are ordered, meaning
-// 	//		this is a comparison sort algorithm.
-// }
 
 char	*LIS_sort(t_push_swap *mystruct)
 {
@@ -63,7 +29,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 	stack_tmp = (t_stack){(t_node_binary *)0, 0};
 	if (is_stack_sorted(&mystruct->a, 0, 0))
 	{
-		result_seq_of_ops = ft_strjoin(result_seq_of_ops,
+		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
 			construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
 		return (result_seq_of_ops);       
 	}
@@ -73,10 +39,8 @@ char	*LIS_sort(t_push_swap *mystruct)
 	n_of_B_LIS_groups = 0;
 	A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
 		* sizeof(*A_LIS_groups));
-	// PRINT_HERE();
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
-	// PRINT_HERE();
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1, -1);
 	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
@@ -84,8 +48,6 @@ char	*LIS_sort(t_push_swap *mystruct)
 		ft_strjoin_free(result_seq_of_ops,
 		construct_seq_of_operations(&mystruct->a, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
 	destroy_t_INT_array2(&LIS_ord_unord);
-	// Currently the last LIS (as well as the others) has to be sorted from
-	// the top.
 	if (is_stack_sorted(&stack_tmp, 0, 1))
 	{
 		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
@@ -99,13 +61,8 @@ char	*LIS_sort(t_push_swap *mystruct)
 		original = stack_tmp;
 		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
 			* sizeof(*B_LIS_groups));
-		// ft_nodbinprint_int(original.head, original.n);
-		// PRINT_HERE();
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
 			original.n);
-		// PRINT_HERE();
-		// PRINT_HERE();
-		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
 		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
 			&LIS_ord_unord.arr1, -1);
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
@@ -144,20 +101,16 @@ char	*LIS_sort(t_push_swap *mystruct)
 			break ;
 		}
 	}
-	// ft_printf("A: ");
-	// for (int i = 0; i < n_of_A_LIS_groups; i++)
-	// 	ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
-	// ft_printf("B: ");
-	// for (int i = 0; i < n_of_B_LIS_groups; i++)
-	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	ft_printf("A: ");
+	for (int i = 0; i < n_of_A_LIS_groups; i++)
+		ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	ft_printf("B: ");
+	for (int i = 0; i < n_of_B_LIS_groups; i++)
+		ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	// ft_printf("Merging:\n");
 	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
 	
 	// result_seq_of_ops = NULL;
-	// TODOs
-	// 1. Create a big stack with all the LIS on top of each other
-	// Have a merging algorithm that rotates the two stacks and inserts each
-	// Element to its right position
 
 	t_stack			big_stack_A;
 	t_stack			big_stack_B;
@@ -246,41 +199,83 @@ char	*LIS_sort(t_push_swap *mystruct)
 	return (result_seq_of_ops);
 }
 
-// pb
-// pb
-// ra
-// ra
-// pb
-// ra
-// ra
-// ra
-// pb
-// pb
-// pa
-// pa
-// pa
-// pb
-// ra
-// pa
-// pb
-// rb
-// pb
-// rb
-// rb
-// pb
-// ra
-// pa
-// ra
-// ra
-// pa
-// ra
-// ra
-// pa
-// ra
-// pa
-// ra
-// ra
-// ra
-// ra
-// pa
-// rra
+// Instead of stacking LIS groups on top of each other
+// 1. Find LIS, keep it in A and push rest in B
+// 2. Find LIS in B in both directions and insert it into A
+// Repeat 2. until B is empty
+char	*LIS_sort2(t_push_swap *mystruct)
+{
+	char			*result_seq_of_ops;
+	t_node_binary	*result_lst;
+	t_INT_array2	LIS_ord_unord;
+	t_INT_array2	LIS_ord_unord2;
+
+	result_lst = NULL;
+	if (is_stack_sorted(&mystruct->a, 0, 0))
+		return (construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
+	LIS_ord_unord = find_LIS_of_sublist(mystruct,
+		mystruct->a.head, mystruct->a.n);
+	// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
+	// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
+	ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+		push_unordered_away(mystruct, &LIS_ord_unord, 'd', 'b', 'd')));
+	// ft_printf("stack a and b:\n");
+	// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
+	// ft_nodbinprint_int(mystruct->b.head, mystruct->b.n);
+	// ft_printf("seq so far: %s\n", result_seq_of_ops);
+	// ft_printf("\n\n");
+	destroy_t_INT_array2(&LIS_ord_unord);
+	while (mystruct->b.n)
+	{
+		LIS_ord_unord = find_LIS_of_sublist(mystruct,
+			mystruct->b.head, mystruct->b.n);
+		LIS_ord_unord2 = find_LIS_of_sublist(mystruct,
+			mystruct->b.head, -mystruct->b.n);
+		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
+		// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
+		// ft_printintarr(LIS_ord_unord2.arr1.elements, LIS_ord_unord2.arr1.size_elements);
+		// ft_printintarr(LIS_ord_unord2.arr2.elements, LIS_ord_unord2.arr2.size_elements);
+		if (LIS_ord_unord.arr1.size_elements
+			> LIS_ord_unord2.arr1.size_elements)
+		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				push_unordered_away(mystruct, &LIS_ord_unord, 'd', 'a', 'u')));
+		else
+		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				push_unordered_away(mystruct, &LIS_ord_unord2, 'u', 'a', 'u')));
+		// ft_printf("stack a and b:\n");
+		// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
+		// ft_nodbinprint_int(mystruct->b.head, mystruct->b.n);
+		// ft_printf("seq so far: %s\n", result_seq_of_ops);
+		// ft_printf("\n\n");
+		destroy_t_INT_array2(&LIS_ord_unord2);
+		destroy_t_INT_array2(&LIS_ord_unord);
+		if (!mystruct->b.n)
+			break ;
+		LIS_ord_unord = find_LIS_of_sublist(mystruct,
+			mystruct->b.head, mystruct->b.n);
+		LIS_ord_unord2 = find_LIS_of_sublist(mystruct,
+			mystruct->b.head, -mystruct->b.n);
+		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
+		// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
+		if (LIS_ord_unord.arr1.size_elements
+			> LIS_ord_unord2.arr1.size_elements)
+		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				push_unordered_away(mystruct, &LIS_ord_unord, 'd', 'a', 'd')));
+		else
+		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				push_unordered_away(mystruct, &LIS_ord_unord2, 'u', 'a', 'd')));
+		// ft_printf("stack a and b:\n");
+		// ft_nodbinprint_int(mystruct->a.head, mystruct->a.n);
+		// ft_nodbinprint_int(mystruct->b.head, mystruct->b.n);
+		// ft_printf("seq so far: %s\n", result_seq_of_ops);
+		// ft_printf("\n\n");
+		destroy_t_INT_array2(&LIS_ord_unord2);
+		destroy_t_INT_array2(&LIS_ord_unord);
+	}
+	ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+		construct_minimum_rotations_needed_ops(&mystruct->a,
+		'a')));
+	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_seq_of_ops);
+}

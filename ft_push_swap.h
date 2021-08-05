@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 13:33:45 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/05 21:48:14 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,5 +191,16 @@ char					*merge_LIS_groups2(t_stack *from, t_stack *to,
 								char pushed_to_stack,
 								t_stack *LIS_group, int cur_LIS_group_index,
 								t_stack *from_stack);
+// Instead of stacking LIS groups on top of each other
+// 1. Find LIS, keep it in A and push rest in B
+// 2. Find LIS in B in both directions and insert it into A
+// Repeat 2. until B is empty
+char					*LIS_sort2(t_push_swap *mystruct);
+// Allocates and returns sequence of operation that is the result of
+// merging the non-LIS group from from_stack and inserting it into
+// to_stack
+char					*push_unordered_away(t_push_swap *mystruct,
+								t_INT_array2 *ord_unord, char direction_from,
+								char to_stack, char direction_to);
 
 #endif
