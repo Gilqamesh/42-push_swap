@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_op1_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 15:13:02 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 11:13:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 01:58:50 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,16 @@ void	push_helper(t_stack *pushed, t_stack *popped)
 	prev_head->next = pushed->head;
 	pushed->head->prev = prev_head;
 	pushed->head->next = cur_head;
+}
+
+void	stack_swap(t_stack *stack)
+{
+	if (stack->n < 2)
+		return ;
+	if (stack->n == 2)
+		stack->head = stack->head->next;
+	else if (stack->n == 3)
+		swap_helper_case_3(stack);
+	else
+		swap_helper_case_g3(stack);
 }

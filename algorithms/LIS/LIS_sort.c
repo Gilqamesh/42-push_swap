@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 22:04:29 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 02:26:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@ char	*LIS_sort(t_push_swap *mystruct)
 	t_stack			*B_LIS_groups;
 	int				n_of_B_LIS_groups;
 	char			*result_seq_of_ops;
+	t_node_binary	*result_lst;
 	t_INT_array2	LIS_ord_unord;
 	t_stack			stack_tmp;
 	t_stack			original;
 	int				i;
 	char			left_at_stack;
 
-	result_seq_of_ops = ft_strdup("");
+	result_lst = NULL;
 	stack_tmp = (t_stack){(t_node_binary *)0, 0};
 	if (is_stack_sorted(&mystruct->a, 0, 0))
-	{
-		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
-		return (result_seq_of_ops);       
-	}
+		return (construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));       
 	A_LIS_groups = (t_stack *)0;
 	B_LIS_groups = (t_stack *)0;
 	n_of_A_LIS_groups = 0;
@@ -44,9 +41,11 @@ char	*LIS_sort(t_push_swap *mystruct)
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1, -1);
 	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
-	result_seq_of_ops =
-		ft_strjoin_free(result_seq_of_ops,
-		construct_seq_of_operations(&mystruct->a, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
+	// ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
+	ft_nodbinadd_front(&result_lst,
+		ft_nodbinnew(construct_seq_of_operations(&mystruct->a,
+		 	&A_LIS_groups[n_of_A_LIS_groups - 1], 'b', &stack_tmp)));
+	// ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
 	destroy_t_INT_array2(&LIS_ord_unord);
 	if (is_stack_sorted(&stack_tmp, 0, 1))
 	{
@@ -66,9 +65,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
 			&LIS_ord_unord.arr1, -1);
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
-		result_seq_of_ops =
-			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &B_LIS_groups[n_of_B_LIS_groups - 1], 'a'));
+		ft_nodbinadd_front(&result_lst,
+			 ft_nodbinnew(construct_seq_of_operations(&original,
+			 	&B_LIS_groups[n_of_B_LIS_groups - 1], 'a', &stack_tmp)));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
 		if (is_stack_sorted(&stack_tmp, 0, 1))
@@ -87,9 +86,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 		construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 			&LIS_ord_unord.arr1, -1);
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
-		result_seq_of_ops =
-			ft_strjoin_free(result_seq_of_ops,
-			construct_seq_of_operations(&original, &A_LIS_groups[n_of_A_LIS_groups - 1], 'b'));
+		ft_nodbinadd_front(&result_lst,
+			ft_nodbinnew(construct_seq_of_operations(&original,
+			 	&A_LIS_groups[n_of_A_LIS_groups - 1], 'b', &stack_tmp)));
 		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
 		if (is_stack_sorted(&stack_tmp, 0, 1))
@@ -101,12 +100,12 @@ char	*LIS_sort(t_push_swap *mystruct)
 			break ;
 		}
 	}
-	ft_printf("A: ");
-	for (int i = 0; i < n_of_A_LIS_groups; i++)
-		ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
-	ft_printf("B: ");
-	for (int i = 0; i < n_of_B_LIS_groups; i++)
-		ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	// ft_printf("A: ");
+	// for (int i = 0; i < n_of_A_LIS_groups; i++)
+	// 	ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	// ft_printf("B: ");
+	// for (int i = 0; i < n_of_B_LIS_groups; i++)
+	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	// ft_printf("Merging:\n");
 	// ft_printf("Cur seq: %s\nN of ops: %d\n", result_seq_of_ops, ft_n_of_words_by_delim(result_seq_of_ops, ' '));
 	
@@ -155,10 +154,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 	//
 	if (left_at_stack == 'b')
 	{
-		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
-				A_LIS_groups, n_of_A_LIS_groups - 1,
-				B_LIS_groups + n_of_B_LIS_groups - 1));
+		ft_nodbinadd_front(&result_lst,
+			 ft_nodbinnew(merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
+			A_LIS_groups, n_of_A_LIS_groups - 1,
+			B_LIS_groups + n_of_B_LIS_groups - 1)));
 		n_of_B_LIS_groups--;
 		// ft_printf("Big stacks: \n");
 		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
@@ -169,10 +168,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 	while (n_of_A_LIS_groups > 1)
 	{
 		// result_seq_of_ops = NULL;
-		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups2(&big_stack_A, &big_stack_B, 'b',
-				B_LIS_groups, n_of_B_LIS_groups - 1,
-				A_LIS_groups + n_of_A_LIS_groups - 1));
+		ft_nodbinadd_front(&result_lst,
+			 ft_nodbinnew(merge_LIS_groups2(&big_stack_A, &big_stack_B, 'b',
+			B_LIS_groups, n_of_B_LIS_groups - 1,
+			A_LIS_groups + n_of_A_LIS_groups - 1)));
 		n_of_A_LIS_groups--;
 		// ft_printf("Big stacks: \n");
 		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
@@ -180,10 +179,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 		// ft_printf("Seq after mergin from a to b: %s\n", result_seq_of_ops);
 		// ft_printf("\n\n");
 		// result_seq_of_ops = NULL;
-		result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-			merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
-				A_LIS_groups, n_of_A_LIS_groups - 1,
-				B_LIS_groups + n_of_B_LIS_groups - 1));
+		ft_nodbinadd_front(&result_lst,
+			 ft_nodbinnew(merge_LIS_groups2(&big_stack_B, &big_stack_A, 'a',
+			A_LIS_groups, n_of_A_LIS_groups - 1,
+			B_LIS_groups + n_of_B_LIS_groups - 1)));
 		n_of_B_LIS_groups--;
 		// ft_printf("Big stacks: \n");
 		// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
@@ -192,8 +191,10 @@ char	*LIS_sort(t_push_swap *mystruct)
 		// ft_printf("\n\n");
 	}
 	// result_seq_of_ops = NULL;
-	result_seq_of_ops = ft_strjoin_free(result_seq_of_ops,
-		construct_minimum_rotations_needed_ops(&big_stack_A, 'a'));
+	ft_nodbinadd_front(&result_lst,
+		 ft_nodbinnew(construct_minimum_rotations_needed_ops(&big_stack_A, 'a')));
+	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	ft_nodbinclear(&big_stack_A.head, ft_nodbindel, big_stack_A.n);
 	ft_nodbinclear(&big_stack_B.head, ft_nodbindel, big_stack_B.n);
 	return (result_seq_of_ops);
@@ -257,6 +258,8 @@ char	*LIS_sort2(t_push_swap *mystruct)
 			mystruct->b.head, -mystruct->b.n);
 		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
 		// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
+		// ft_printintarr(LIS_ord_unord2.arr1.elements, LIS_ord_unord2.arr1.size_elements);
+		// ft_printintarr(LIS_ord_unord2.arr2.elements, LIS_ord_unord2.arr2.size_elements);
 		if (LIS_ord_unord.arr1.size_elements
 			> LIS_ord_unord2.arr1.size_elements)
 		ft_nodbinadd_front(&result_lst, ft_nodbinnew(

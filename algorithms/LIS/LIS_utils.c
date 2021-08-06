@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 22:28:24 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 02:27:10 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,48 +416,76 @@ int direction)
 }
 
 char	*construct_seq_of_operations(t_stack *original_stack, 
-t_stack *LIS, char pushed_to_stack)
+t_stack *LIS, char pushed_to_stack, t_stack *unordered_stack)
 {
 	t_node_binary	*cur_origin;
+	t_node_binary	*result_lst;
 	int				pushed_counter;
 	char			*result;
 	int				reverse_needed;
 
-	result = ft_strdup("");
 	cur_origin = original_stack->head;
 	pushed_counter = 0;
 	reverse_needed = 0;
-	while (pushed_counter != original_stack->n - LIS->n)
+	result_lst = NULL;
+	while (pushed_counter < original_stack->n - LIS->n)
 	{
 		if (*(int *)cur_origin->content == *(int *)LIS->head->content)
 		{
 			if (pushed_to_stack == 'b')
-				result = ft_strjoin_free(result, ft_strjoin(" r", "a"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" r", "a")));
 			else
-				result = ft_strjoin_free(result, ft_strjoin(" r", "b"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" r", "b")));
 			LIS->head = LIS->head->next;
 			reverse_needed++;
+			cur_origin = cur_origin->next;
 		}
 		else
 		{
 			if (pushed_to_stack == 'b')
-				result = ft_strjoin_free(result, ft_strjoin(" p", "b"));
+			{
+				// if (pushed_counter < original_stack->n - LIS->n - 1
+				// 	&& *(int *)cur_origin->next->content != *(int *)LIS->head->content
+				// 	&& *(int *)cur_origin->content < *(int *)cur_origin->next->content)
+				// {
+				// 	void *tmp = cur_origin->content;
+				// 	cur_origin->content = cur_origin->next->content;
+				// 	cur_origin->next->content = tmp;
+				// 	stack_swap(unordered_stack);
+				// 	ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" s", "a")));
+				// }
+				// else
+				{
+					pushed_counter++;
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" p", "b")));
+					unordered_stack->head = unordered_stack->head->prev;
+					cur_origin = cur_origin->next;
+				}
+			}
 			else
-				result = ft_strjoin_free(result, ft_strjoin(" p", "a"));
-			pushed_counter++;	
+			{
+				
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" p", "a")));
+				unordered_stack->head = unordered_stack->head->prev;
+				pushed_counter++;
+				cur_origin = cur_origin->next;
+			}
+			// pushed_counter++;
 		}
-		cur_origin = cur_origin->next;
+		// cur_origin = cur_origin->next;
 	}
 	// Maybe works with construct_minimum_rotations_needed_ops
 	// construct_minimum_rotations_needed_ops(LIS, pushed_to_stack == 'a' ? 'b' : 'a');
 	while (reverse_needed--)
 	{
 		if (pushed_to_stack == 'b')
-			result = ft_strjoin_free(result, ft_strjoin(" rr", "a"));
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" rr", "a")));
 		else
-			result = ft_strjoin_free(result, ft_strjoin(" rr", "b"));
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" rr", "b")));
 		LIS->head = LIS->head->prev;
 	}
+	result = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result);
 }
 
@@ -716,9 +744,35 @@ char direction_from, char to_stack, char direction_to)
 			if (*(int *)mystruct->a.head->content
 				== ord_unord->arr2.elements[cur_unord])
 			{
-				stack_pb(mystruct);
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
-				cur_unord++;
+				// if (mystruct->a.n > 1 && cur_unord < ord_unord->arr2.size_elements - 1
+				// 	&& *(int *)mystruct->a.head->next->content
+				// 	== ord_unord->arr2.elements[cur_unord + 1]
+				// 	&& *(int *)mystruct->a.head->content
+				// 	> *(int *)mystruct->a.head->next->content)
+				// {
+				// 	if (mystruct->b.n > 1 && *(int *)mystruct->b.head->content
+				// 		< *(int *)mystruct->b.head->next->content)
+				// 	{
+				// 		stack_ss(mystruct);
+				// 		ft_nodbinadd_front(&result_lst,
+				// 			ft_nodbinnew(ft_strdup(" ss")));
+				// 	}
+				// 	else
+				// 	{
+				// 		stack_sa(mystruct);
+				// 		ft_nodbinadd_front(&result_lst,
+				// 			ft_nodbinnew(ft_strdup(" sa")));
+				// 	}
+				// 	int	tmp = ord_unord->arr2.elements[cur_unord];
+				// 	ord_unord->arr2.elements[cur_unord] = ord_unord->arr2.elements[cur_unord + 1];
+				// 	ord_unord->arr2.elements[cur_unord + 1] = tmp;
+				// }
+				// else
+				{
+					stack_pb(mystruct);
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
+					cur_unord++;
+				}
 			}
 			else
 			{
@@ -801,13 +855,32 @@ char direction_from, char to_stack, char direction_to)
 				stack_rrb(mystruct);
 				ft_nodbinadd_front(&result_lst,
 					ft_nodbinnew(ft_strdup(" rrb")));
+				cur_unord++;
 			}
 			else
 			{
-				stack_rb(mystruct);
-				ft_nodbinadd_front(&result_lst,
-					ft_nodbinnew(ft_strdup(" rb")));
+				if (mystruct->b.n > 1 && cur_unord < ord_unord->arr2.size_elements - 1
+					&& *(int *)mystruct->b.head->next->content
+					== ord_unord->arr2.elements[cur_unord + 1]
+					&& *(int *)mystruct->b.head->content
+					> *(int *)mystruct->b.head->next->content)
+				{
+					// int	tmp = ord_unord->arr2.elements[cur_unord];
+					// ord_unord->arr2.elements[cur_unord] = ord_unord->arr2.elements[cur_unord + 1];
+					// ord_unord->arr2.elements[cur_unord + 1] = tmp;
+					stack_sb(mystruct);
+					ft_nodbinadd_front(&result_lst,
+						ft_nodbinnew(ft_strdup(" sb")));
+				}
+				else
+				{
+					stack_rb(mystruct);
+					ft_nodbinadd_front(&result_lst,
+						ft_nodbinnew(ft_strdup(" rb")));
+					cur_unord++;
+				}
 			}
+			// cur_unord++;
 		}
 	}
 	result_str = ft_nodbinstrjoin_from_back(result_lst);

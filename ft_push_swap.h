@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 21:48:14 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 02:04:19 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,8 @@ void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr,
 // Second argument is the stack constructed from the LIS
 // As a side effect rotate LIS until all elements are pushed from original
 char			*construct_seq_of_operations(t_stack *original_stack, 
-								t_stack *LIS, char pushed_to_stack);
+								t_stack *LIS, char pushed_to_stack,
+								t_stack *unordered_stack);
 // Allocates and returns a t_INT_array that is the result of going over the
 // t_list from *head
 t_INT_array		construct_intarr_from_lst(t_list *lst);
@@ -202,5 +203,7 @@ char					*LIS_sort2(t_push_swap *mystruct);
 char					*push_unordered_away(t_push_swap *mystruct,
 								t_INT_array2 *ord_unord, char direction_from,
 								char to_stack, char direction_to);
+// Generic swap operation on a stack
+void					stack_swap(t_stack *stack);
 
 #endif
