@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 02:27:10 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 23:56:19 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int n)
 	second_arr.elements = malloc((n > 0 ? n : -n) * sizeof(*second_arr.elements));
 	helper = malloc((n > 0 ? n : -n) * sizeof(*helper));
 	second_arr.size_elements = n > 0 ? n : -n;
-	// PRINT_HERE();
 	if (!first_arr.elements || !second_arr.elements || !helper)
 		ft_error(mystruct);
 	cur = head;
@@ -48,7 +47,6 @@ int n)
 	}
 	else
 	{
-		// PRINT_HERE();
 		while (++i < n)
 		{
 			first_arr.elements[i] = *(int *)cur->content;
@@ -56,22 +54,10 @@ int n)
 			cur = cur->next;
 		}
 	}
-	// ft_printf("n: %d print_arr: ", n);
-	// ft_printintarr(first_arr.elements, first_arr.size_elements);
-	// PRINT_HERE();
 	ft_merge_sort_int(second_arr.elements, (t_2_int){0, ft_abs_int(n)}, helper);
 	free(helper);
-	// Find LCS of arr and sorted. It will be the LIS
-	// PRINT_HERE();
 	t_INT_array	LIS;
-	// ft_printintarr(first_arr.elements, first_arr.size_elements);
-	// ft_printintarr(second_arr.elements, second_arr.size_elements);
-	// PRINT_HERE();
 	LIS = find_LCS_of_two_sequences(first_arr, second_arr);
-	// ft_printf("seq size: %d %d\n", first_arr.size_elements, second_arr.size_elements);
-	// ft_printf("LIS.size_elements: %d\n", LIS.size_elements);
-	// ft_printintarr(LIS.elements, LIS.size_elements);
-	// PRINT_HERE();
 	unordered.size_elements = 0;
 	unordered.elements = malloc((first_arr.size_elements - LIS.size_elements)
 		* sizeof(int));
@@ -94,8 +80,6 @@ int n)
 	}
 	free(first_arr.elements);
 	free(second_arr.elements);
-	// ft_printintarr(LIS.elements, LIS.size_elements);
-	// ft_printintarr(unordered.elements, unordered.size_elements);
 	return ((t_INT_array2){LIS, unordered});
 }
 
@@ -159,14 +143,6 @@ t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 			compared_value = ft_intarrcmp(&ARR1->arr[i], &ARR2->arr[j]);
 			if (!compared_value)
 			{
-				// LCS_group_arr[LCS_index].elements
-				// 	= malloc(ARR1->arr[i].size_elements * sizeof(int));
-				// LCS_group_arr[LCS_index].size_elements
-				// 	= ARR1->arr[i].size_elements;
-				// ft_memcpy(LCS_group_arr[LCS_index].elements,
-				// 	ARR1->arr[i].elements,
-				// 	ARR1->arr[i].size_elements * sizeof(int));
-
 				LCS_group_arr[LCS_index].size_elements
 					= ARR1->arr[i].size_elements;
 				LCS_group_arr[LCS_index].elements
@@ -176,14 +152,6 @@ t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 			}
 			else if (compared_value < 0)
 			{
-				// LCS_group_arr[LCS_index].elements
-				// 	= malloc(ARR1->arr[i].size_elements * sizeof(int));
-				// LCS_group_arr[LCS_index].size_elements
-				// 	= ARR1->arr[i].size_elements;
-				// ft_memcpy(LCS_group_arr[LCS_index].elements,
-				// 	ARR1->arr[i].elements,
-				// 	ARR1->arr[i].size_elements * sizeof(int));
-
 				LCS_group_arr[LCS_index].size_elements
 					= ARR1->arr[i].size_elements;
 				LCS_group_arr[LCS_index].elements
@@ -192,14 +160,6 @@ t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 			}
 			else
 			{
-				// LCS_group_arr[LCS_index].elements
-				// 	= malloc(ARR2->arr[j].size_elements * sizeof(int));
-				// LCS_group_arr[LCS_index].size_elements
-				// 	= ARR2->arr[j].size_elements;
-				// ft_memcpy(LCS_group_arr[LCS_index].elements,
-				// 	ARR2->arr[j].elements,
-				// 	ARR2->arr[j].size_elements * sizeof(int));
-
 				LCS_group_arr[LCS_index].size_elements
 					= ARR2->arr[j].size_elements;
 				LCS_group_arr[LCS_index].elements
@@ -209,14 +169,6 @@ t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 		}
 		else if (i < ARR1->size_arr)
 		{
-			// LCS_group_arr[LCS_index].elements
-			// 	= malloc(ARR1->arr[i].size_elements * sizeof(int));
-			// LCS_group_arr[LCS_index].size_elements
-			// 	= ARR1->arr[i].size_elements;
-			// ft_memcpy(LCS_group_arr[LCS_index].elements,
-			// 	ARR1->arr[i].elements,
-			// 	ARR1->arr[i].size_elements * sizeof(int));
-
 			LCS_group_arr[LCS_index].size_elements
 				= ARR1->arr[i].size_elements;
 			LCS_group_arr[LCS_index].elements
@@ -225,13 +177,6 @@ t_INT_array_of_arrays *ARR2, t_list **alloced_ptrs)
 		}
 		else
 		{
-			// LCS_group_arr[LCS_index].elements
-			// 	= malloc(ARR2->arr[j].size_elements * sizeof(int));
-			// LCS_group_arr[LCS_index].size_elements
-			// 	= ARR2->arr[j].size_elements;
-			// ft_memcpy(LCS_group_arr[LCS_index].elements,
-			// 	ARR2->arr[j].elements,
-			// 	ARR2->arr[j].size_elements * sizeof(int));
 			LCS_group_arr[LCS_index].size_elements
 				= ARR2->arr[j].size_elements;
 			LCS_group_arr[LCS_index].elements
@@ -416,75 +361,101 @@ int direction)
 }
 
 char	*construct_seq_of_operations(t_stack *original_stack, 
-t_stack *LIS, char pushed_to_stack, t_stack *unordered_stack)
+t_stack *LIS, char pushed_to_stack, t_stack *unordered_stack,
+t_stack *LIS_group, int cur_LIS_group_index)
 {
-	t_node_binary	*cur_origin;
 	t_node_binary	*result_lst;
 	int				pushed_counter;
 	char			*result;
 	int				reverse_needed;
+	int				condition;
+	int				tmp;
+	int				i;
+	t_node_binary	*tmpptr;
 
-	cur_origin = original_stack->head;
+	// ft_printf("In construct_seq_of_operations:\n");
+	// ft_nodbinprint_int(original_stack->head, original_stack->n);
+	// ft_nodbinprint_int(LIS->head, LIS->n);
+	// ft_nodbinprint_int(unordered_stack->head, unordered_stack->n);
+	// ft_printf("\n");
 	pushed_counter = 0;
 	reverse_needed = 0;
 	result_lst = NULL;
-	while (pushed_counter < original_stack->n - LIS->n)
+	condition = original_stack->n - LIS->n;
+	while (pushed_counter < condition)
 	{
-		if (*(int *)cur_origin->content == *(int *)LIS->head->content)
+		if (*(int *)original_stack->head->content == *(int *)LIS->head->content)
 		{
 			if (pushed_to_stack == 'b')
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" r", "a")));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
 			else
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" r", "b")));
-			LIS->head = LIS->head->next;
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
+			stack_rotate(LIS);
+			stack_rotate(original_stack);
 			reverse_needed++;
-			cur_origin = cur_origin->next;
 		}
 		else
 		{
-			if (pushed_to_stack == 'b')
+			if (pushed_counter < condition - 1
+				&& *(int *)original_stack->head->next->content != *(int *)LIS->head->content
+				&& *(int *)original_stack->head->content < *(int *)original_stack->head->next->content)
 			{
-				// if (pushed_counter < original_stack->n - LIS->n - 1
-				// 	&& *(int *)cur_origin->next->content != *(int *)LIS->head->content
-				// 	&& *(int *)cur_origin->content < *(int *)cur_origin->next->content)
-				// {
-				// 	void *tmp = cur_origin->content;
-				// 	cur_origin->content = cur_origin->next->content;
-				// 	cur_origin->next->content = tmp;
-				// 	stack_swap(unordered_stack);
-				// 	ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" s", "a")));
-				// }
-				// else
-				{
-					pushed_counter++;
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" p", "b")));
-					unordered_stack->head = unordered_stack->head->prev;
-					cur_origin = cur_origin->next;
-				}
+				stack_swap(original_stack);
+				if (pushed_to_stack == 'b')
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sa")));
+				else
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sb")));
 			}
 			else
 			{
-				
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" p", "a")));
-				unordered_stack->head = unordered_stack->head->prev;
+				if (pushed_to_stack == 'b')
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
+				else
+					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pa")));
+				stack_push(original_stack, unordered_stack);
 				pushed_counter++;
-				cur_origin = cur_origin->next;
 			}
-			// pushed_counter++;
 		}
-		// cur_origin = cur_origin->next;
 	}
-	// Maybe works with construct_minimum_rotations_needed_ops
-	// construct_minimum_rotations_needed_ops(LIS, pushed_to_stack == 'a' ? 'b' : 'a');
-	while (reverse_needed--)
+	// TODO:
+	// find min path between r and rr maybe
+	if (reverse_needed <= LIS->n / 2)
 	{
-		if (pushed_to_stack == 'b')
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" rr", "a")));
-		else
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strjoin(" rr", "b")));
-		LIS->head = LIS->head->prev;
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'b')
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
+			else
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
+			stack_revrotate(original_stack);
+			stack_revrotate(LIS);
+		}
+	}
+	else
+	{
+		reverse_needed = LIS->n - reverse_needed;
+		while (reverse_needed-- > 0)
+		{
+			if (pushed_to_stack == 'b')
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
+			else
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
+			stack_rotate(original_stack);
+			stack_rotate(LIS);
+		}
+		tmp = LIS_group[cur_LIS_group_index].n;
+		tmpptr = LIS_group[cur_LIS_group_index].head;
+		i = cur_LIS_group_index + 1;
+		while (--i > 0)
+		{
+			LIS_group[i].n = LIS_group[i - 1].n;
+			LIS_group[i].head = LIS_group[i - 1].head;
+		}
+		LIS_group[0].n = tmp;
+		LIS_group[0].head = tmpptr;
 	}
 	result = ft_nodbinstrjoin_from_back(result_lst);
+	// ft_printf("Result in construct_seq_of_operations: %s\n", result);
 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result);
 }
@@ -494,6 +465,7 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 	char			*result;
 	t_node_binary	*min;
 	t_node_binary	*cur;
+	t_node_binary	*result_lst;
 	int				i;
 
 	min = stack->head;
@@ -513,26 +485,28 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 			break ;
 		cur = cur->next;
 	}
-	result = ft_strdup("");
+	result_lst = NULL;
 	if (i > stack->n / 2)
 	{
 		i = stack->n - i;
 		if (stack_name == 'a')
 			while (i-- > 0)
-				result = ft_strjoin_free(result, ft_strdup(" rra"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
 		else
 			while (i-- > 0)
-				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
 	}
 	else
 	{
 		if (stack_name == 'a')
 			while (i-- > 0)
-				result = ft_strjoin_free(result, ft_strdup(" ra"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
 		else
 			while (i-- > 0)
-				result = ft_strjoin_free(result, ft_strdup(" rb"));
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
 	}
+	result = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result);
 }
 
@@ -652,25 +626,30 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 char	*merge_LIS_groups2(t_stack *from, t_stack *to, char pushed_to_stack,
 t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 {
-	char	*result;
-	int		reverse_needed;
-	int		tmp;
-	int		i;
+	char			*result;
+	int				reverse_needed;
+	int				tmp;
+	int				i;
+	t_node_binary	*result_lst;
 
+	// ft_printf("Merge_LIS_groups2\n");
+	// ft_nodbinprint_int(from->head, from->n);
+	// ft_nodbinprint_int(to->head, to->n);
+	// ft_printf("\n");
 	reverse_needed = 0;
 	i = LIS_group[cur_LIS_group_index].n;
-	result = ft_strdup("");
+	result_lst = NULL;
 	while (from_stack->n)
 	{
-		// PRINT_HERE();
 		if (*(int *)from->head->content < *(int *)to->head->content
 			|| !i)
 		{
 			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" pa"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" pa")));
 			else
-				result = ft_strjoin_free(result, ft_strdup(" pb"));
-			// PRINT_HERE();
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" pb")));
 			stack_push(from, to);
 			from_stack->n--;
 			i++;
@@ -678,52 +657,52 @@ t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 		}
 		else
 		{
-			// PRINT_HERE();
 			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" ra"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" ra")));
 			else
-				result = ft_strjoin_free(result, ft_strdup(" rb"));
-			to->head = to->head->next;
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rb")));
+			stack_rotate(to);
 			reverse_needed++;
 			i--;
 		}
-		// PRINT_HERE();
 	}
 	if (reverse_needed <= LIS_group[cur_LIS_group_index].n / 2)
 	{
-		// PRINT_HERE();
 		while (reverse_needed-- > 0)
 		{
 			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" rra"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rra")));
 			else
-				result = ft_strjoin_free(result, ft_strdup(" rrb"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rrb")));
 			to->head = to->head->prev;
 		}
-		// PRINT_HERE();
 	}
 	else
 	{
 		reverse_needed = LIS_group[cur_LIS_group_index].n - reverse_needed;
-		// PRINT_HERE();
 		while (reverse_needed-- > 0)
 		{
 			if (pushed_to_stack == 'a')
-				result = ft_strjoin_free(result, ft_strdup(" ra"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" ra")));
 			else
-				result = ft_strjoin_free(result, ft_strdup(" rb"));
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rb")));
 			to->head = to->head->next;
 		}
-		// PRINT_HERE();
 		// INSERTING FROM THE BOTTOM
-		// PRINT_HERE();
 		tmp = LIS_group[cur_LIS_group_index].n;
 		i = cur_LIS_group_index + 1;
 		while (--i > 0)
 			LIS_group[i].n = LIS_group[i - 1].n;
 		LIS_group[0].n = tmp;
-		// PRINT_HERE();
 	}
+	result = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result);
 }
 

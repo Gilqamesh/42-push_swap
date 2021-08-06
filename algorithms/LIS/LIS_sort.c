@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 02:26:20 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 23:52:04 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*LIS_sort(t_push_swap *mystruct)
 	char			left_at_stack;
 
 	result_lst = NULL;
-	stack_tmp = (t_stack){(t_node_binary *)0, 0};
 	if (is_stack_sorted(&mystruct->a, 0, 0))
 		return (construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));       
 	A_LIS_groups = (t_stack *)0;
@@ -38,64 +37,60 @@ char	*LIS_sort(t_push_swap *mystruct)
 		* sizeof(*A_LIS_groups));
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 		mystruct->a.head, mystruct->a.n);
+	// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
 	construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
 		&LIS_ord_unord.arr1, -1);
-	construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
 	// ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
+	B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
+			* sizeof(*B_LIS_groups));
+	B_LIS_groups[n_of_B_LIS_groups - 1].head = NULL;
+	B_LIS_groups[n_of_B_LIS_groups - 1].n = 0;
 	ft_nodbinadd_front(&result_lst,
 		ft_nodbinnew(construct_seq_of_operations(&mystruct->a,
-		 	&A_LIS_groups[n_of_A_LIS_groups - 1], 'b', &stack_tmp)));
-	// ft_nodbinprint_int(stack_tmp.head, stack_tmp.n);
+		 	&A_LIS_groups[n_of_A_LIS_groups - 1], 'b',
+			&B_LIS_groups[n_of_B_LIS_groups - 1],
+			A_LIS_groups, n_of_A_LIS_groups - 1)));
+	// ft_nodbinprint_int(A_LIS_groups[n_of_A_LIS_groups - 1].head,
+	// 	A_LIS_groups[n_of_A_LIS_groups - 1].n);
 	destroy_t_INT_array2(&LIS_ord_unord);
-	if (is_stack_sorted(&stack_tmp, 0, 1))
-	{
-		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
-			* sizeof(*B_LIS_groups));
-		B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
+	if (is_stack_sorted(&B_LIS_groups[n_of_B_LIS_groups - 1], 0, 1))
 		left_at_stack = 'b';
-	}
 	else
 	while (1)
 	{
-		original = stack_tmp;
-		B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
-			* sizeof(*B_LIS_groups));
-		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
-			original.n);
-		construct_stack_from_arr(&B_LIS_groups[n_of_B_LIS_groups - 1],
-			&LIS_ord_unord.arr1, -1);
-		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
+		LIS_ord_unord = find_LIS_of_sublist(mystruct, B_LIS_groups[n_of_B_LIS_groups - 1].head,
+			B_LIS_groups[n_of_B_LIS_groups - 1].n);
+		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr1, -1);
+		A_LIS_groups = realloc(A_LIS_groups, ++n_of_A_LIS_groups
+			* sizeof(*A_LIS_groups));
+		A_LIS_groups[n_of_A_LIS_groups - 1].head = NULL;
+		A_LIS_groups[n_of_A_LIS_groups - 1].n = 0;
 		ft_nodbinadd_front(&result_lst,
-			 ft_nodbinnew(construct_seq_of_operations(&original,
-			 	&B_LIS_groups[n_of_B_LIS_groups - 1], 'a', &stack_tmp)));
-		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
+			 ft_nodbinnew(construct_seq_of_operations(&B_LIS_groups[n_of_B_LIS_groups - 1],
+			 	&stack_tmp, 'a', &A_LIS_groups[n_of_A_LIS_groups - 1],
+				B_LIS_groups, n_of_B_LIS_groups - 1)));
+		ft_nodbinclear(&stack_tmp.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&stack_tmp, 0, 1))
+		if (is_stack_sorted(&A_LIS_groups[n_of_A_LIS_groups - 1], 0, 1))
 		{
-			A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
-				* sizeof(*A_LIS_groups));
-			A_LIS_groups[n_of_A_LIS_groups - 1] = stack_tmp;
 			left_at_stack = 'a';
 			break ;
 		}
-		original = stack_tmp;
-		A_LIS_groups = ft_realloc(A_LIS_groups, ++n_of_A_LIS_groups
-			* sizeof(*A_LIS_groups));
-		LIS_ord_unord = find_LIS_of_sublist(mystruct, original.head,
-			original.n);
-		construct_stack_from_arr(&A_LIS_groups[n_of_A_LIS_groups - 1],
-			&LIS_ord_unord.arr1, -1);
-		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr2, 1);
+		LIS_ord_unord = find_LIS_of_sublist(mystruct, A_LIS_groups[n_of_A_LIS_groups - 1].head,
+			A_LIS_groups[n_of_A_LIS_groups - 1].n);
+		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr1,-1);
+		B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
+			* sizeof(*B_LIS_groups));
+		B_LIS_groups[n_of_B_LIS_groups - 1].head = NULL;
+		B_LIS_groups[n_of_B_LIS_groups - 1].n = 0;
 		ft_nodbinadd_front(&result_lst,
-			ft_nodbinnew(construct_seq_of_operations(&original,
-			 	&A_LIS_groups[n_of_A_LIS_groups - 1], 'b', &stack_tmp)));
-		ft_nodbinclear(&original.head, ft_nodbindel, stack_tmp.n);
+			ft_nodbinnew(construct_seq_of_operations(&A_LIS_groups[n_of_A_LIS_groups - 1],
+			 	&stack_tmp, 'b', &B_LIS_groups[n_of_B_LIS_groups - 1],
+				A_LIS_groups, n_of_A_LIS_groups - 1)));
+		ft_nodbinclear(&stack_tmp.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&stack_tmp, 0, 1))
+		if (is_stack_sorted(&B_LIS_groups[n_of_B_LIS_groups - 1], 0, 1))
 		{
-			B_LIS_groups = ft_realloc(B_LIS_groups, ++n_of_B_LIS_groups
-				* sizeof(*B_LIS_groups));
-			B_LIS_groups[n_of_B_LIS_groups - 1] = stack_tmp;
 			left_at_stack = 'b';
 			break ;
 		}
@@ -147,8 +142,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 	big_stack_B.head = B_LIS_groups[n_of_B_LIS_groups - 1].head;
 	
 	// ft_printf("Big stacks: \n");
-	// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n + 5);
-	// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n + 5);
+	// ft_nodbinprint_int(big_stack_A.head, big_stack_A.n);
+	// ft_nodbinprint_int(big_stack_B.head, big_stack_B.n);
+	// ft_printf("Left at stack: %c\n", left_at_stack);
 	// ft_printf("\n\n");
 	
 	//
@@ -192,7 +188,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 	}
 	// result_seq_of_ops = NULL;
 	ft_nodbinadd_front(&result_lst,
-		 ft_nodbinnew(construct_minimum_rotations_needed_ops(&big_stack_A, 'a')));
+		ft_nodbinnew(construct_minimum_rotations_needed_ops(&big_stack_A, 'a')));
 	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	ft_nodbinclear(&big_stack_A.head, ft_nodbindel, big_stack_A.n);

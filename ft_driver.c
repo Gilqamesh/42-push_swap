@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 02:26:14 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/07 00:00:45 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,23 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		ft_error(&mystruct);
 	parse_input(&mystruct, argc, argv);
-	sequence = LIS_sort(&mystruct);
+	// PRINT_HERE();
 	// sequence = LIS_sort2(&mystruct);
+	sequence = LIS_sort(&mystruct);
 	sequence_arr = ft_split(sequence, ' ');
+	crunch_sequence(sequence_arr);
 	i = -1;
-	while (sequence_arr[++i])
-		ft_printf("%s\n", sequence_arr[i]);
-	// ft_printf("Sequence: %s\n", sequence);
-	// ft_printf("Number of arguments: %d\n", mystruct.a.n);
-	// ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
+	// while (sequence_arr[++i])
+	// 	ft_printf("%s\n", sequence_arr[i]);
+	ft_printf("Sequence: %s\n", sequence);
+	ft_printf("Number of arguments: %d\n", mystruct.a.n);
+	ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
 	// game_loop(&mystruct);
 	free(sequence);
-	i = -1;
-	while (sequence_arr[++i])
-		free(sequence_arr[i]);
-	free(sequence_arr);
+	// i = -1;
+	// while (sequence_arr[++i])
+	// 	free(sequence_arr[i]);
+	// free(sequence_arr);
 	// system("leaks push_swap");
 	return (0);
 }

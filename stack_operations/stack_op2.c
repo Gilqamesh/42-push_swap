@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_op2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 18:20:23 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 14:10:40 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 20:21:58 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,16 @@ void	stack_rr(t_push_swap *mystruct)
 {
 	stack_ra(mystruct);
 	stack_rb(mystruct);
+}
+
+void	stack_rotate(t_stack *stack)
+{
+	if (stack->n > 1)
+		stack->head = stack->head->next;
+}
+
+void	stack_revrotate(t_stack *stack)
+{
+	if (stack->n > 1)
+		stack->head = stack->head->prev;
 }

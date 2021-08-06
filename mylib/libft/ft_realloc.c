@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:29:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 19:38:18 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/06 21:26:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_realloc(void *src, size_t size)
 {
 	void	*new;
 
-	new = malloc(size);
+	new = ft_calloc(1, size);
 	if (!new)
 	{
 		if (src)
@@ -26,6 +26,7 @@ void	*ft_realloc(void *src, size_t size)
 	}
 	if (!src)
 		return (new);
+	// Wrong
 	ft_memmove(new, src, size);
 	free(src);
 	return (new);

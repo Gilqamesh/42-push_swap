@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/05 11:35:46 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/07 01:20:51 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,9 @@ int	ft_lstiscontained(t_list *lst, void *ptr)
 		cur = cur->next;
 	}
 	return (0);
+}
+
+void	crunch_sequence(char **sequence_arr)
+{
+	t_list	*operation_flags;
 }
