@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/07 00:00:45 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/07 19:23:40 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	main(int argc, char **argv)
 	// sequence = LIS_sort2(&mystruct);
 	sequence = LIS_sort(&mystruct);
 	sequence_arr = ft_split(sequence, ' ');
-	crunch_sequence(sequence_arr);
+	free(sequence);
+	sequence = crunch_sequence(sequence_arr);
 	i = -1;
 	// while (sequence_arr[++i])
 	// 	ft_printf("%s\n", sequence_arr[i]);

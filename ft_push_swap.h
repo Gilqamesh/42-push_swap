@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/07 00:52:52 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/07 21:21:49 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ typedef struct s_push_swap
 	t_list			*sorted;
 	t_relative_pos	relative_pos;
 }	t_push_swap;
+
+typedef struct s_lststr
+{
+	char			**content;
+	struct s_lststr	*next;
+}	t_lststr;
 
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
 void			ft_error(t_push_swap *mystruct);
@@ -211,6 +217,16 @@ void					stack_rotate(t_stack *stack);
 // Generic reverse rotate operation on a stack
 void					stack_revrotate(t_stack *stack);
 // 
-void					crunch_sequence(char **sequence_arr);
+char					*crunch_sequence(char **sequence_arr);
+//
+void					ft_lststradd_back(t_lststr **lst, t_lststr *new);
+//
+t_lststr				*ft_lststrnew(char **content);
+void	ft_lststrreplace(t_lststr ***tail, char ***compared_str,
+t_lststr **operation_flags, char *op);
+void	ft_lststrprint(t_lststr *lst);
+void	ft_lststrnullboth(t_lststr ***tail, char ***compared_str,
+t_lststr **operation_flags);
+void	ft_lststrexcludenode(t_lststr **tail);
 
 #endif

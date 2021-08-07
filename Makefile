@@ -7,7 +7,7 @@ stack_operations/stack_op1.c stack_operations/stack_op2.c \
 stack_operations/stack_op3.c utils/ft_entropy.c algorithms/LIS/LIS_sort.c \
 ft_get_routes.c stack_operations/stack_op1_helper.c ft_testers_helper.c \
 utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c
-CFLAGS = 
+CFLAGS = -g
 LIBNAME = libpush_swap.a
 LIBPATH = ./$(LIBNAME)
 MYLIB = ./mylib/libmylib.a

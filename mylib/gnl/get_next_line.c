@@ -16,6 +16,7 @@
 #ifndef OPEN_MAX
 # define OPEN_MAX 3000
 #endif
+#define BUFFER_SIZE 42
 
 static int	reset_ret(char **line, int ret, char **buf_p)
 {
