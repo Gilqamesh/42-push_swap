@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 23:56:19 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/08 16:57:19 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,11 +316,13 @@ t_INT_array second_arr)
 	}
 	// Could choose between multiple unique LIS solutions
 	// Not sure how this affects the final n sequence of ops
+	// int	index = table[first_arr.size_elements][second_arr.size_elements].size_arr;
+	// ft_printf("index: %d\n", index);
 	result.size_elements =
-		table[first_arr.size_elements][second_arr.size_elements].arr->size_elements;
+		table[first_arr.size_elements][second_arr.size_elements].arr[0].size_elements;
 	result.elements = malloc(result.size_elements * sizeof(int));
 	ft_memcpy(result.elements,
-		table[first_arr.size_elements][second_arr.size_elements].arr->elements,
+		table[first_arr.size_elements][second_arr.size_elements].arr[0].elements,
 		result.size_elements * sizeof(int));
 	ft_lstmallocfree(&alloced_ptrs);
 	return (result);
@@ -396,17 +398,17 @@ t_stack *LIS_group, int cur_LIS_group_index)
 		}
 		else
 		{
-			if (pushed_counter < condition - 1
-				&& *(int *)original_stack->head->next->content != *(int *)LIS->head->content
-				&& *(int *)original_stack->head->content < *(int *)original_stack->head->next->content)
-			{
-				stack_swap(original_stack);
-				if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sa")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sb")));
-			}
-			else
+			// if (pushed_counter < condition - 1
+			// 	&& *(int *)original_stack->head->next->content != *(int *)LIS->head->content
+			// 	&& *(int *)original_stack->head->content < *(int *)original_stack->head->next->content)
+			// {
+			// 	stack_swap(original_stack);
+			// 	if (pushed_to_stack == 'b')
+			// 		ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sa")));
+			// 	else
+			// 		ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" sb")));
+			// }
+			// else
 			{
 				if (pushed_to_stack == 'b')
 					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
@@ -417,8 +419,6 @@ t_stack *LIS_group, int cur_LIS_group_index)
 			}
 		}
 	}
-	// TODO:
-	// find min path between r and rr maybe
 	if (reverse_needed <= LIS->n / 2)
 	{
 		while (reverse_needed-- > 0)
@@ -623,6 +623,15 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 }
 
 // With big stack
+// Check for the next (n * ra + pa) and see how many operations it takes
+// next check how many operations would (m * rr + pa) take and choose
+// the one that is smaller
+// char	*merge_LIS_groups3()
+// {
+	
+// }
+
+// With big stack
 char	*merge_LIS_groups2(t_stack *from, t_stack *to, char pushed_to_stack,
 t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 {
@@ -678,7 +687,7 @@ t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 			else
 				ft_nodbinadd_front(&result_lst,
 					ft_nodbinnew(ft_strdup(" rrb")));
-			to->head = to->head->prev;
+			stack_revrotate(to);
 		}
 	}
 	else
@@ -692,7 +701,7 @@ t_stack *LIS_group, int cur_LIS_group_index, t_stack *from_stack)
 			else
 				ft_nodbinadd_front(&result_lst,
 					ft_nodbinnew(ft_strdup(" rb")));
-			to->head = to->head->next;
+			stack_rotate(to);
 		}
 		// INSERTING FROM THE BOTTOM
 		tmp = LIS_group[cur_LIS_group_index].n;

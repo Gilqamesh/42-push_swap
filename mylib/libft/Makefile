@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/08/05 10:38:21 by edavid           ###   ########.fr        #
+#    Updated: 2021/08/08 13:38:01 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,20 +31,21 @@ ft_lstmallocwrapper.c ft_lstmallocfree.c
 
 NAME = libft.a
 
+all : $(NAME) bonus
 $(NAME) : *.c
 	$(CC) $(CFLAGS) -c $(sources)
 	ar rc $(NAME) *.o
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
-.PHONY: clean bonus all fclean re
+.PHONY: clean bonus all fclean re fcleanall
 clean :
 	rm -f *.o __.SYMDEF __.SYMDEF\ SORTED
 bonus : $(bonus_sources:.c=.o) $(extended_sources:.c=.o)
 	ar rc $(NAME) $(bonus_sources:.c=.o) $(extended_sources:.c=.o)
-all : $(NAME) bonus
 fclean :
 	make clean
 	rm -f $(NAME)
 re :
 	make fclean
 	make all
+fcleanall: fclean

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 11:31:40 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/08 16:01:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,8 +222,8 @@ char					*crunch_sequence(char **sequence_arr);
 void					ft_lststradd_back(t_lststr **lst, t_lststr *new);
 //
 t_lststr				*ft_lststrnew(char **content);
-void	ft_lststrreplace(t_lststr **head, char ***compared_str,
-t_lststr *operation_flags, char *op);
+void	ft_lststrreplace(t_lststr ***head, char ***compared_str,
+t_lststr **operation_flags, char *op);
 void	ft_lststrprint(t_lststr *lst);
 void	ft_lststrnullboth(t_lststr **head, char **compared_str, t_lststr *begin);
 void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin);

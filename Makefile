@@ -23,7 +23,7 @@ $(NAME): $(SRC:.c=.o) ft_driver.o $(LIBNAME)
 $(LIBNAME): $(MYLIB)
 $(MYLIB):
 	$(MAKE) --directory=mylib
-.PHONY: clean fclean re all bonus library tester
+.PHONY: clean fclean re all bonus library tester fcleanall
 clean:
 	rm -f *.o __.SYMDEF __.SYMDEF\ SORTED
 	cd stack_operations && rm -f *.o
@@ -46,6 +46,7 @@ library:
 	make $(LIBNAME)
 	cp $(MYLIB) .
 	ar -x libmylib.a
+	rm -rf libmylib.a
 	ar -rs $(LIBNAME) *.o
 	ar -rs $(LIBNAME) ./stack_operations/*.o
 	ar -rs $(LIBNAME) ./algorithms/LIS/*.o
@@ -55,3 +56,5 @@ tester: $(SRC:.c=.o) tester.o
 	make library
 	ar -d $(LIBNAME) ft_driver.o ft_checker.o tester.o
 	$(CC) $(CFLAGS) -o tester $(LIBNAME) tester.o
+fcleanall: fclean
+	$(MAKE) fcleanall --directory=mylib

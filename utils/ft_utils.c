@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 11:36:33 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/08 16:22:48 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,22 +184,22 @@ void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
 	t_lststr	*prev;
 	t_lststr	*tmp;
 
-	PRINT_HERE();
-	ft_printf("%s %p, %s %p\n", *(*head)->content, (*head)->content,
-		*begin->content, begin->content);
+	// PRINT_HERE();
+	// ft_printf("%s %p, %s %p\n", *(*head)->content, (*head)->content,
+		// *begin->content, begin->content);
 	if (!begin)
 		return ;
 	if (!head || !*head)
 		return ;
 	prev = begin;
-	ft_printf("prev: %p, begin: %p, head: %p\n", prev, begin, *head);
+	// ft_printf("prev: %p, begin: %p, head: %p\n", prev, begin, *head);
 	if (prev == *head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
 		free(tmp);
-		ft_printf("Head: %p\n", *head);
-		PRINT_HERE();
+		// ft_printf("Head: %p\n", *head);
+		// PRINT_HERE();
 		return ;
 	}
 	while (prev->next != *head)
@@ -208,32 +208,32 @@ void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
 	*head = (*head)->next;
 	free(tmp);
 	prev->next = *head;
-	PRINT_HERE();
+	// PRINT_HERE();
 }
 
 void	ft_lststrnullboth(t_lststr **head, char **compared_str_ptr, t_lststr *begin)
 {
-	PRINT_HERE();
+	// PRINT_HERE();
 	free(*(*head)->content);
-	*(*head)->content = ft_strdup(" ");
+	*(*head)->content = ft_strdup("");
 	ft_lststrexcludenode(head, begin);
 	free(*compared_str_ptr);
 	*compared_str_ptr = ft_strdup("");
 	*head = NULL;
-	PRINT_HERE();
+	// PRINT_HERE();
 }
 
-void	ft_lststrreplace(t_lststr **head, char ***compared_str_ptr,
-t_lststr *operation_flags, char *op)
+void	ft_lststrreplace(t_lststr ***head, char ***compared_str_ptr,
+t_lststr **operation_flags, char *op)
 {
-	PRINT_HERE();
-	free(*(*head)->content);
-	*(*head)->content = ft_strdup(op);
+	// PRINT_HERE();
+	free(*(**head)->content);
+	*(**head)->content = ft_strdup(op);
 	free(**compared_str_ptr);
 	**compared_str_ptr = ft_strdup("");
-	*compared_str_ptr = (*head)->content;
+	*compared_str_ptr = (**head)->content;
 	*head = operation_flags;
-	PRINT_HERE();
+	// PRINT_HERE();
 }
 
 void	ft_lststrprint(t_lststr *lst)
@@ -253,7 +253,7 @@ void	ft_lststrprint(t_lststr *lst)
 char	*crunch_sequence(char **sequence_arr)
 {
 	t_lststr		*operation_flags;
-	t_lststr		*head;
+	t_lststr		**head;
 	t_lststr		*tmp;
 	char			**compared_str_ptr;
 	int				index;
@@ -271,132 +271,105 @@ char	*crunch_sequence(char **sequence_arr)
 		if (!operation_flags && sequence_arr[index + 1])
 			ft_lststradd_back(&operation_flags,
 				ft_lststrnew(sequence_arr + index++));
-		head = operation_flags;
+		head = &operation_flags;
 		compared_str_ptr = sequence_arr + index;
-		ft_printf("Compared_str: %s\n", *compared_str_ptr);
-		ft_printf("Head->content: %s\n", *head->content);
-		ft_printf("operation_flags->content: %s\n", *operation_flags->content);
-		while (head && head->content != operation_flags->content)
+		while (*head && (*head)->content != compared_str_ptr)
 		{
-			if (!ft_strcmp(*head->content, "ra"))
+			if (!ft_strcmp(*(*head)->content, "ra"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rrb");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrb");
 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rr");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rr");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "rb"))
+			else if (!ft_strcmp(*(*head)->content, "rb"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rra");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rra");
 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rr");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rr");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "rr"))
+			else if (!ft_strcmp(*(*head)->content, "rr"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "sb")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rb");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rb");
 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "ra");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "ra");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "rrr"))
+			else if (!ft_strcmp(*(*head)->content, "rrr"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "sb")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rr"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rrb");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrb");
 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rra");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rra");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "rra"))
+			else if (!ft_strcmp(*(*head)->content, "rra"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rrr");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrr");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "rrb"))
+			else if (!ft_strcmp(*(*head)->content, "rrb"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb")
 					|| !ft_strcmp(*compared_str_ptr, "sb")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "rrr");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrr");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "pa"))
+			else if (!ft_strcmp(*(*head)->content, "pa"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "ra")
 					|| !ft_strcmp(*compared_str_ptr, "rr")
@@ -407,17 +380,13 @@ char	*crunch_sequence(char **sequence_arr)
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "sb")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "pb"))
+			else if (!ft_strcmp(*(*head)->content, "pb"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "ra")
 					|| !ft_strcmp(*compared_str_ptr, "rr")
@@ -428,17 +397,13 @@ char	*crunch_sequence(char **sequence_arr)
 					|| !ft_strcmp(*compared_str_ptr, "sa")
 					|| !ft_strcmp(*compared_str_ptr, "sb")
 					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "pa"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "sa"))
+			else if (!ft_strcmp(*(*head)->content, "sa"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "ra")
 					|| !ft_strcmp(*compared_str_ptr, "rr")
@@ -446,19 +411,15 @@ char	*crunch_sequence(char **sequence_arr)
 					|| !ft_strcmp(*compared_str_ptr, "rrr")
 					|| !ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "sa"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "sb");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sb");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "sb"))
+			else if (!ft_strcmp(*(*head)->content, "sb"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "ra")
 					|| !ft_strcmp(*compared_str_ptr, "rr")
@@ -466,19 +427,15 @@ char	*crunch_sequence(char **sequence_arr)
 					|| !ft_strcmp(*compared_str_ptr, "rrr")
 					|| !ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "sb"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "sa");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sa");
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
-			else if (!ft_strcmp(*head->content, "ss"))
+			else if (!ft_strcmp(*(*head)->content, "ss"))
 			{
 				if (!ft_strcmp(*compared_str_ptr, "ra")
 					|| !ft_strcmp(*compared_str_ptr, "rb")
@@ -488,29 +445,35 @@ char	*crunch_sequence(char **sequence_arr)
 					|| !ft_strcmp(*compared_str_ptr, "rrr")
 					|| !ft_strcmp(*compared_str_ptr, "pa")
 					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(&head, operation_flags);
+					ft_lststrexcludenode(head, operation_flags);
 				else if (!ft_strcmp(*compared_str_ptr, "sa"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "sb");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sb");
 				else if (!ft_strcmp(*compared_str_ptr, "sb"))
-					ft_lststrreplace(&head, &compared_str_ptr, operation_flags, "sa");
+					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sa");
 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrnullboth(&head, compared_str_ptr, operation_flags);
+					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
 				else
-				{
-					head = head->next;
-					ft_lststradd_back(&operation_flags,
-						ft_lststrnew(sequence_arr + index));
-				}
+					head = &(*head)->next;
 			}
 		}
-		ft_lststrprint(operation_flags);
+		if (ft_strcmp("", sequence_arr[index]))
+		{
+			ft_lststradd_back(&operation_flags,
+				ft_lststrnew(sequence_arr + index));
+		}
 	}
-	// free operation flags
+	while (operation_flags)
+	{
+		tmp = operation_flags;
+		operation_flags = operation_flags->next;
+		free(tmp);
+	}
 	result_lst = NULL;
 	index = -1;
 	while (sequence_arr[++index])
-		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
-			ft_strjoin(" ", sequence_arr[index])));
+		if (ft_strcmp("", sequence_arr[index]))
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				ft_strjoin(" ", sequence_arr[index])));
 	result_str = ft_nodbinstrjoin_from_back(result_lst);
 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result_str);

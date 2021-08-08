@@ -19,7 +19,7 @@ $(LIBPRINTF):
 	$(MAKE) --directory=printf
 $(LIBGNL):
 	$(MAKE) --directory=gnl
-.PHONY: all fclean
+.PHONY: all fclean fcleanall
 all: $(NAME)
 clean:
 	rm -rf *.o __.SYMDEF __.SYMDEF\ SORTED
@@ -27,3 +27,7 @@ fclean:
 	make clean
 	rm -rf $(NAME)
 	rm -f $(LIBFT) $(LIBPRINTF) $(LIBGNL)
+fcleanall: fclean
+	$(MAKE) fcleanall --directory=libft
+	$(MAKE) fcleanall --directory=gnl
+	$(MAKE) fcleanall --directory=printf

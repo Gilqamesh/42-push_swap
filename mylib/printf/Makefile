@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/25 20:47:25 by edavid            #+#    #+#              #
-#    Updated: 2021/08/05 10:41:51 by edavid           ###   ########.fr        #
+#    Updated: 2021/08/08 13:38:12 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ $(NAME) : $(sources:.c=.o)
 	ar -rs $(NAME) $^
 %.o: %.c
 	$(CC) $(CFLAGS) -c $^
-.PHONY: all clean fclean re bonus test
+.PHONY: all clean fclean re bonus test fcleanall
 all : $(NAME)
 clean :
 	rm -f *.o libft/*.o __.SYMDEF __.SYMDEF\ SORTED
@@ -45,3 +45,4 @@ test : $(sources:.c=.o) driver.o
 	mv libft.a $(NAME)
 	ar -rs $(NAME) $(sources:.c=.o) driver.o
 	$(CC) -o test.out $^ -Llibft -lft
+fcleanall: fclean
