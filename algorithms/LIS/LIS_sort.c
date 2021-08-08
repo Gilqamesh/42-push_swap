@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 22:14:05 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 00:35:55 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, is_unordered_at_bottom ? 
 		B_LIS_groups[0].head
 		: B_LIS_groups[n_of_B_LIS_groups - 1].head, is_unordered_at_bottom ?
-		B_LIS_groups[0].n
+		-B_LIS_groups[0].n
 		: B_LIS_groups[n_of_B_LIS_groups - 1].n);
 		// ft_printintarr(LIS_ord_unord.arr1.elements, LIS_ord_unord.arr1.size_elements);
 		// ft_printintarr(LIS_ord_unord.arr2.elements, LIS_ord_unord.arr2.size_elements);
@@ -83,7 +83,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 				&is_unordered_at_bottom)));
 		ft_nodbinclear(&stack_tmp.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&A_LIS_groups[n_of_A_LIS_groups - 1], 0, 1))
+		if (is_stack_sorted(is_unordered_at_bottom ?
+			&A_LIS_groups[0]
+			: &A_LIS_groups[n_of_A_LIS_groups - 1], 0, 1))
 		{
 			left_at_stack = 'a';
 			break ;
@@ -91,7 +93,7 @@ char	*LIS_sort(t_push_swap *mystruct)
 		LIS_ord_unord = find_LIS_of_sublist(mystruct, is_unordered_at_bottom ?
 			A_LIS_groups[0].head
 			: A_LIS_groups[n_of_A_LIS_groups - 1].head, is_unordered_at_bottom ?
-			A_LIS_groups[0].n
+			-A_LIS_groups[0].n
 			: A_LIS_groups[n_of_A_LIS_groups - 1].n);
 		construct_stack_from_arr(&stack_tmp, &LIS_ord_unord.arr1,-1);
 		B_LIS_groups = realloc(B_LIS_groups, ++n_of_B_LIS_groups
@@ -106,18 +108,20 @@ char	*LIS_sort(t_push_swap *mystruct)
 				&is_unordered_at_bottom)));
 		ft_nodbinclear(&stack_tmp.head, ft_nodbindel, stack_tmp.n);
 		destroy_t_INT_array2(&LIS_ord_unord);
-		if (is_stack_sorted(&B_LIS_groups[n_of_B_LIS_groups - 1], 0, 1))
+		if (is_stack_sorted(is_unordered_at_bottom ?
+		&B_LIS_groups[0]
+		: &B_LIS_groups[n_of_B_LIS_groups - 1], 0, 1))
 		{
 			left_at_stack = 'b';
 			break ;
 		}
 	}
-	// ft_printf("A: ");
-	// for (int i = 0; i < n_of_A_LIS_groups; i++)
-	// 	ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
-	// ft_printf("B: ");
-	// for (int i = 0; i < n_of_B_LIS_groups; i++)
-	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	ft_printf("A: ");
+	for (int i = 0; i < n_of_A_LIS_groups; i++)
+		ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	ft_printf("B: ");
+	for (int i = 0; i < n_of_B_LIS_groups; i++)
+		ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	
 	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
 	// ft_printf("Merging:\n");

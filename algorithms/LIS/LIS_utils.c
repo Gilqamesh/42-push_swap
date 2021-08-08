@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 22:14:12 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 00:24:44 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,90 +473,59 @@ bool *is_unordered_at_bottom)
 			}
 		}
 	}
-	if (*is_unordered_at_bottom)
-		*is_unordered_at_bottom = false;
 	if (reverse_needed <= LIS->n / 2)
 	{
+		*is_unordered_at_bottom = false;
 		while (reverse_needed-- > 0)
 		{
 			if (reverse_needed2-- > 0)
 			{
-				if (*is_unordered_at_bottom)
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rr")));
-					stack_rotate(unordered_stack);
-				}
-				else
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
-					stack_revrotate(unordered_stack);
-				}
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
+				stack_revrotate(unordered_stack);
 			}
 			else if (pushed_to_stack == 'b')
 				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
 			else
 				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-			if (*is_unordered_at_bottom)
-			{
-				stack_rotate(original_stack);
-				stack_rotate(LIS);
-			}
-			else
-			{
-				stack_revrotate(original_stack);
-				stack_revrotate(LIS);
-			}
+			stack_revrotate(original_stack);
+			stack_revrotate(LIS);
 		}
-		*is_unordered_at_bottom = false;
 	}
 	else
-	// PROBLEM: if this happens, the unordered part gets at the bottom of
-	// the stack. Would need to merge until the unordered part gets to the top
-	// again to get the LIS from, or alternatively could continue to create
-	// the LIS group, except starting from the bottom now.
+	// // PROBLEM: if this happens, the unordered part gets at the bottom of
+	// // the stack. Would need to merge until the unordered part gets to the top
+	// // again to get the LIS from, or alternatively could continue to create
+	// // the LIS group, except starting from the bottom now.
 	{
+		*is_unordered_at_bottom = true;
 		reverse_needed = LIS->n - reverse_needed;
 		reverse_needed2 = unordered_stack->n - reverse_needed2;
 		while (reverse_needed-- > 0)
 		{
 			if (reverse_needed2-- > 0)
 			{
-				if (*is_unordered_at_bottom)
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
-					stack_revrotate(unordered_stack);
-				}
-				else
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rr")));
-					stack_rotate(unordered_stack);
-				}
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rr")));
+				stack_rotate(unordered_stack);
 			}
 			else if (pushed_to_stack == 'b')
-			{
-				if (*is_unordered_at_bottom)
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
-			}
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
 			else
-			{
-				if (*is_unordered_at_bottom)
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
-			}
-			if (*is_unordered_at_bottom)
-			{
-				stack_revrotate(original_stack);
-				stack_revrotate(LIS);
-			}
-			else
-			{
-				stack_rotate(original_stack);
-				stack_rotate(LIS);
-			}
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
+			stack_rotate(original_stack);
+			stack_rotate(LIS);
 		}
+		while (reverse_needed2-- > 0)
+		{
+			// ft_printf("This is here to remind you that it might be more efficient
+			// to compare reverse_needed2 with reverse_needed / 2\n");
+			if (pushed_to_stack == 'b')
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
+			else
+				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
+			stack_rotate(unordered_stack);
+			stack_rotate(original_stack);
+		}
+
 		tmp = LIS_group[cur_LIS_group_index].n;
 		tmpptr = LIS_group[cur_LIS_group_index].head;
 		i = cur_LIS_group_index + 1;
@@ -568,33 +537,16 @@ bool *is_unordered_at_bottom)
 		LIS_group[0].n = tmp;
 		LIS_group[0].head = tmpptr;
 
-		if (*is_unordered_at_bottom)
+		tmp = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].n;
+		tmpptr = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].head;
+		i = pushed_to_cur_LIS_group_index + 1;
+		while (--i > 0)
 		{
-			tmp = pushed_to_LIS_group[0].n;
-			tmpptr = pushed_to_LIS_group[0].head;
-			i = 0;
-			while (++i < pushed_to_cur_LIS_group_index)
-			{
-				pushed_to_LIS_group[i - 1].n = pushed_to_LIS_group[i].n;
-				pushed_to_LIS_group[i - 1].head = pushed_to_LIS_group[i].head;
-			}
-			pushed_to_LIS_group[pushed_to_cur_LIS_group_index].n = tmp;
-			pushed_to_LIS_group[pushed_to_cur_LIS_group_index].head = tmpptr;
+			pushed_to_LIS_group[i].n = pushed_to_LIS_group[i - 1].n;
+			pushed_to_LIS_group[i].head = pushed_to_LIS_group[i - 1].head;
 		}
-		else
-		{
-			tmp = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].n;
-			tmpptr = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].head;
-			i = pushed_to_cur_LIS_group_index + 1;
-			while (--i > 0)
-			{
-				pushed_to_LIS_group[i].n = pushed_to_LIS_group[i - 1].n;
-				pushed_to_LIS_group[i].head = pushed_to_LIS_group[i - 1].head;
-			}
-			pushed_to_LIS_group[0].n = tmp;
-			pushed_to_LIS_group[0].head = tmpptr;
-		}
-		// *is_unordered_at_bottom = true;
+		pushed_to_LIS_group[0].n = tmp;
+		pushed_to_LIS_group[0].head = tmpptr;
 	}
 	result = ft_nodbinstrjoin_from_back(result_lst);
 	// ft_printf("Result in construct_seq_of_operations: %s\n", result);
