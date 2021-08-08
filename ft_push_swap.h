@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 16:01:20 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/08 19:09:07 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,9 @@ void			construct_stack_from_arr(t_stack *stack, t_INT_array *arr,
 char			*construct_seq_of_operations(t_stack *original_stack, 
 								t_stack *LIS, char pushed_to_stack,
 								t_stack *unordered_stack,
-								t_stack *LIS_group, int cur_LIS_group_index);
+								t_stack *LIS_group, int cur_LIS_group_index,
+								t_stack *pushed_to_LIS_group,
+								int pushed_to_cur_LIS_group_index);
 // Allocates and returns a t_INT_array that is the result of going over the
 // t_list from *head
 t_INT_array		construct_intarr_from_lst(t_list *lst);
