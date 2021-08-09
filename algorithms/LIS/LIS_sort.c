@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 00:35:55 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 09:19:47 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 		A_LIS_groups[n_of_A_LIS_groups - 1].head = NULL;
 		A_LIS_groups[n_of_A_LIS_groups - 1].n = 0;
 		ft_nodbinadd_front(&result_lst,
-			 ft_nodbinnew(construct_seq_of_operations(&B_LIS_groups[n_of_B_LIS_groups - 1],
+			 ft_nodbinnew(construct_seq_of_operations(is_unordered_at_bottom ?
+				&B_LIS_groups[0]
+				: &B_LIS_groups[n_of_B_LIS_groups - 1],
 			 	&stack_tmp, 'a', &A_LIS_groups[n_of_A_LIS_groups - 1],
 				B_LIS_groups, n_of_B_LIS_groups - 1,
 				A_LIS_groups, n_of_A_LIS_groups - 1,
@@ -101,7 +103,9 @@ char	*LIS_sort(t_push_swap *mystruct)
 		B_LIS_groups[n_of_B_LIS_groups - 1].head = NULL;
 		B_LIS_groups[n_of_B_LIS_groups - 1].n = 0;
 		ft_nodbinadd_front(&result_lst,
-			ft_nodbinnew(construct_seq_of_operations(&A_LIS_groups[n_of_A_LIS_groups - 1],
+			ft_nodbinnew(construct_seq_of_operations(is_unordered_at_bottom ?
+				&A_LIS_groups[0]
+				: &A_LIS_groups[n_of_A_LIS_groups - 1],
 			 	&stack_tmp, 'b', &B_LIS_groups[n_of_B_LIS_groups - 1],
 				A_LIS_groups, n_of_A_LIS_groups - 1,
 				B_LIS_groups, n_of_B_LIS_groups - 1,
@@ -116,12 +120,12 @@ char	*LIS_sort(t_push_swap *mystruct)
 			break ;
 		}
 	}
-	ft_printf("A: ");
-	for (int i = 0; i < n_of_A_LIS_groups; i++)
-		ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
-	ft_printf("B: ");
-	for (int i = 0; i < n_of_B_LIS_groups; i++)
-		ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
+	// ft_printf("A: ");
+	// for (int i = 0; i < n_of_A_LIS_groups; i++)
+	// 	ft_nodbinprint_int(A_LIS_groups[i].head, A_LIS_groups[i].n);
+	// ft_printf("B: ");
+	// for (int i = 0; i < n_of_B_LIS_groups; i++)
+	// 	ft_nodbinprint_int(B_LIS_groups[i].head, B_LIS_groups[i].n);
 	
 	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
 	// ft_printf("Merging:\n");
