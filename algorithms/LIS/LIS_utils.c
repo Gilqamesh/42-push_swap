@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 20:06:18 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 01:12:38 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -635,8 +635,9 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 }
 
 // Works on already sorted stack
+// 'num' is the compared value over the rotation
 // 0 reverse rotation, anything else forward direction
-static int	get_number_of_rotations_for_inclusion(t_stack *stack, int num,
+int	get_number_of_rotations_for_inclusion(t_stack *stack, int num,
 int dir)
 {
 	int	rotations;
@@ -655,6 +656,9 @@ int dir)
 				break ;
 			rotations++;
 			cur = cur->next;
+			PRINT_HERE();
+			PRINT_HERE();
+			// Find out why is this an infinite loop.
 		}
 	}
 	else
@@ -666,6 +670,9 @@ int dir)
 				break ;
 			rotations++;
 			cur = cur->prev;
+			PRINT_HERE();
+			PRINT_HERE();
+			// Find out why is this an infinite loop.
 		}
 	}
 	return (rotations);

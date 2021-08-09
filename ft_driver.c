@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_driver.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 21:04:15 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 01:11:20 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	main(int argc, char **argv)
 	parse_input(&mystruct, argc, argv);
 	// PRINT_HERE();
 	// sequence = LIS_sort2(&mystruct);
-	sequence = LIS_sort(&mystruct);
+	// sequence = LIS_sort(&mystruct);
+	sequence = LIS_sort3(&mystruct);
 	// ft_printf("Sequence: %s\n", sequence);
 	// ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
 	sequence_arr = ft_split(sequence, ' ');
@@ -33,10 +34,10 @@ int	main(int argc, char **argv)
 	sequence = crunch_sequence(sequence_arr);
 	sequence_arr = ft_split(sequence, ' ');
 	i = -1;
-	while (sequence_arr[++i])
-		ft_printf("%s\n", sequence_arr[i]);
-	// ft_printf("Sequence: %s\n", sequence);
-	// ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
+	// while (sequence_arr[++i])
+	// 	ft_printf("%s\n", sequence_arr[i]);
+	ft_printf("Sequence: %s\n", sequence);
+	ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
 	// game_loop(&mystruct);
 	free(sequence);
 	i = -1;

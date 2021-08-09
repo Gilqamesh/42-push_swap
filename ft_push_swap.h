@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_push_swap.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 19:51:31 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 00:30:27 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,5 +230,10 @@ void	ft_lststrprint(t_lststr *lst);
 void	ft_lststrnullboth(t_lststr **head, char **compared_str, t_lststr *begin);
 void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin);
 char	*merge_LIS_groups3(t_stack *A, t_stack *B);
+// Works on already sorted stack
+// 0 reverse rotation, anything else forward direction
+int	get_number_of_rotations_for_inclusion(t_stack *stack, int num,
+								int dir);
+char	*LIS_sort3(t_push_swap *mystruct);
 
 #endif

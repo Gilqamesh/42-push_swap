@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 21:07:41 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 01:11:47 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,4 +299,100 @@ char	*LIS_sort2(t_push_swap *mystruct)
 	result_seq_of_ops = ft_nodbinstrjoin_from_back(result_lst);
 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result_seq_of_ops);
+}
+
+static char	*keep_LIS_in_A(t_push_swap *mystruct, t_INT_array2 *LIS_ord_unord)
+{
+	int				ord_index;
+	int				unord_index;
+	t_node_binary	*result_lst;
+	char			*result_str;
+
+	ord_index = 0;
+	unord_index = 0;
+	result_lst = NULL;
+	while (unord_index < LIS_ord_unord->arr2.size_elements)
+	{
+		if (LIS_ord_unord->arr1.elements[ord_index]
+			== *(int *)mystruct->a.head->content)
+		{
+			ord_index++;
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
+			stack_ra(mystruct);
+		}
+		else
+		{
+			unord_index++;
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pb")));
+			stack_pb(mystruct);
+		}
+	}
+	result_str = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_str);
+}
+
+static char	*find_optimal_merge_sequence(t_push_swap *mystruct)
+{
+	t_node_binary	*result_lst;
+	char			*result_str;
+	int				forward_rot;
+	int				reverse_rot;
+
+	result_lst = NULL;
+	while (mystruct->b.n)
+	{
+		// Also check for forward_rot and reverse_rot
+		// While iterating through second argument
+		forward_rot = get_number_of_rotations_for_inclusion(&mystruct->a,
+			*(int *)mystruct->b.head->content, 1);
+		reverse_rot = get_number_of_rotations_for_inclusion(&mystruct->a,
+			*(int *)mystruct->b.head->content, 0);
+		if (forward_rot > reverse_rot)
+		{
+			while (reverse_rot-- > 0)
+			{
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rra")));
+				stack_revrotate(&mystruct->a);
+			}
+		}
+		else
+		{
+			while (forward_rot-- > 0)
+			{
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" ra")));
+				stack_rotate(&mystruct->a);
+			}
+		}
+		ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pa")));
+		stack_pa(mystruct);
+	}
+	result_str = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_str);
+}
+
+char	*LIS_sort3(t_push_swap *mystruct)
+{
+	t_node_binary	*result_lst;
+	char			*result_str;
+	t_INT_array2	LIS_ord_unord;
+
+	result_lst = NULL;
+	if (is_stack_sorted(&mystruct->a, 0, 0))
+		return (construct_minimum_rotations_needed_ops(&mystruct->a, 'a'));
+	LIS_ord_unord = find_LIS_of_sublist(mystruct,
+		mystruct->a.head, mystruct->a.n);
+	ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+		keep_LIS_in_A(mystruct, &LIS_ord_unord)));
+	destroy_t_INT_array2(&LIS_ord_unord);
+	ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+		find_optimal_merge_sequence(mystruct)));
+	ft_nodbinadd_front(&result_lst,
+		ft_nodbinnew(construct_minimum_rotations_needed_ops(&mystruct->a, 'a')));
+	result_str = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_str);
 }
