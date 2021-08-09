@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_testers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 07:57:33 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 19:37:53 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	game_loop(t_push_swap *mystruct)
 	}
 }
 
-int	is_solution(t_push_swap *mystruct)
+int	
+is_solution(t_push_swap *mystruct)
 {
 	int				entr_a;
 	int				entr_b;

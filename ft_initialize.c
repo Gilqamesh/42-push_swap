@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_initialize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 23:15:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 19:11:30 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,4 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 	mystruct->sorted = sorted;
 	test_for_duplicates(mystruct);
 	initialize_relative_positions(mystruct);
-	// ft_printf("Relative positions: %d\n", mystruct->relative_pos.n);
-	// for (int i = 0; i < mystruct->relative_pos.n; i++)
-	// 	ft_printf("%d %d\n", mystruct->relative_pos.number_pos[i].a,
-	// 		mystruct->relative_pos.number_pos[i].b);
-	// ft_printf("Relative positions end.\n");
 }

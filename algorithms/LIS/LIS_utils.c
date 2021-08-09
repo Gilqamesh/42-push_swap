@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   LIS_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 09:40:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 20:06:18 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,13 +316,35 @@ t_INT_array second_arr)
 	}
 	// Could choose between multiple unique LIS solutions
 	// Not sure how this affects the final n sequence of ops
-	// int	index = table[first_arr.size_elements][second_arr.size_elements].size_arr;
+	// ft_printf("index: %d\n", index);
+	int	max_diff, index;
+	i = 0;
+	index = 0;
+	max_diff = ft_abs_int(table[first_arr.size_elements][second_arr.size_elements].arr[0].elements[0]
+		- table[first_arr.size_elements][second_arr.size_elements].arr[0].elements[
+			table[first_arr.size_elements][second_arr.size_elements].arr[0].size_elements - 1
+		]);
+	while (++i < table[first_arr.size_elements][second_arr.size_elements].size_arr)
+	{
+		if (ft_abs_int(table[first_arr.size_elements][second_arr.size_elements].arr[i].elements[0]
+			- table[first_arr.size_elements][second_arr.size_elements].arr[i].elements[
+				table[first_arr.size_elements][second_arr.size_elements].arr[i].size_elements - 1
+			]) > max_diff)
+		{
+			index = i;
+			max_diff = ft_abs_int(table[first_arr.size_elements][second_arr.size_elements].arr[i].elements[0]
+			- table[first_arr.size_elements][second_arr.size_elements].arr[i].elements[
+				table[first_arr.size_elements][second_arr.size_elements].arr[i].size_elements - 1
+			]);
+		}
+	}
+	// index = 0;
 	// ft_printf("index: %d\n", index);
 	result.size_elements =
-		table[first_arr.size_elements][second_arr.size_elements].arr[0].size_elements;
+		table[first_arr.size_elements][second_arr.size_elements].arr[index].size_elements;
 	result.elements = malloc(result.size_elements * sizeof(int));
 	ft_memcpy(result.elements,
-		table[first_arr.size_elements][second_arr.size_elements].arr[0].elements,
+		table[first_arr.size_elements][second_arr.size_elements].arr[index].elements,
 		result.size_elements * sizeof(int));
 	ft_lstmallocfree(&alloced_ptrs);
 	return (result);
@@ -365,8 +387,7 @@ int direction)
 char	*construct_seq_of_operations(t_stack *original_stack, 
 t_stack *LIS, char pushed_to_stack, t_stack *unordered_stack,
 t_stack *LIS_group, int cur_LIS_group_index,
-t_stack *pushed_to_LIS_group, int pushed_to_cur_LIS_group_index,
-bool *is_unordered_at_bottom)
+t_stack *pushed_to_LIS_group, int pushed_to_cur_LIS_group_index)
 {
 	t_node_binary	*result_lst;
 	int				pushed_counter;
@@ -388,42 +409,9 @@ bool *is_unordered_at_bottom)
 	reverse_needed2 = 0;
 	result_lst = NULL;
 	condition = original_stack->n - LIS->n;
-	if (*is_unordered_at_bottom)
-	{
-		if (pushed_to_stack == 'b')
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-		else
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-		stack_revrotate(LIS);
-		stack_revrotate(original_stack);
-		reverse_needed++;
-	}
 	while (pushed_counter < condition)
 	{
-		if (*is_unordered_at_bottom
-			&& *(int *)original_stack->head->content == *(int *)LIS->head->content)
-		{
-			// This Logic is incorrect, if unordered is at the bottom, we should
-			// Always start out with an rrb or rra operation based on which stack
-			// We are pushing from. (RRR for efficiency later)
-			//
-			// Check if rr is worth doing
-			// if (unordered_stack->n > 1 && *(int *)unordered_stack->head->content
-			// 	> *(int *)unordered_stack->head->next->content)
-			// {
-			// 	ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
-			// 	stack_revrotate(unordered_stack);
-			// 	reverse_needed2++;
-			// }
-			if (pushed_to_stack == 'b')
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-			else
-				ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-			stack_revrotate(LIS);
-			stack_revrotate(original_stack);
-			reverse_needed++;
-		}
-		else if (*(int *)original_stack->head->content == *(int *)LIS->head->content)
+		if (*(int *)original_stack->head->content == *(int *)LIS->head->content)
 		{
 			// Check if rr is worth doing
 			if (unordered_stack->n > 1 && *(int *)unordered_stack->head->content
@@ -460,127 +448,23 @@ bool *is_unordered_at_bottom)
 				else
 					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" pa")));
 				stack_push(original_stack, unordered_stack);
-				if (*is_unordered_at_bottom)
-				{
-					// Could use RRR later for more optimization
-					if (pushed_to_stack == 'b')
-						ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-					else
-						ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-					stack_revrotate(original_stack);
-				}
 				pushed_counter++;
 			}
 		}
 	}
-	if (reverse_needed <= LIS->n / 2)
+	while (reverse_needed-- > 0)
 	{
-		if (*is_unordered_at_bottom)
+		if (reverse_needed2-- > 0)
 		{
-			while (reverse_needed-- > 0)
-			{
-				if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-				stack_revrotate(original_stack);
-				stack_revrotate(LIS);
-			}
-			*is_unordered_at_bottom = false;
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
+			stack_revrotate(unordered_stack);
 		}
+		else if (pushed_to_stack == 'b')
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
 		else
-		{
-			while (reverse_needed-- > 0)
-			{
-				if (reverse_needed2-- > 0)
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrr")));
-					stack_revrotate(unordered_stack);
-				}
-				else if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rra")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
-				stack_revrotate(original_stack);
-				stack_revrotate(LIS);
-			}
-		}
-		
-	}
-	else
-	// // PROBLEM: if this happens, the unordered part gets at the bottom of
-	// // the stack. Would need to merge until the unordered part gets to the top
-	// // again to get the LIS from, or alternatively could continue to create
-	// // the LIS group, except starting from the bottom now.
-	{
-		reverse_needed = LIS->n - reverse_needed;
-		reverse_needed2 = unordered_stack->n - reverse_needed2;
-		if (*is_unordered_at_bottom)
-		{
-			// maybe reverse_needed-- > 1 here
-			while (reverse_needed-- > 0)
-			{
-				if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
-				stack_rotate(original_stack);
-				stack_rotate(LIS);
-			}
-			*is_unordered_at_bottom = false;
-		}
-		else
-		{
-			while (reverse_needed-- > 0)
-			{
-				if (reverse_needed2-- > 0)
-				{
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rr")));
-					stack_rotate(unordered_stack);
-				}
-				else if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
-				stack_rotate(original_stack);
-				stack_rotate(LIS);
-			}
-			while (reverse_needed2-- > 0)
-			{
-				// ft_printf("This is here to remind you that it might be more efficient
-				// to compare reverse_needed2 with reverse_needed / 2\n");
-				if (pushed_to_stack == 'b')
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rb")));
-				else
-					ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" ra")));
-				stack_rotate(unordered_stack);
-				// stack_rotate(original_stack);
-			}
-
-			tmp = LIS_group[cur_LIS_group_index].n;
-			tmpptr = LIS_group[cur_LIS_group_index].head;
-			i = cur_LIS_group_index + 1;
-			while (--i > 0)
-			{
-				LIS_group[i].n = LIS_group[i - 1].n;
-				LIS_group[i].head = LIS_group[i - 1].head;
-			}
-			LIS_group[0].n = tmp;
-			LIS_group[0].head = tmpptr;
-
-			tmp = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].n;
-			tmpptr = pushed_to_LIS_group[pushed_to_cur_LIS_group_index].head;
-			i = pushed_to_cur_LIS_group_index + 1;
-			while (--i > 0)
-			{
-				pushed_to_LIS_group[i].n = pushed_to_LIS_group[i - 1].n;
-				pushed_to_LIS_group[i].head = pushed_to_LIS_group[i - 1].head;
-			}
-			pushed_to_LIS_group[0].n = tmp;
-			pushed_to_LIS_group[0].head = tmpptr;
-			
-			*is_unordered_at_bottom = true;
-		}
+			ft_nodbinadd_front(&result_lst, ft_nodbinnew(ft_strdup(" rrb")));
+		stack_revrotate(original_stack);
+		stack_revrotate(LIS);
 	}
 	result = ft_nodbinstrjoin_from_back(result_lst);
 	// ft_printf("Result in construct_seq_of_operations: %s\n", result);
@@ -750,14 +634,97 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 	return (-1);
 }
 
+// Works on already sorted stack
+// 0 reverse rotation, anything else forward direction
+static int	get_number_of_rotations_for_inclusion(t_stack *stack, int num,
+int dir)
+{
+	int	rotations;
+	t_node_binary	*cur;
+	t_node_binary	*min;
+
+	min = get_min_from_stack(stack);
+	cur = stack->head;
+	rotations = 0;
+	if (dir)
+	{
+		while (1)
+		{
+			if ((*(int *)cur->content > num && *(int *)cur->prev->content < num)
+				|| (cur == min && *(int *)cur->content > num && *(int *)cur->prev->content > num))
+				break ;
+			rotations++;
+			cur = cur->next;
+		}
+	}
+	else
+	{
+		while (1)
+		{
+			if ((*(int *)cur->content > num && *(int *)cur->prev->content < num)
+				|| (cur == min && *(int *)cur->content > num && *(int *)cur->prev->content > num))
+				break ;
+			rotations++;
+			cur = cur->prev;
+		}
+	}
+	return (rotations);
+}
+
 // With big stack
-// Check for the next (n * ra + pa) and see how many operations it takes
-// next check how many operations would (m * rr + pa) take and choose
-// the one that is smaller
-// char	*merge_LIS_groups3()
-// {
-	
-// }
+// Do the next insertion that is closest
+// Insertion would be (n * rotation + push) or (n * rev rotation + push)
+char	*merge_LIS_groups3(t_stack *A, t_stack *B)
+{
+	int				forward_steps;
+	int				reverse_steps;
+	int				i;
+	t_node_binary	*min;
+	t_node_binary	*result_lst;
+	char			*result_str;
+
+	// ft_nodbinprint_int(A->head, A->n);
+	// ft_nodbinprint_int(B->head, B->n);
+	// ft_printf("\n");
+	result_lst = NULL;
+	while (B->n)
+	{
+		forward_steps = get_number_of_rotations_for_inclusion(A,
+			*(int *)B->head->content, 1);
+		reverse_steps = get_number_of_rotations_for_inclusion(A,
+			*(int *)B->head->prev->content, 0);
+		if (reverse_steps + 1 > forward_steps)
+		{
+			while (forward_steps-- > 0)
+			{
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" ra")));
+				stack_rotate(A);
+			}
+		}
+		else
+		{
+			ft_nodbinadd_front(&result_lst,
+				ft_nodbinnew(ft_strdup(" rrb")));
+			stack_revrotate(B);
+			while (reverse_steps-- > 0)
+			{
+				ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" rra")));
+				stack_revrotate(A);
+			}
+		}
+		stack_push(B, A);
+		ft_nodbinadd_front(&result_lst,
+					ft_nodbinnew(ft_strdup(" pa")));
+		// ft_nodbinprint_int(A->head, A->n);
+		// ft_nodbinprint_int(B->head, B->n);
+		// ft_printf("\n");
+	}
+	result_str = ft_nodbinstrjoin_from_back(result_lst);
+	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+	return (result_str);
+}
 
 // With big stack
 char	*merge_LIS_groups2(t_stack *from, t_stack *to, char pushed_to_stack,

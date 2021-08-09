@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 19:30:58 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/09 19:51:31 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,7 @@ char			*construct_seq_of_operations(t_stack *original_stack,
 								t_stack *unordered_stack,
 								t_stack *LIS_group, int cur_LIS_group_index,
 								t_stack *pushed_to_LIS_group,
-								int pushed_to_cur_LIS_group_index,
-								bool *is_unordered_at_bottom);
+								int pushed_to_cur_LIS_group_index);
 // Allocates and returns a t_INT_array that is the result of going over the
 // t_list from *head
 t_INT_array		construct_intarr_from_lst(t_list *lst);
@@ -230,5 +229,6 @@ t_lststr **operation_flags, char *op);
 void	ft_lststrprint(t_lststr *lst);
 void	ft_lststrnullboth(t_lststr **head, char **compared_str, t_lststr *begin);
 void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin);
+char	*merge_LIS_groups3(t_stack *A, t_stack *B);
 
 #endif
