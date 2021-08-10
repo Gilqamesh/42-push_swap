@@ -6,7 +6,7 @@
 /*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 01:12:38 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 08:42:09 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -640,40 +640,25 @@ int	get_relative_position(t_push_swap *mystruct, int element)
 int	get_number_of_rotations_for_inclusion(t_stack *stack, int num,
 int dir)
 {
-	int	rotations;
+	int				rotations;
 	t_node_binary	*cur;
-	t_node_binary	*min;
 
-	min = get_min_from_stack(stack);
+	if (stack->n < 2)
+		return (0);
 	cur = stack->head;
 	rotations = 0;
-	if (dir)
+	while (1)
 	{
-		while (1)
-		{
-			if ((*(int *)cur->content > num && *(int *)cur->prev->content < num)
-				|| (cur == min && *(int *)cur->content > num && *(int *)cur->prev->content > num))
-				break ;
-			rotations++;
+		if ((*(int *)cur->content < *(int *)cur->prev->content
+			&& (num < *(int *)cur->content || num > *(int *)cur->prev->content))
+			|| (*(int *)cur->content > *(int *)cur->prev->content
+			&& num < *(int *)cur->content && num > *(int *)cur->prev->content))
+			break ;
+		rotations++;
+		if (dir)
 			cur = cur->next;
-			PRINT_HERE();
-			PRINT_HERE();
-			// Find out why is this an infinite loop.
-		}
-	}
-	else
-	{
-		while (1)
-		{
-			if ((*(int *)cur->content > num && *(int *)cur->prev->content < num)
-				|| (cur == min && *(int *)cur->content > num && *(int *)cur->prev->content > num))
-				break ;
-			rotations++;
+		else
 			cur = cur->prev;
-			PRINT_HERE();
-			PRINT_HERE();
-			// Find out why is this an infinite loop.
-		}
 	}
 	return (rotations);
 }
