@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/08 16:22:48 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 14:41:43 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,53 +19,6 @@ void	swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b)
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
-}
-
-int	is_sublist_ordered(t_node_binary *p, int n)
-{
-	return (0);
-}
-
-int	is_stack_sorted(t_stack *stack, int check_for_both_dirs,
-int position_of_head_matters)
-{
-	t_node_binary	*head;
-	t_node_binary	*min;
-	int				i;
-
-	if (!stack->n)
-		return (1);
-	head = stack->head;
-	if (!position_of_head_matters)
-	{
-		min = get_min_from_stack(stack);
-		head = min;
-	}
-	i = 0;
-	while (++i < stack->n)
-	{
-		if (*(int *)head->content > *(int *)head->next->content)
-		{
-			if (!check_for_both_dirs)
-				return (0);
-			else
-				break ;
-		}
-		head = head->next;
-	}
-	if (!check_for_both_dirs)
-		return (1);
-	head = stack->head;
-	if (!position_of_head_matters)
-		head = min;
-	i = 0;
-	while (++i < stack->n)
-	{
-		if (*(int *)head->content > *(int *)head->prev->content)
-			return (0);
-		head = head->prev;
-	}
-	return (1);
 }
 
 /* Allocates and returns a t_INT_array that is the result of going over the
@@ -184,22 +137,16 @@ void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
 	t_lststr	*prev;
 	t_lststr	*tmp;
 
-	// PRINT_HERE();
-	// ft_printf("%s %p, %s %p\n", *(*head)->content, (*head)->content,
-		// *begin->content, begin->content);
 	if (!begin)
 		return ;
 	if (!head || !*head)
 		return ;
 	prev = begin;
-	// ft_printf("prev: %p, begin: %p, head: %p\n", prev, begin, *head);
 	if (prev == *head)
 	{
 		tmp = *head;
 		*head = (*head)->next;
 		free(tmp);
-		// ft_printf("Head: %p\n", *head);
-		// PRINT_HERE();
 		return ;
 	}
 	while (prev->next != *head)
@@ -208,32 +155,27 @@ void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
 	*head = (*head)->next;
 	free(tmp);
 	prev->next = *head;
-	// PRINT_HERE();
 }
 
 void	ft_lststrnullboth(t_lststr **head, char **compared_str_ptr, t_lststr *begin)
 {
-	// PRINT_HERE();
 	free(*(*head)->content);
 	*(*head)->content = ft_strdup("");
 	ft_lststrexcludenode(head, begin);
 	free(*compared_str_ptr);
 	*compared_str_ptr = ft_strdup("");
 	*head = NULL;
-	// PRINT_HERE();
 }
 
 void	ft_lststrreplace(t_lststr ***head, char ***compared_str_ptr,
 t_lststr **operation_flags, char *op)
 {
-	// PRINT_HERE();
 	free(*(**head)->content);
 	*(**head)->content = ft_strdup(op);
 	free(**compared_str_ptr);
 	**compared_str_ptr = ft_strdup("");
 	*compared_str_ptr = (**head)->content;
 	*head = operation_flags;
-	// PRINT_HERE();
 }
 
 void	ft_lststrprint(t_lststr *lst)
