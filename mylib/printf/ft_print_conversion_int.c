@@ -6,13 +6,14 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 20:45:29 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 14:06:42 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 15:10:57 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "ft_conversions.h"
 #include "ft_print_conversion_int_utils.h"
+#include <stdlib.h>
 
 int	print_conversion_int(int n, int *flags)
 {
@@ -37,5 +38,6 @@ int	print_conversion_int(int n, int *flags)
 	if (is_n)
 		ft_putchar_fd('-', 1);
 	ft_putstr_fd(conv_str, 1);
+	free(conv_str);
 	return (printed_bytes);
 }

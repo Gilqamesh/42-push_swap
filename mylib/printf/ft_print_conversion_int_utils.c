@@ -6,12 +6,13 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 20:47:56 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/22 14:06:42 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 15:10:37 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "ft_print_conversion_int_utils.h"
+#include <stdlib.h>
 
 void	set_precision_and_negative(int *flags, int *precision, int n,
 int *is_n)
@@ -63,6 +64,7 @@ char *converted_str)
 	}
 	printed_bytes = precision + is_n;
 	print_part(is_n, precision, conv_str_len, converted_str);
+	free(converted_str);
 	return (printed_bytes);
 }
 
@@ -117,5 +119,6 @@ int	handle_flag_g_str_i(int *flags, int precision, int is_n, char *conv_str)
 			ft_putchar_fd('-', 1);
 	}
 	ft_putstr_fd(conv_str, 1);
+	free(conv_str);
 	return (printed_bytes);
 }
