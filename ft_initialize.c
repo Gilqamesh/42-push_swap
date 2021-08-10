@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 19:11:30 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 20:11:46 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ static void	test_is_str_valid_int(t_push_swap *mystruct, char *str)
 		ft_error(mystruct);
 }
 
-void	initialize_struct(t_push_swap *mystruct, int argc)
-{
-	ft_bzero(mystruct, sizeof(*mystruct));
-}
-
 static void	test_for_duplicates(t_push_swap *mystruct)
 {
 	t_list	*head;
@@ -61,40 +56,6 @@ static void	test_for_duplicates(t_push_swap *mystruct)
 		if (*(int *)(head->content) == *(int *)(head->next->content))
 			ft_error(mystruct);
 		head = head->next;
-	}
-}
-
-static void	initialize_relative_positions(t_push_swap *mystruct)
-{
-	t_list			*cur_sorted;
-	t_node_binary	*cur_stack;
-	int				cur_stack_index;
-	int				cur_sorted_index;
-
-	mystruct->relative_pos.number_pos = malloc(mystruct->a.n
-		* sizeof(*mystruct->relative_pos.number_pos));
-	mystruct->relative_pos.n = mystruct->a.n;
-	cur_sorted = mystruct->sorted;
-	cur_sorted_index = 0;
-	while (cur_sorted)
-	{
-		cur_stack_index = 0;
-		cur_stack = mystruct->a.head;
-		while (1)
-		{
-			if (*(int *)cur_stack->content == *(int *)cur_sorted->content)
-			{
-				mystruct->relative_pos.number_pos[cur_stack_index].a
-					= *(int *)cur_stack->content;
-				mystruct->relative_pos.number_pos[cur_stack_index].b
-					= cur_sorted_index;
-				break ;
-			}
-			cur_stack_index++;
-			cur_stack = cur_stack->next;
-		}
-		cur_sorted_index++;
-		cur_sorted = cur_sorted->next;
 	}
 }
 
@@ -136,5 +97,4 @@ void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 	}
 	mystruct->sorted = sorted;
 	test_for_duplicates(mystruct);
-	initialize_relative_positions(mystruct);
 }

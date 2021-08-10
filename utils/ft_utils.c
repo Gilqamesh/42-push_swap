@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 14:41:43 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 18:32:40 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ char	*crunch_sequence(char **sequence_arr)
 		ft_lststrnew(sequence_arr + index));
 	while (sequence_arr[++index])
 	{
+		ft_printf("%d\n", index);
 		if (!operation_flags && sequence_arr[index + 1])
 			ft_lststradd_back(&operation_flags,
 				ft_lststrnew(sequence_arr + index++));
@@ -398,7 +399,7 @@ char	*crunch_sequence(char **sequence_arr)
 					head = &(*head)->next;
 			}
 		}
-		if (ft_strcmp("", sequence_arr[index]))
+		if (*sequence_arr[index])
 		{
 			ft_lststradd_back(&operation_flags,
 				ft_lststrnew(sequence_arr + index));
@@ -413,10 +414,52 @@ char	*crunch_sequence(char **sequence_arr)
 	result_lst = NULL;
 	index = -1;
 	while (sequence_arr[++index])
-		if (ft_strcmp("", sequence_arr[index]))
+		if (*sequence_arr[index])
 			ft_nodbinadd_front(&result_lst, ft_nodbinnew(
 				ft_strjoin(" ", sequence_arr[index])));
 	result_str = ft_nodbinstrjoin_from_back(result_lst);
 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
 	return (result_str);
+}
+
+int	is_stack_sorted(t_stack *stack, int check_for_both_dirs,
+int position_of_head_matters)
+{
+	t_node_binary	*head;
+	t_node_binary	*min;
+	int				i;
+
+	if (!stack->n)
+		return (1);
+	head = stack->head;
+	if (!position_of_head_matters)
+	{
+		min = get_min_from_stack(stack);
+		head = min;
+	}
+	i = 0;
+	while (++i < stack->n)
+	{
+		if (*(int *)head->content > *(int *)head->next->content)
+		{
+			if (!check_for_both_dirs)
+				return (0);
+			else
+				break ;
+		}
+		head = head->next;
+	}
+	if (!check_for_both_dirs)
+		return (1);
+	head = stack->head;
+	if (!position_of_head_matters)
+		head = min;
+	i = 0;
+	while (++i < stack->n)
+	{
+		if (*(int *)head->content > *(int *)head->prev->content)
+			return (0);
+		head = head->prev;
+	}
+	return (1);
 }

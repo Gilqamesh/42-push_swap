@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 19:31:23 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 14:28:16 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 19:57:52 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,23 @@ static char	**ft_free(char ***s, int i)
 static char	**split_fn(char **splits_array, int n_of_splits,
 char const *s, int c)
 {
-	int	i;
+	int		i;
+	char	*end_ptr;
 
 	i = -1;
 	while (++i <= n_of_splits)
 	{
 		while (*s == c)
 			s++;
-		if (i < n_of_splits || ft_strchr(s, c))
+		end_ptr = ft_strchr(s, c);
+		if (i < n_of_splits || end_ptr)
 			*(splits_array + i) = ft_substr(s, 0,
-					(size_t)(ft_strchr(s, c) - s));
+					(size_t)(end_ptr - s));
 		else
 			*(splits_array + i) = ft_strdup(s);
 		if (!*(splits_array + i))
 			return (ft_free(&splits_array, i));
-		s = ft_strchr(s, c);
+		s = end_ptr;
 	}
 	return (splits_array);
 }

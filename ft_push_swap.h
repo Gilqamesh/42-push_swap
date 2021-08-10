@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 14:45:38 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 20:13:21 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,11 @@ typedef struct s_stack
 	int				n;
 }	t_stack;
 
-typedef struct s_relative_pos
-{
-	t_2_int	*number_pos;
-	int		n;
-}	t_relative_pos;
-
 typedef struct s_push_swap
 {
 	t_stack			a;
 	t_stack			b;
 	t_list			*sorted;
-	t_relative_pos	relative_pos;
 }	t_push_swap;
 
 typedef struct s_lststr
@@ -72,7 +65,6 @@ typedef struct s_4_int
 
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
 void			ft_error(t_push_swap *mystruct);
-void			initialize_struct(t_push_swap *mystruct, int argc);
 void			print_stacks(t_push_swap *mystruct);
 // swap the first 2 elements at the top of stack a
 void			stack_sa(t_push_swap *mystruct);
@@ -181,5 +173,7 @@ void			ft_lststrexcludenode(t_lststr **head, t_lststr *begin);
 int				get_number_of_rotations_for_inclusion(t_stack *stack, int num,
 					int dir);
 char			*LIS_sort(t_push_swap *mystruct);
+int				is_stack_sorted(t_stack *stack, int check_for_both_dirs,
+					int position_of_head_matters);
 
 #endif

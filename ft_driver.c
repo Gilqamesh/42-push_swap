@@ -6,35 +6,40 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:59:27 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 14:36:04 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 20:12:51 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_push_swap.h"
 
+static void	print_operations(char *ops)
+{
+	while (*ops)
+	{
+		while (*ops == ' ')
+			ops++;
+		while (*ops && *ops != ' ')
+		{
+			ft_printf("%c", *ops);
+			ops++;
+		}
+		while (*ops && *ops == ' ')
+			ops++;
+		ft_printf("\n");
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_push_swap	mystruct;
 	char		*sequence;
-	char		**sequence_arr;
-	int			i;
 
-	initialize_struct(&mystruct, argc);
+	ft_bzero(&mystruct, sizeof(mystruct));
 	if (argc < 2)
 		ft_error(&mystruct);
 	parse_input(&mystruct, argc, argv);
 	sequence = LIS_sort(&mystruct);
-	sequence_arr = ft_split(sequence, ' ');
+	print_operations(sequence);
 	free(sequence);
-	sequence = crunch_sequence(sequence_arr);
-	sequence_arr = ft_split(sequence, ' ');
-	i = -1;
-	// while (sequence_arr[++i])
-	// 	ft_printf("%s\n", sequence_arr[i]);
-	// ft_printf("Sequence: %s\n", sequence);
-	ft_printf("Number of operations: %d\n", ft_n_of_words_by_delim(sequence, ' '));
-	free(sequence);
-	ft_destroy_str_arr(&sequence_arr);
-	// system("leaks push_swap");
 	return (0);
 }

@@ -6,7 +6,8 @@ SRC = ft_initialize.c ft_error.c ft_testers.c \
 stack_operations/stack_op1.c stack_operations/stack_op2.c \
 stack_operations/stack_op3.c utils/ft_entropy.c algorithms/LIS/LIS_sort.c \
 ft_get_routes.c stack_operations/stack_op1_helper.c ft_testers_helper.c \
-utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c
+utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c \
+helper1.c
 CFLAGS = -g
 LIBNAME = libpush_swap.a
 LIBPATH = ./$(LIBNAME)

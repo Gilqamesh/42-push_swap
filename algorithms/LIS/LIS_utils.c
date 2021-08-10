@@ -6,14 +6,12 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 14:44:49 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/10 20:18:44 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "../../ft_push_swap.h"
-#include <time.h>
-#include <stdio.h>
 
 t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 int n)
@@ -25,6 +23,7 @@ int n)
 	int				*helper;
 	int				i;
 	int				j;
+	int				k;
 	int				found;
 
 	first_arr.elements = malloc((n > 0 ? n : -n) * sizeof(*first_arr.elements));
@@ -58,25 +57,21 @@ int n)
 	free(helper);
 	t_INT_array	LIS;
 	LIS = find_LCS_of_two_sequences(first_arr, second_arr);
-	unordered.size_elements = 0;
-	unordered.elements = malloc((first_arr.size_elements - LIS.size_elements)
+	unordered.size_elements = mystruct->a.n - LIS.size_elements;
+	unordered.elements = malloc((mystruct->a.n - LIS.size_elements)
 		* sizeof(int));
+	t_node_binary	*tmp;
+	tmp = mystruct->a.head;
 	i = -1;
-	while (++i < first_arr.size_elements)
+	j = 0;
+	k = 0;
+	while (++i < mystruct->a.n)
 	{
-		j = -1;
-		found = 0;
-		while (++j < LIS.size_elements)
-		{
-			if (first_arr.elements[i] == LIS.elements[j])
-			{
-				found = 1;
-				break ;
-			}
-		}
-		if (!found)
-			unordered.elements[unordered.size_elements++]
-				= first_arr.elements[i];
+		if (*(int *)tmp->content != LIS.elements[j])
+			unordered.elements[k++] = *(int *)tmp->content;
+		else
+			j++;
+		tmp = tmp->next;
 	}
 	free(first_arr.elements);
 	free(second_arr.elements);
@@ -191,11 +186,11 @@ t_INT_array	find_LCS_of_two_sequences(t_INT_array first_arr,
 t_INT_array second_arr)
 {
 	t_INTarrofarr	**table;
-	t_INT_array				result;
-	int						i;
-	int						j;
-	int						k;
-	t_list					*alloced_ptrs;
+	t_INT_array		result;
+	int				i;
+	int				j;
+	int				k;
+	t_list			*alloced_ptrs;
 
 	alloced_ptrs = NULL;
 	table = ft_lstmallocwrapper(&alloced_ptrs,
@@ -324,15 +319,7 @@ char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
 	t_node_binary	*result_lst;
 	int				i;
 
-	min = stack->head;
-	cur = stack->head;
-	i = 0;
-	while (++i < stack->n)
-	{
-		cur = cur->next;
-		if (*(int *)cur->content < *(int *)min->content)
-			min = cur;
-	}
+	min = get_min_from_stack(stack);
 	cur = stack->head;
 	i = -1;
 	while (++i < stack->n)
