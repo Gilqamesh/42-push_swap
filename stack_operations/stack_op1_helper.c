@@ -3,53 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   stack_op1_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edavid <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/26 15:13:02 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/06 01:58:50 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 23:05:01 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_push_swap.h"
-
-void	swap_helper_case_3(t_stack *stack)
-{
-	t_node_binary	*cur_head;
-	t_node_binary	*after_head;
-	t_node_binary	*before_head;
-	t_node_binary	*before_before_head;
-
-	cur_head = stack->head;
-	before_head = cur_head->prev;
-	after_head = cur_head->next;
-	cur_head->next = before_head;
-	cur_head->prev = after_head;
-	before_head->next = after_head;
-	before_head->prev = cur_head;
-	after_head->next = cur_head;
-	after_head->prev = before_head;
-	swap_nodbin_ptrs(&stack->head, &stack->head->prev);
-}
-
-void	swap_helper_case_g3(t_stack *stack)
-{
-	t_node_binary	*cur_head;
-	t_node_binary	*after_head;
-	t_node_binary	*before_head;
-	t_node_binary	*after_after_head;
-
-	cur_head = stack->head;
-	after_head = cur_head->next;
-	before_head = cur_head->prev;
-	after_after_head = after_head->next;
-	after_after_head->prev = cur_head;
-	before_head->next = after_head;
-	cur_head->next = after_after_head;
-	cur_head->prev = after_head;
-	after_head->next = cur_head;
-	after_head->prev = before_head;
-	swap_nodbin_ptrs(&stack->head, &stack->head->prev);
-}
 
 static void	remove_head_helper(t_stack *stack)
 {
@@ -104,10 +65,5 @@ void	stack_swap(t_stack *stack)
 {
 	if (stack->n < 2)
 		return ;
-	if (stack->n == 2)
-		stack->head = stack->head->next;
-	else if (stack->n == 3)
-		swap_helper_case_3(stack);
-	else
-		swap_helper_case_g3(stack);
+	swap_nodbin_content(stack->head, stack->head->next);
 }

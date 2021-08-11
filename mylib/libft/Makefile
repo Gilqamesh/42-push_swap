@@ -6,7 +6,7 @@
 #    By: edavid <edavid@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/15 10:05:25 by edavid            #+#    #+#              #
-#    Updated: 2021/08/08 13:38:01 by edavid           ###   ########.fr        #
+#    Updated: 2021/08/11 17:17:17 by edavid           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ all : $(NAME) bonus
 $(NAME) : *.c
 	$(CC) $(CFLAGS) -c $(sources)
 	ar rc $(NAME) *.o
+	rm -rf __.SYMDEF __.SYMDEF\ SORTED
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
 .PHONY: clean bonus all fclean re fcleanall

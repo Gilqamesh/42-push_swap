@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   utils_helper4.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 14:29:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 17:41:41 by edavid           ###   ########.fr       */
+/*   Created: 2021/08/11 17:06:46 by edavid            #+#    #+#             */
+/*   Updated: 2021/08/11 20:21:04 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#ifndef UTILS_HELPER4_H
+# define UTILS_HELPER4_H
 
-void	*ft_realloc(void *src, size_t size)
-{
-	void	*new;
+# include "../../ft_push_swap.h"
+void	init_vars(t_stack *stack, t_node_binary **result_lst, int *i,
+			t_node_binary **cur);
+void	get_rotations(t_stack *stack, t_node_binary **result_lst, int i,
+			char stack_name);
+// Limits the number of inputs when calculating its LIS
+int		get_input_limit_on_LIS(int n_of_inputs);
 
-	new = ft_calloc(1, size);
-	if (!new)
-	{
-		if (src)
-			free(src);
-		return ((void *)0);
-	}
-	if (!src)
-		return (new);
-	ft_memmove(new, src, size);
-	free(src);
-	return (new);
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 20:13:21 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 22:42:12 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,64 @@
 
 # include "mylib/mylib.h"
 
+# ifndef T_INT_ARRAY
+#  define T_INT_ARRAY
 typedef struct s_INT_array
 {
 	int	*elements;
 	int	size_elements;
 }	t_INT_array;
+# endif
 
+# ifndef T_INT_ARRAY2
+#  define T_INT_ARRAY2
 typedef struct s_INT_array2
 {
 	t_INT_array	arr1;
 	t_INT_array	arr2;
 }	t_INT_array2;
+# endif
 
+# ifndef T_INTARROFARR
+#  define T_INTARROFARR
 typedef struct s_INTarrofarr
 {
 	t_INT_array	*arr;
 	int			size_arr;
 }	t_INTarrofarr;
+# endif
 
+# ifndef T_STACK
+#  define T_STACK
 typedef struct s_stack
 {
 	t_node_binary	*head;
 	int				n;
 }	t_stack;
+# endif
 
+# ifndef T_PUSH_SWAP
+#  define T_PUSH_SWAP
 typedef struct s_push_swap
 {
 	t_stack			a;
 	t_stack			b;
 	t_list			*sorted;
 }	t_push_swap;
+# endif
 
-typedef struct s_lststr
-{
-	char			**content;
-	struct s_lststr	*next;
-}	t_lststr;
+// # ifndef T_LSTSTR
+// #  define T_LSTSTR
+// typedef struct s_lststr
+// {
+// 	char			**content;
+// 	struct s_lststr	*next;
+// }	t_lststr;
+// # endif
 
-typedef struct s_4_int
+# ifndef T_ROT_VARS
+#  define T_ROT_VARS
+typedef struct s_rot_vars
 {
 	int	forward_rot;
 	int	reverse_rot;
@@ -61,7 +81,8 @@ typedef struct s_4_int
 	int	forward_both;
 	int	reverse_both;
 	int	sum;
-}	t_4_int;
+}	t_rot_vars;
+# endif
 
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
 void			ft_error(t_push_swap *mystruct);
@@ -116,8 +137,8 @@ void			push_helper(t_stack *pushed, t_stack *popped);
 // helper function 
 void			print_stacks_helper(t_node_binary *a_cur, t_node_binary *b_cur,
 					int a_counter, int b_counter);
-// swaps two *t_node_binary type
-void			swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b);
+// swaps 'content' of two *t_node_binary type
+void			swap_nodbin_content(t_node_binary *a, t_node_binary *b);
 // Finds the Largest Increasing Subsequence starting from head, the number of
 // elements are 'n'. If 'n' is positive, the traveling direction is positive,
 // i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.
@@ -126,9 +147,6 @@ t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 // Finds the Largest Common Subsequence between two sequences
 t_INT_array		find_LCS_of_two_sequences(t_INT_array first_seq,
 					t_INT_array second_seq);
-// Allocates and returns a t_INT_array that is the result of going over the
-// t_list from *head
-t_INT_array		construct_intarr_from_lst(t_list *lst);
 // Combines two t_INTarrofarr type, only keeping the unique ones.
 // The combination is sorted lexicographically as well between each elements.
 // Uses ft_mallocwrapper for 'allocated_ptr'.
@@ -148,8 +166,6 @@ void			stack_push(t_stack *from, t_stack *to);
 // Returns greater than, equal to, or less than 0, according as 'arr1' is
 // greater than, equal to, or less than 'arr2'.
 int				ft_intarrcmp(t_INT_array *arr1, t_INT_array *arr2);
-// Returns 1 if 'ptr' as an address is already contained in 'lst', 0 otherwise
-int				ft_lstiscontained(t_list *lst, void *ptr);
 // Generic swap operation on a stack
 void			stack_swap(t_stack *stack);
 // Generic rotate operation on a stack
@@ -159,21 +175,24 @@ void			stack_revrotate(t_stack *stack);
 // 
 char			*crunch_sequence(char **sequence_arr);
 //
-void			ft_lststradd_back(t_lststr **lst, t_lststr *new);
-//
-t_lststr		*ft_lststrnew(char **content);
-void			ft_lststrreplace(t_lststr ***head, char ***compared_str,
-					t_lststr **operation_flags, char *op);
-void			ft_lststrprint(t_lststr *lst);
-void			ft_lststrnullboth(t_lststr **head, char **compared_str,
-					t_lststr *begin);
-void			ft_lststrexcludenode(t_lststr **head, t_lststr *begin);
+// void			ft_lststradd_back(t_lststr **lst, t_lststr *new);
+// //
+// t_lststr		*ft_lststrnew(char **content);
+// void			ft_lststrreplace(t_lststr ***head, char ***compared_str,
+// 					t_lststr **operation_flags, char *op);
+// void			ft_lststrprint(t_lststr *lst);
+// void			ft_lststrnullboth(t_lststr **head, char **compared_str,
+// 					t_lststr *begin);
+// void			ft_lststrexcludenode(t_lststr **head, t_lststr *begin);
 // Works on already sorted stack
 // 0 reverse rotation, anything else forward direction
 int				get_number_of_rotations_for_inclusion(t_stack *stack, int num,
 					int dir);
+// Keeps LIS in stack A, pushes the rest away to B, then applies optimal sort
 char			*LIS_sort(t_push_swap *mystruct);
-int				is_stack_sorted(t_stack *stack, int check_for_both_dirs,
-					int position_of_head_matters);
+// Returns 1 if stack is sorted from the head, 0 otherwise
+int				is_stack_sorted(t_stack *stack);
+// Pushes all elements but 3 away to stack B and then applies optimal sort
+char			*three_sort(t_push_swap *mystruct);
 
 #endif

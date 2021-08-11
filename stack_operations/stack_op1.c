@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 18:05:13 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/27 14:20:25 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 22:59:24 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,14 @@ void	stack_sa(t_push_swap *mystruct)
 {
 	if (mystruct->a.n < 2)
 		return ;
-	if (mystruct->a.n == 2)
-		mystruct->a.head = mystruct->a.head->next;
-	else if (mystruct->a.n == 3)
-		swap_helper_case_3(&mystruct->a);
-	else
-		swap_helper_case_g3(&mystruct->a);
+	swap_nodbin_content(mystruct->a.head, mystruct->a.head->next);
 }
 
 void	stack_sb(t_push_swap *mystruct)
 {
 	if (mystruct->b.n < 2)
 		return ;
-	if (mystruct->b.n == 2)
-		mystruct->b.head = mystruct->b.head->next;
-	else if (mystruct->b.n == 3)
-		swap_helper_case_3(&mystruct->b);
-	else
-		swap_helper_case_g3(&mystruct->b);
+	swap_nodbin_content(mystruct->a.head, mystruct->a.head->next);
 }
 
 void	stack_ss(t_push_swap *mystruct)

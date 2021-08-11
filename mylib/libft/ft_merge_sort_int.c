@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:41:34 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/28 13:12:16 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 17:45:32 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_merge_sort_comb(int *in, t_3_int start_mid_end_indexes, int *out)
 	while (++k < start_mid_end_indexes.c)
 	{
 		if (i < start_mid_end_indexes.b && (j >= start_mid_end_indexes.c
-			|| in[i] <= in[j]))
+				|| in[i] <= in[j]))
 		{
 			out[k] = in[i];
 			i++;

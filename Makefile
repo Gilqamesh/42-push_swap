@@ -7,7 +7,10 @@ stack_operations/stack_op1.c stack_operations/stack_op2.c \
 stack_operations/stack_op3.c utils/ft_entropy.c algorithms/LIS/LIS_sort.c \
 ft_get_routes.c stack_operations/stack_op1_helper.c ft_testers_helper.c \
 utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c \
-helper1.c
+helper1.c helper2.c algorithms/LIS/utils_helper1.c algorithms/LIS/utils_helper2.c \
+algorithms/LIS/utils_helper3.c algorithms/LIS/utils_helper4.c \
+algorithms/three_sort/three_sort.c
+
 CFLAGS = -g
 LIBNAME = libpush_swap.a
 LIBPATH = ./$(LIBNAME)
@@ -15,7 +18,7 @@ MYLIB = ./mylib/libmylib.a
 
 $(NAME): $(SRC:.c=.o) ft_driver.o $(LIBNAME)
 	make library
-	-ar -d $(LIBNAME) ft_checker.o tester.o
+	-ar -d $(LIBNAME) ft_checker.o
 	ar -rs $(LIBNAME) ft_driver.o
 	$(CC) $(CFLAGS) -o $(NAME) $(LIBPATH)
 %.o: %.c
@@ -24,7 +27,7 @@ $(NAME): $(SRC:.c=.o) ft_driver.o $(LIBNAME)
 $(LIBNAME): $(MYLIB)
 $(MYLIB):
 	$(MAKE) --directory=mylib
-.PHONY: clean fclean re all bonus library tester fcleanall
+.PHONY: clean fclean re all bonus library fcleanall
 clean:
 	rm -f *.o __.SYMDEF __.SYMDEF\ SORTED
 	cd stack_operations && rm -f *.o
@@ -40,7 +43,7 @@ re:
 all: $(NAME)
 bonus: $(SRC:.c=.o) $(BONUSOBJ)
 	make library
-	-ar -d $(LIBNAME) tester.o driver.o
+	-ar -d $(LIBNAME) driver.o
 	ar -rs $(LIBNAME) $(BONUSOBJ)
 	$(CC) $(CFLAGS) -o $(BONUSNAME) $(LIBNAME)
 library:
@@ -51,11 +54,7 @@ library:
 	ar -rs $(LIBNAME) *.o
 	ar -rs $(LIBNAME) ./stack_operations/*.o
 	ar -rs $(LIBNAME) ./algorithms/LIS/*.o
+	ar -rs $(LIBNAME) ./algorithms/three_sort/*.o
 	ar -rs $(LIBNAME) ./utils/*.o
-tester: $(SRC:.c=.o) tester.o
-	rm -rf $(LIBNAME)
-	make library
-	ar -d $(LIBNAME) ft_driver.o ft_checker.o tester.o
-	$(CC) $(CFLAGS) -o tester $(LIBNAME) tester.o
 fcleanall: fclean
 	$(MAKE) fcleanall --directory=mylib

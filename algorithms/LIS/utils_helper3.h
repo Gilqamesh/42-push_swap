@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   utils_helper3.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/22 14:29:42 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 17:41:41 by edavid           ###   ########.fr       */
+/*   Created: 2021/08/11 16:32:33 by edavid            #+#    #+#             */
+/*   Updated: 2021/08/11 16:37:06 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#ifndef UTILS_HELPER3_H
+# define UTILS_HELPER3_H
 
-void	*ft_realloc(void *src, size_t size)
-{
-	void	*new;
+# include "../../ft_push_swap.h"
+void	append_cell(t_3_int ijk, t_list **alloced_ptrs,
+			t_INTarrofarr **table, t_INT_array fir_arr);
+void	select_longest_cell(t_3_int ijk, t_list **alloced_ptrs,
+			t_INTarrofarr **table);
 
-	new = ft_calloc(1, size);
-	if (!new)
-	{
-		if (src)
-			free(src);
-		return ((void *)0);
-	}
-	if (!src)
-		return (new);
-	ft_memmove(new, src, size);
-	free(src);
-	return (new);
-}
+#endif

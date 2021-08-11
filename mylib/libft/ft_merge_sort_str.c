@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/29 11:39:06 by edavid            #+#    #+#             */
-/*   Updated: 2021/07/29 11:56:45 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 17:45:16 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char **out)
 	while (++k < start_mid_end_indexes.c)
 	{
 		if (i < start_mid_end_indexes.b && (j >= start_mid_end_indexes.c
-			|| ft_strcmp(in[i], in[j]) <= 0))
+				|| ft_strcmp(in[i], in[j]) <= 0))
 		{
 			out[k] = in[i];
 			i++;

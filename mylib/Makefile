@@ -13,6 +13,7 @@ $(NAME): $(LIBFT) $(LIBPRINTF) $(LIBGNL)
 	rm -rf *.a
 	ar -rs $(NAME) *.o
 	rm -rf *.o
+	rm -rf __.SYMDEF __.SYMDEF\ SORTED
 $(LIBFT):
 	$(MAKE) --directory=libft
 $(LIBPRINTF):

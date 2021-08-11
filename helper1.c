@@ -6,55 +6,18 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:28:24 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 11:20:31 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 23:06:36 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_push_swap.h"
 #include "helper1.h"
+#include "helper2.h"
 
-void	handle_rotations(t_push_swap *mystruct, t_4_int *min_rotate_ops,
+void	handle_rotations(t_push_swap *mystruct, t_rot_vars *min_rotate_ops,
 t_node_binary **result_lst)
 {
-	*result_lst = NULL;
-	if (min_rotate_ops->forward_both)
-	{
-		while (min_rotate_ops->forward_both-- > 0)
-		{
-			ft_nodbinadd_front(result_lst,
-				ft_nodbinnew(ft_strdup(" rr")));
-			stack_rotate(&mystruct->b);
-			stack_rotate(&mystruct->a);
-		}
-	}
-	else if (min_rotate_ops->reverse_both)
-	{
-		while (min_rotate_ops->reverse_both-- > 0)
-		{
-			ft_nodbinadd_front(result_lst,
-				ft_nodbinnew(ft_strdup(" rrr")));
-			stack_revrotate(&mystruct->b);
-			stack_revrotate(&mystruct->a);
-		}
-	}
-	if (min_rotate_ops->forward_rot_B)
-	{
-		while (min_rotate_ops->forward_rot_B-- > 0)
-		{
-			ft_nodbinadd_front(result_lst,
-				ft_nodbinnew(ft_strdup(" rb")));
-			stack_rotate(&mystruct->b);
-		}
-	}
-	else if (min_rotate_ops->reverse_rot_B)
-	{
-		while (min_rotate_ops->reverse_rot_B-- > 0)
-		{
-			ft_nodbinadd_front(result_lst,
-				ft_nodbinnew(ft_strdup(" rrb")));
-			stack_revrotate(&mystruct->b);
-		}
-	}
+	handle_rotation_helper1(mystruct, min_rotate_ops, result_lst);
+	handle_rotation_helper2(mystruct, min_rotate_ops, result_lst);
 	if (min_rotate_ops->forward_rot)
 	{
 		while (min_rotate_ops->forward_rot-- > 0)
@@ -76,11 +39,11 @@ t_node_binary **result_lst)
 }
 
 void	initialize_min_rotate_ops(t_push_swap *mystruct,
-t_4_int *min_rotate_ops)
+t_rot_vars *min_rotate_ops)
 {
-	ft_bzero(&min_rotate_ops, sizeof(min_rotate_ops));
+	ft_bzero(min_rotate_ops, sizeof(*min_rotate_ops));
 	min_rotate_ops->forward_rot = get_number_of_rotations_for_inclusion(
-		&mystruct->a, *(int *)mystruct->b.head->content, 1);
+			&mystruct->a, *(int *)mystruct->b.head->content, 1);
 	min_rotate_ops->reverse_rot = mystruct->a.n - min_rotate_ops->forward_rot;
 	if (min_rotate_ops->forward_rot < min_rotate_ops->reverse_rot)
 	{
@@ -94,50 +57,41 @@ t_4_int *min_rotate_ops)
 	}
 }
 
-void	check_for_min_ops_combo(t_push_swap *mystruct,
-t_4_int *min_rotate_ops, t_node_binary *tmp_B)
+static void	helper_fn(t_push_swap *mystruct, t_2_int i_dir,
+t_node_binary *tmp_B, t_rot_vars *rotate_ops)
 {
-	int		i;
-	int		j;
-	int		size_of_b;
-	t_4_int	rotate_ops;
+	int	j;
 
-	size_of_b = mystruct->b.n;
-	if (size_of_b > 250)
-		size_of_b = 250;
-	i = 0;
+	tmp_B = mystruct->b.head;
+	j = -1;
+	if (i_dir.b)
+		while (++j < i_dir.a)
+			tmp_B = tmp_B->next;
+	else
+		while (++j < i_dir.a)
+			tmp_B = tmp_B->prev;
+	ft_bzero(rotate_ops, sizeof(*rotate_ops));
+	rotate_ops->forward_rot = get_number_of_rotations_for_inclusion(
+			&mystruct->a, *(int *)tmp_B->content, 1);
+	rotate_ops->reverse_rot = mystruct->a.n - rotate_ops->forward_rot;
+}
+
+void	check_for_min_ops_combo(t_push_swap *mystruct,
+t_rot_vars *min_rotate_ops, t_node_binary *tmp_B)
+{
+	int			i;
+	int			j;
+	int			size_of_b;
+	t_rot_vars	rotate_ops;
+
+	init_b_i(mystruct, &size_of_b, &i);
 	while (++i <= size_of_b / 2)
 	{
-		tmp_B = mystruct->b.head;
-		j = -1;
-		while (++j < i)
-			tmp_B = tmp_B->next;
-		ft_bzero(&rotate_ops, sizeof(rotate_ops));
-		rotate_ops.forward_rot = get_number_of_rotations_for_inclusion(
-			&mystruct->a, *(int *)tmp_B->content, 1);
-		rotate_ops.reverse_rot = mystruct->a.n - rotate_ops.forward_rot;
+		helper_fn(mystruct, (t_2_int){i, 1}, tmp_B, &rotate_ops);
 		rotate_ops.forward_rot_B = i;
-		rotate_ops.reverse_rot_B = 0;
 		rotate_ops.sum = rotate_ops.forward_rot_B;
 		if (rotate_ops.forward_rot < rotate_ops.reverse_rot)
-		{
-			rotate_ops.sum += rotate_ops.forward_rot;
-			if (rotate_ops.forward_rot_B < rotate_ops.forward_rot)
-			{
-				rotate_ops.sum -= rotate_ops.forward_rot_B;
-				rotate_ops.forward_both = rotate_ops.forward_rot_B;
-				rotate_ops.forward_rot -= rotate_ops.forward_rot_B;
-				rotate_ops.forward_rot_B = 0;
-			}
-			else
-			{
-				rotate_ops.sum -= rotate_ops.forward_rot;
-				rotate_ops.forward_both = rotate_ops.forward_rot;
-				rotate_ops.forward_rot_B -= rotate_ops.forward_rot;
-				rotate_ops.forward_rot = 0;
-			}
-			rotate_ops.reverse_rot = 0;
-		}
+			handle_rotate(&rotate_ops, min_rotate_ops);
 		else
 		{
 			rotate_ops.sum += rotate_ops.reverse_rot;
@@ -149,28 +103,17 @@ t_4_int *min_rotate_ops, t_node_binary *tmp_B)
 }
 
 void	check_for_min_ops_combo2(t_push_swap *mystruct,
-t_4_int *min_rotate_ops, t_node_binary *tmp_B)
+t_rot_vars *min_rotate_ops, t_node_binary *tmp_B)
 {
-	int		i;
-	int		j;
-	int		size_of_b;
-	t_4_int	rotate_ops;
+	int			i;
+	int			j;
+	int			size_of_b;
+	t_rot_vars	rotate_ops;
 
-	size_of_b = mystruct->b.n;
-	if (size_of_b > 250)
-		size_of_b = 250;
-	i = 0;
+	init_b_i(mystruct, &size_of_b, &i);
 	while (++i < size_of_b / 2)
 	{
-		tmp_B = mystruct->b.head;
-		j = -1;
-		while (++j < i)
-			tmp_B = tmp_B->prev;
-		ft_bzero(&rotate_ops, sizeof(rotate_ops));
-		rotate_ops.forward_rot = get_number_of_rotations_for_inclusion(&mystruct->a,
-			*(int *)tmp_B->content, 1);
-		rotate_ops.reverse_rot = mystruct->a.n - rotate_ops.forward_rot;
-		rotate_ops.forward_rot_B = 0;
+		helper_fn(mystruct, (t_2_int){i, 0}, tmp_B, &rotate_ops);
 		rotate_ops.reverse_rot_B = i;
 		rotate_ops.sum = rotate_ops.reverse_rot_B;
 		if (rotate_ops.forward_rot < rotate_ops.reverse_rot)
@@ -179,25 +122,6 @@ t_4_int *min_rotate_ops, t_node_binary *tmp_B)
 			rotate_ops.reverse_rot = 0;
 		}
 		else
-		{
-			rotate_ops.sum += rotate_ops.reverse_rot;
-			if (rotate_ops.reverse_rot_B < rotate_ops.reverse_rot)
-			{
-				rotate_ops.sum -= rotate_ops.reverse_rot_B;
-				rotate_ops.reverse_both = rotate_ops.reverse_rot_B;
-				rotate_ops.reverse_rot -= rotate_ops.reverse_rot_B;
-				rotate_ops.reverse_rot_B = 0;
-			}
-			else
-			{
-				rotate_ops.sum -= rotate_ops.reverse_rot;
-				rotate_ops.reverse_both = rotate_ops.reverse_rot;
-				rotate_ops.reverse_rot_B -= rotate_ops.reverse_rot;
-				rotate_ops.reverse_rot = 0;
-			}
-			rotate_ops.forward_rot = 0;
-		}
-		if (rotate_ops.sum < min_rotate_ops->sum)
-			*min_rotate_ops = rotate_ops;
+			handle_rotate2(&rotate_ops, min_rotate_ops);
 	}
 }

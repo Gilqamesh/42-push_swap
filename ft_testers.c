@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 17:44:59 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/09 19:37:53 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 17:48:09 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	print_stacks(t_push_swap *mystruct)
 	ft_printf("%d\t\t%d\n", calc_entropy(&mystruct->a),
 		calc_entropy(&mystruct->b));
 	ft_printf("sorted\n");
-	ft_printf("%d\t\t%d\n", is_stack_sorted(&mystruct->a, 0, 0),
-		is_stack_sorted(&mystruct->b, 0, 0));
+	ft_printf("%d\t\t%d\n", is_stack_sorted(&mystruct->a),
+		is_stack_sorted(&mystruct->b));
 	ft_printf("n of elements\n");
 	ft_printf("%d\t\t%d\n", mystruct->a.n, mystruct->b.n);
 	ft_printf("------------------------------------------------------------\n");
@@ -85,8 +85,7 @@ void	game_loop(t_push_swap *mystruct)
 	}
 }
 
-int	
-is_solution(t_push_swap *mystruct)
+int	is_solution(t_push_swap *mystruct)
 {
 	int				entr_a;
 	int				entr_b;

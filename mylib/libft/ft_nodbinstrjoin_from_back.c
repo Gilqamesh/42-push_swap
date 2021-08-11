@@ -6,12 +6,26 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 16:13:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/04 16:56:46 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 17:44:52 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+
+static void	measure_len(t_node_binary *list, t_node_binary **cur, int *len)
+{
+	*len = 0;
+	(*cur) = list;
+	while ((*cur))
+	{
+		*len += ft_strlen((char *)(*cur)->content);
+		if ((*cur)->next)
+			(*cur) = (*cur)->next;
+		else
+			break ;
+	}
+}
 
 // Allocates and returns a string that is the concatenation of going through
 // the list's str contents
@@ -24,16 +38,7 @@ char	*ft_nodbinstrjoin_from_back(t_node_binary *list)
 
 	if (!list)
 		return (ft_strdup(""));
-	len = 0;
-	cur = list;
-	while (cur)
-	{
-		len += ft_strlen((char *)cur->content);
-		if (cur->next)
-			cur = cur->next;
-		else
-			break ;
-	}
+	measure_len(list, &cur, &len);
 	result = malloc(len + 1);
 	result[len] = '\0';
 	index_res_tmp.a = -1;

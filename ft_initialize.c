@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 14:38:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 20:11:46 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 21:04:22 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,41 +59,48 @@ static void	test_for_duplicates(t_push_swap *mystruct)
 	}
 }
 
+static void	handle_argument(t_push_swap *mystruct, char **argv, t_3_int *ijk,
+t_list **sorted)
+{
+	int				*nptr;
+	char			**str_arr;
+	t_node_binary	*new;
+
+	str_arr = ft_split(argv[ijk->a], ' ');
+	while (str_arr[++ijk->b])
+	{
+		test_is_str_valid_int(mystruct, str_arr[ijk->b]);
+		nptr = malloc(sizeof(*nptr));
+		if (!nptr)
+			ft_error(mystruct);
+		*nptr = ft_atoi(str_arr[ijk->b]);
+		ft_lstsortedinsert_int(sorted, ft_lstnew(nptr));
+		new = ft_nodbinnew(ft_intdup(*nptr));
+		if (!new)
+			ft_error(mystruct);
+		ft_nodbinadd_back(&mystruct->a.head, new);
+		mystruct->a.n++;
+	}
+	ft_destroy_str_arr(&str_arr);
+	if (ijk->a == ijk->c - 1)
+	{
+		new->next = mystruct->a.head;
+		mystruct->a.head->prev = new;
+	}
+}
+
 void	parse_input(t_push_swap *mystruct, int argc, char **argv)
 {
-	int				i;
-	int				j;
-	int				*nptr;
+	t_3_int			ijk;
 	t_list			*sorted;
-	t_node_binary	*new;
-	char			**str_arr;
 
-	i = 1;
 	sorted = (t_list *)0;
-	while (i < argc)
+	ijk.a = 0;
+	ijk.c = argc;
+	while (++ijk.a < argc)
 	{
-		str_arr = ft_split(argv[i], ' ');
-		j = -1;
-		while (str_arr[++j])
-		{
-			test_is_str_valid_int(mystruct, str_arr[j]);
-			nptr = malloc(sizeof(*nptr));
-			if (!nptr)
-				ft_error(mystruct);
-			*nptr = ft_atoi(str_arr[j]);
-			ft_lstsortedinsert_int(&sorted, ft_lstnew(nptr));
-			new = ft_nodbinnew(ft_intdup(*nptr));
-			if (!new)
-				ft_error(mystruct);
-			ft_nodbinadd_back(&mystruct->a.head, new);
-			mystruct->a.n++;
-		}
-		ft_destroy_str_arr(&str_arr);
-		if (++i == argc)
-		{
-			new->next = mystruct->a.head;
-			mystruct->a.head->prev = new;
-		}
+		ijk.b = -1;
+		handle_argument(mystruct, argv, &ijk, &sorted);
 	}
 	mystruct->sorted = sorted;
 	test_for_duplicates(mystruct);

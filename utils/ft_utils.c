@@ -6,40 +6,19 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 13:20:25 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 18:32:40 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 22:43:11 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_push_swap.h"
 
-void	swap_nodbin_ptrs(t_node_binary **a, t_node_binary **b)
+void	swap_nodbin_content(t_node_binary *a, t_node_binary *b)
 {
-	t_node_binary	*tmp;
+	void	*tmp;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-/* Allocates and returns a t_INT_array that is the result of going over the
-** t_list from *head
-*/
-t_INT_array	construct_intarr_from_lst(t_list *lst)
-{
-	int	*result_arr;
-	int	arrLen;
-
-	arrLen = 0;
-	if (!lst)
-		return ((t_INT_array){(int *)0, 0});
-	result_arr = (int *)0;
-	while (lst)
-	{
-		result_arr = ft_realloc(result_arr, ++arrLen * sizeof(*result_arr));
-		result_arr[arrLen - 1] = *(int *)lst->content;
-		lst = lst->next;
-	}
-	return ((t_INT_array){result_arr, arrLen});
+	tmp = a->content;
+	a->content = b->content;
+	b->content = tmp;
 }
 
 void	destroy_t_INT_array2(t_INT_array2 *arr)
@@ -89,341 +68,340 @@ int	ft_intarrcmp(t_INT_array *arr1, t_INT_array *arr2)
 	return (0);
 }
 
-int	ft_lstiscontained(t_list *lst, void *ptr)
-{
-	t_list	*cur;
+// void	ft_lststradd_back(t_lststr **lst, t_lststr *new)
+// {
+// 	t_lststr	*cur;
 
-	cur = lst;
-	while (cur)
-	{
-		if (cur->content == ptr)
-			return (1);
-		cur = cur->next;
-	}
-	return (0);
-}
+// 	if (!new)
+// 		return ;
+// 	if (!*lst)
+// 	{
+// 		*lst = new;
+// 		return ;
+// 	}
+// 	cur = *lst;
+// 	while (cur->next)
+// 		cur = cur->next;
+// 	cur->next = new;
+// }
 
-void	ft_lststradd_back(t_lststr **lst, t_lststr *new)
-{
-	t_lststr	*cur;
+// t_lststr	*ft_lststrnew(char **content)
+// {
+// 	t_lststr	*new_el;
 
-	if (!new)
-		return ;
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
-	cur = *lst;
-	while (cur->next)
-		cur = cur->next;
-	cur->next = new;
-}
+// 	new_el = (t_lststr *)malloc(sizeof(*new_el));
+// 	if (!new_el)
+// 		return ((t_lststr *)0);
+// 	new_el->content = content;
+// 	new_el->next = (t_lststr *)0;
+// 	return (new_el);
+// }
 
-t_lststr	*ft_lststrnew(char **content)
-{
-	t_lststr	*new_el;
+// void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
+// {
+// 	t_lststr	*prev;
+// 	t_lststr	*tmp;
 
-	new_el = (t_lststr *)malloc(sizeof(*new_el));
-	if (!new_el)
-		return ((t_lststr *)0);
-	new_el->content = content;
-	new_el->next = (t_lststr *)0;
-	return (new_el);
-}
+// 	if (!begin)
+// 		return ;
+// 	if (!head || !*head)
+// 		return ;
+// 	prev = begin;
+// 	if (prev == *head)
+// 	{
+// 		tmp = *head;
+// 		*head = (*head)->next;
+// 		free(tmp);
+// 		return ;
+// 	}
+// 	while (prev->next != *head)
+// 		prev = prev->next;
+// 	tmp = *head;
+// 	*head = (*head)->next;
+// 	free(tmp);
+// 	prev->next = *head;
+// }
 
-void	ft_lststrexcludenode(t_lststr **head, t_lststr *begin)
-{
-	t_lststr	*prev;
-	t_lststr	*tmp;
+// void	ft_lststrnullboth(t_lststr **head, char **compared_str_ptr,
+// t_lststr *begin)
+// {
+// 	free(*(*head)->content);
+// 	*(*head)->content = ft_strdup("");
+// 	ft_lststrexcludenode(head, begin);
+// 	free(*compared_str_ptr);
+// 	*compared_str_ptr = ft_strdup("");
+// 	*head = NULL;
+// }
 
-	if (!begin)
-		return ;
-	if (!head || !*head)
-		return ;
-	prev = begin;
-	if (prev == *head)
-	{
-		tmp = *head;
-		*head = (*head)->next;
-		free(tmp);
-		return ;
-	}
-	while (prev->next != *head)
-		prev = prev->next;
-	tmp = *head;
-	*head = (*head)->next;
-	free(tmp);
-	prev->next = *head;
-}
+// void	ft_lststrreplace(t_lststr ***head, char ***compared_str_ptr,
+// t_lststr **operation_flags, char *op)
+// {
+// 	free(*(**head)->content);
+// 	*(**head)->content = ft_strdup(op);
+// 	free(**compared_str_ptr);
+// 	**compared_str_ptr = ft_strdup("");
+// 	*compared_str_ptr = (**head)->content;
+// 	*head = operation_flags;
+// }
 
-void	ft_lststrnullboth(t_lststr **head, char **compared_str_ptr, t_lststr *begin)
-{
-	free(*(*head)->content);
-	*(*head)->content = ft_strdup("");
-	ft_lststrexcludenode(head, begin);
-	free(*compared_str_ptr);
-	*compared_str_ptr = ft_strdup("");
-	*head = NULL;
-}
+// void	ft_lststrprint(t_lststr *lst)
+// {
+// 	if (!lst)
+// 	{
+// 		ft_printf("List is empty.\n");
+// 		return ;
+// 	}
+// 	while (lst)
+// 	{
+// 		ft_printf("%s\n", *lst->content);
+// 		lst = lst->next;
+// 	}
+// }
 
-void	ft_lststrreplace(t_lststr ***head, char ***compared_str_ptr,
-t_lststr **operation_flags, char *op)
-{
-	free(*(**head)->content);
-	*(**head)->content = ft_strdup(op);
-	free(**compared_str_ptr);
-	**compared_str_ptr = ft_strdup("");
-	*compared_str_ptr = (**head)->content;
-	*head = operation_flags;
-}
+// char	*crunch_sequence(char **sequence_arr)
+// {
+// 	t_lststr		*operation_flags;
+// 	t_lststr		**head;
+// 	t_lststr		*tmp;
+// 	char			**compared_str_ptr;
+// 	int				index;
+// 	t_node_binary	*result_lst;
+// 	char			*result_str;
 
-void	ft_lststrprint(t_lststr *lst)
-{
-	if (!lst)
-	{
-		ft_printf("List is empty.\n");
-		return ;
-	}
-	while (lst)
-	{
-		ft_printf("%s\n", *lst->content);
-		lst = lst->next;
-	}
-}
+// 	if (!sequence_arr)
+// 		return (ft_strdup(""));
+// 	operation_flags = NULL;
+// 	index = 0;
+// 	ft_lststradd_back(&operation_flags,
+// 		ft_lststrnew(sequence_arr + index));
+// 	while (sequence_arr[++index])
+// 	{
+// 		if (!operation_flags && sequence_arr[index + 1])
+// 			ft_lststradd_back(&operation_flags,
+// 				ft_lststrnew(sequence_arr + index++));
+// 		head = &operation_flags;
+// 		compared_str_ptr = sequence_arr + index;
+// 		while (*head && (*head)->content != compared_str_ptr)
+// 		{
+// 			if (!ft_strcmp(*(*head)->content, "ra"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
+// 					ft_lststrreplace(&head, &compared_str_ptr,
+// 						&operation_flags, "rrb");
+// 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
+// 					ft_lststrreplace(&head, &compared_str_ptr,
+// 						&operation_flags, "rr");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "rb"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
+// 					ft_lststrreplace(&head, &compared_str_ptr,
+// 						&operation_flags, "rra");
+// 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rr");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "rr"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "sb")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rb");
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"ra");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "rrr"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "sb")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rr"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rrb");
+// 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rra");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "rra"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "ra"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rrr");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "rrb"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sb")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rb"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "rra"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"rrr");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "pa"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "ra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rb")
+// 					|| !ft_strcmp(*compared_str_ptr, "rra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "sb")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "pb"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "pb"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "ra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rb")
+// 					|| !ft_strcmp(*compared_str_ptr, "rra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrb")
+// 					|| !ft_strcmp(*compared_str_ptr, "sa")
+// 					|| !ft_strcmp(*compared_str_ptr, "sb")
+// 					|| !ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "pa"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "sa"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "ra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrr")
+// 					|| !ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "sa"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"sb");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "sb"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "ra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrb")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrr")
+// 					|| !ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "sb"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"sa");
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 			else if (!ft_strcmp(*(*head)->content, "ss"))
+// 			{
+// 				if (!ft_strcmp(*compared_str_ptr, "ra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rb")
+// 					|| !ft_strcmp(*compared_str_ptr, "rr")
+// 					|| !ft_strcmp(*compared_str_ptr, "rra")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrb")
+// 					|| !ft_strcmp(*compared_str_ptr, "rrr")
+// 					|| !ft_strcmp(*compared_str_ptr, "pa")
+// 					|| !ft_strcmp(*compared_str_ptr, "pb"))
+// 					ft_lststrexcludenode(head, operation_flags);
+// 				else if (!ft_strcmp(*compared_str_ptr, "sa"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"sb");
+// 				else if (!ft_strcmp(*compared_str_ptr, "sb"))
+// 					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags,
+// 						"sa");
+// 				else if (!ft_strcmp(*compared_str_ptr, "ss"))
+// 					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
+// 				else
+// 					head = &(*head)->next;
+// 			}
+// 		}
+// 		if (*sequence_arr[index])
+// 		{
+// 			ft_lststradd_back(&operation_flags,
+// 				ft_lststrnew(sequence_arr + index));
+// 		}
+// 	}
+// 	while (operation_flags)
+// 	{
+// 		tmp = operation_flags;
+// 		operation_flags = operation_flags->next;
+// 		free(tmp);
+// 	}
+// 	result_lst = NULL;
+// 	index = -1;
+// 	while (sequence_arr[++index])
+// 		if (*sequence_arr[index])
+// 			ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+// 				ft_strjoin(" ", sequence_arr[index])));
+// 	result_str = ft_nodbinstrjoin_from_back(result_lst);
+// 	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
+// 	return (result_str);
+// }
 
-char	*crunch_sequence(char **sequence_arr)
-{
-	t_lststr		*operation_flags;
-	t_lststr		**head;
-	t_lststr		*tmp;
-	char			**compared_str_ptr;
-	int				index;
-	t_node_binary	*result_lst;
-	char			*result_str;
-
-	if (!sequence_arr)
-		return (ft_strdup(""));
-	operation_flags = NULL;
-	index = 0;
-	ft_lststradd_back(&operation_flags,
-		ft_lststrnew(sequence_arr + index));
-	while (sequence_arr[++index])
-	{
-		ft_printf("%d\n", index);
-		if (!operation_flags && sequence_arr[index + 1])
-			ft_lststradd_back(&operation_flags,
-				ft_lststrnew(sequence_arr + index++));
-		head = &operation_flags;
-		compared_str_ptr = sequence_arr + index;
-		while (*head && (*head)->content != compared_str_ptr)
-		{
-			if (!ft_strcmp(*(*head)->content, "ra"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrb");
-				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rr");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "rb"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rra");
-				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rr");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "rr"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "sb")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rrr"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rb");
-				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "ra");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "rrr"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "sb")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rr"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrb");
-				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rra");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "rra"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "ra"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rrb"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrr");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "rrb"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb")
-					|| !ft_strcmp(*compared_str_ptr, "sb")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rb"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "rra"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "rrr");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "pa"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "ra")
-					|| !ft_strcmp(*compared_str_ptr, "rr")
-					|| !ft_strcmp(*compared_str_ptr, "rrr")
-					|| !ft_strcmp(*compared_str_ptr, "rb")
-					|| !ft_strcmp(*compared_str_ptr, "rra")
-					|| !ft_strcmp(*compared_str_ptr, "rrb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "sb")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "pb"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "ra")
-					|| !ft_strcmp(*compared_str_ptr, "rr")
-					|| !ft_strcmp(*compared_str_ptr, "rrr")
-					|| !ft_strcmp(*compared_str_ptr, "rb")
-					|| !ft_strcmp(*compared_str_ptr, "rra")
-					|| !ft_strcmp(*compared_str_ptr, "rrb")
-					|| !ft_strcmp(*compared_str_ptr, "sa")
-					|| !ft_strcmp(*compared_str_ptr, "sb")
-					|| !ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "pa"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "sa"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "ra")
-					|| !ft_strcmp(*compared_str_ptr, "rr")
-					|| !ft_strcmp(*compared_str_ptr, "rra")
-					|| !ft_strcmp(*compared_str_ptr, "rrr")
-					|| !ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "sa"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sb");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "sb"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "ra")
-					|| !ft_strcmp(*compared_str_ptr, "rr")
-					|| !ft_strcmp(*compared_str_ptr, "rrb")
-					|| !ft_strcmp(*compared_str_ptr, "rrr")
-					|| !ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "sb"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sa");
-				else
-					head = &(*head)->next;
-			}
-			else if (!ft_strcmp(*(*head)->content, "ss"))
-			{
-				if (!ft_strcmp(*compared_str_ptr, "ra")
-					|| !ft_strcmp(*compared_str_ptr, "rb")
-					|| !ft_strcmp(*compared_str_ptr, "rr")
-					|| !ft_strcmp(*compared_str_ptr, "rra")
-					|| !ft_strcmp(*compared_str_ptr, "rrb")
-					|| !ft_strcmp(*compared_str_ptr, "rrr")
-					|| !ft_strcmp(*compared_str_ptr, "pa")
-					|| !ft_strcmp(*compared_str_ptr, "pb"))
-					ft_lststrexcludenode(head, operation_flags);
-				else if (!ft_strcmp(*compared_str_ptr, "sa"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sb");
-				else if (!ft_strcmp(*compared_str_ptr, "sb"))
-					ft_lststrreplace(&head, &compared_str_ptr, &operation_flags, "sa");
-				else if (!ft_strcmp(*compared_str_ptr, "ss"))
-					ft_lststrnullboth(head, compared_str_ptr, operation_flags);
-				else
-					head = &(*head)->next;
-			}
-		}
-		if (*sequence_arr[index])
-		{
-			ft_lststradd_back(&operation_flags,
-				ft_lststrnew(sequence_arr + index));
-		}
-	}
-	while (operation_flags)
-	{
-		tmp = operation_flags;
-		operation_flags = operation_flags->next;
-		free(tmp);
-	}
-	result_lst = NULL;
-	index = -1;
-	while (sequence_arr[++index])
-		if (*sequence_arr[index])
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(
-				ft_strjoin(" ", sequence_arr[index])));
-	result_str = ft_nodbinstrjoin_from_back(result_lst);
-	ft_nodbinclear(&result_lst, ft_nodbindel, -1);
-	return (result_str);
-}
-
-int	is_stack_sorted(t_stack *stack, int check_for_both_dirs,
-int position_of_head_matters)
+int	is_stack_sorted(t_stack *stack)
 {
 	t_node_binary	*head;
 	t_node_binary	*min;
@@ -431,35 +409,14 @@ int position_of_head_matters)
 
 	if (!stack->n)
 		return (1);
-	head = stack->head;
-	if (!position_of_head_matters)
-	{
-		min = get_min_from_stack(stack);
-		head = min;
-	}
+	min = get_min_from_stack(stack);
+	head = min;
 	i = 0;
 	while (++i < stack->n)
 	{
 		if (*(int *)head->content > *(int *)head->next->content)
-		{
-			if (!check_for_both_dirs)
-				return (0);
-			else
-				break ;
-		}
-		head = head->next;
-	}
-	if (!check_for_both_dirs)
-		return (1);
-	head = stack->head;
-	if (!position_of_head_matters)
-		head = min;
-	i = 0;
-	while (++i < stack->n)
-	{
-		if (*(int *)head->content > *(int *)head->prev->content)
 			return (0);
-		head = head->prev;
+		head = head->next;
 	}
 	return (1);
 }
