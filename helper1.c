@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 20:28:24 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/10 20:48:37 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 11:20:31 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	handle_rotations(t_push_swap *mystruct, t_4_int *min_rotate_ops,
 t_node_binary **result_lst)
 {
+	*result_lst = NULL;
 	if (min_rotate_ops->forward_both)
 	{
 		while (min_rotate_ops->forward_both-- > 0)
