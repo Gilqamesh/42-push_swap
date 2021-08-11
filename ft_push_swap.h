@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 22:42:12 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 23:29:47 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ typedef struct s_rot_vars
 }	t_rot_vars;
 # endif
 
+# ifndef T_ARROFARRPTRS
+#  define T_ARROFARRPTRS
+typedef struct s_arrofarrptrs
+{
+	t_INTarrofarr	table;
+	t_list			**alloced_ptrs;
+}	t_arrofarrptrs;
+# endif
+
 void			parse_input(t_push_swap *mystruct, int argc, char **argv);
 void			ft_error(t_push_swap *mystruct);
 void			print_stacks(t_push_swap *mystruct);
@@ -142,10 +151,10 @@ void			swap_nodbin_content(t_node_binary *a, t_node_binary *b);
 // Finds the Largest Increasing Subsequence starting from head, the number of
 // elements are 'n'. If 'n' is positive, the traveling direction is positive,
 // i.e. head->next n-1 times, otherwise negative, i.e., head->prev n-1 times.
-t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
+t_arrofarrptrs	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 					int n);
 // Finds the Largest Common Subsequence between two sequences
-t_INT_array		find_LCS_of_two_sequences(t_INT_array first_seq,
+t_arrofarrptrs	find_LCS_of_two_sequences(t_INT_array first_seq,
 					t_INT_array second_seq);
 // Combines two t_INTarrofarr type, only keeping the unique ones.
 // The combination is sorted lexicographically as well between each elements.

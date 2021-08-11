@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 23:17:18 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/11 23:29:30 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "utils_helper4.h"
 #include "../../ft_push_swap.h"
 
-t_INT_array2	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
+t_arrofarrptrs	find_LIS_of_sublist(t_push_swap *mystruct, t_node_binary *head,
 int n)
 {
 	t_INT_array		fir_arr;
 	t_INT_array		sec_arr;
 	int				*helper;
-	t_INT_array		LIS;
+	t_arrofarrptrs	LIS;
 
 	if (!allocate_helper(&fir_arr, &sec_arr, n, &helper))
 		ft_error(mystruct);
@@ -32,6 +32,7 @@ int n)
 	LIS = find_LCS_of_two_sequences(fir_arr, sec_arr);
 	free(fir_arr.elements);
 	free(sec_arr.elements);
+	return (LIS);
 	return ((t_INT_array2){LIS, fill_unordered(mystruct, &LIS)});
 }
 
@@ -57,24 +58,17 @@ t_INTarrofarr *ARR2, t_list **alloced_ptrs)
 	return ((t_INTarrofarr){LCS_g_a, unique_counter});
 }
 
-t_INT_array	find_LCS_of_two_sequences(t_INT_array fir_arr,
+t_arrofarrptrs	find_LCS_of_two_sequences(t_INT_array fir_arr,
 t_INT_array sec_arr)
 {
 	t_INTarrofarr	**table;
-	t_INT_array		result;
-	t_list			*alloced_ptrs;
+	t_list			**alloced_ptrs;
 
-	init_table(&alloced_ptrs, &table, fir_arr, sec_arr);
-	fill_table(table, fir_arr, sec_arr, &alloced_ptrs);
-	result.size_elements
-		= table[fir_arr.size_elements][sec_arr.size_elements].arr[0]
-		.size_elements;
-	result.elements = malloc(result.size_elements * sizeof(int));
-	ft_memcpy(result.elements,
-		table[fir_arr.size_elements][sec_arr.size_elements].arr[0].elements,
-		result.size_elements * sizeof(int));
-	ft_lstmallocfree(&alloced_ptrs);
-	return (result);
+	init_table(alloced_ptrs, &table, fir_arr, sec_arr);
+	fill_table(table, fir_arr, sec_arr, alloced_ptrs);
+	int	index = table[fir_arr.size_elements][sec_arr.size_elements].size_arr - 1;
+	return ((t_arrofarrptrs){table[fir_arr.size_elements]
+		[sec_arr.size_elements], alloced_ptrs});
 }
 
 char	*construct_minimum_rotations_needed_ops(t_stack *stack, char stack_name)
