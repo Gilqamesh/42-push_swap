@@ -4,6 +4,9 @@
 		"utils_helper4.h": "c",
 		"ft_push_swap.h": "c",
 		"algorithm": "c",
-		"helper1.h": "c"
+		"helper1.h": "c",
+		"utils_helper2.h": "c",
+		"utils_helper1.h": "c",
+		"utils_helper5.h": "c"
 	}
 }

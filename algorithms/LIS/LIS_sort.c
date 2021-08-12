@@ -6,12 +6,13 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/27 19:06:01 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 23:36:56 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/12 15:03:09 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../ft_push_swap.h"
 #include "../../helper1.h"
+#include "utils_helper1.h"
 #include "utils_helper4.h"
 
 static void	init_indexes(int *ord_index, int *unord_index,
@@ -22,7 +23,7 @@ t_node_binary **result_lst)
 	*result_lst = NULL;
 }
 
-static char	*keep_LIS_in_A(t_push_swap *mystruct, t_INT_array2 *LIS_ord_unord)
+char	*keep_LIS_in_A(t_push_swap *mystruct, t_INT_array2 *LIS_ord_unord)
 {
 	int				ord_index;
 	int				unord_index;
@@ -62,7 +63,7 @@ static void	helper_function(t_push_swap *mystruct, t_node_binary **result_lst)
 	handle_rotations(mystruct, &min_rotate_ops, result_lst);
 }
 
-static char	*find_optimal_merge_sequence(t_push_swap *mystruct)
+char	*find_optimal_merge_sequence(t_push_swap *mystruct)
 {
 	t_node_binary	*tmp_B;
 	t_node_binary	*result_lst;
@@ -87,11 +88,6 @@ char	*LIS_sort(t_push_swap *mystruct)
 	t_node_binary	*result_lst;
 	char			*result_str;
 	t_arrofarrptrs	LIS_ord_unord;
-	int				i;
-	int				min;
-	int				min_index;
-	char			*tmp;
-	t_push_swap		*tmp_mystruct;
 
 	result_lst = NULL;
 	if (is_stack_sorted(&mystruct->a))
@@ -99,39 +95,13 @@ char	*LIS_sort(t_push_swap *mystruct)
 	LIS_ord_unord = find_LIS_of_sublist(mystruct,
 			mystruct->a.head, get_input_limit_on_LIS(mystruct->a.n));
 	if (LIS_ord_unord.table.arr[0].size_elements < 3)
-	{
 		ft_nodbinadd_front(&result_lst, ft_nodbinnew(three_sort(mystruct)));
-		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
-			find_optimal_merge_sequence(mystruct)));
-	}
 	else
-	{
-		i = -1;
-		while (++i < LIS_ord_unord.table.size_arr)
-		{
-			ft_nodbinadd_front(&result_lst, ft_nodbinnew(
-					keep_LIS_in_A(mystruct, &LIS_ord_unord)));
-			tmp = find_optimal_merge_sequence(mystruct);
-			if (!i)
-			{
-				min = ft_n_of_words_by_delim(tmp, ' ');
-				min_index = 0;
-			}
-			else
-			{
-				if (ft_n_of_words_by_delim(tmp, ' ') < min)
-				{
-					min = ft_n_of_words_by_delim(tmp, ' ');
-					min_index = i;
-				}
-			}
-			// reset mystruct somehow
-			free(tmp);
-		}
 		ft_nodbinadd_front(&result_lst, ft_nodbinnew(
+				find_minimum_sequence_of_all_LIS(&LIS_ord_unord, mystruct)));
+	ft_nodbinadd_front(&result_lst, ft_nodbinnew(
 			find_optimal_merge_sequence(mystruct)));
-	}
-	ft_lstmallocfree(LIS_ord_unord.alloced_ptrs);
+	ft_lstmallocfree(&LIS_ord_unord.alloced_ptrs);
 	ft_nodbinadd_front(&result_lst,
 		ft_nodbinnew(construct_minimum_rotations_needed_ops(
 				&mystruct->a, 'a')));

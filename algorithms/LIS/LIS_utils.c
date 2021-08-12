@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 12:31:33 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 23:29:30 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/12 14:16:35 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int n)
 	free(fir_arr.elements);
 	free(sec_arr.elements);
 	return (LIS);
-	return ((t_INT_array2){LIS, fill_unordered(mystruct, &LIS)});
 }
 
 t_INTarrofarr	combine_two_LCS_array(t_INTarrofarr *ARR1,
@@ -62,11 +61,10 @@ t_arrofarrptrs	find_LCS_of_two_sequences(t_INT_array fir_arr,
 t_INT_array sec_arr)
 {
 	t_INTarrofarr	**table;
-	t_list			**alloced_ptrs;
+	t_list			*alloced_ptrs;
 
-	init_table(alloced_ptrs, &table, fir_arr, sec_arr);
-	fill_table(table, fir_arr, sec_arr, alloced_ptrs);
-	int	index = table[fir_arr.size_elements][sec_arr.size_elements].size_arr - 1;
+	init_table(&alloced_ptrs, &table, fir_arr, sec_arr);
+	fill_table(table, fir_arr, sec_arr, &alloced_ptrs);
 	return ((t_arrofarrptrs){table[fir_arr.size_elements]
 		[sec_arr.size_elements], alloced_ptrs});
 }

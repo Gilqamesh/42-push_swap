@@ -9,7 +9,7 @@ ft_get_routes.c stack_operations/stack_op1_helper.c ft_testers_helper.c \
 utils/ft_utils.c algorithms/LIS/LIS_utils.c algorithms/LIS/LIS_sort.c \
 helper1.c helper2.c algorithms/LIS/utils_helper1.c algorithms/LIS/utils_helper2.c \
 algorithms/LIS/utils_helper3.c algorithms/LIS/utils_helper4.c \
-algorithms/three_sort/three_sort.c
+algorithms/three_sort/three_sort.c algorithms/LIS/utils_helper5.c
 
 CFLAGS = -g
 LIBNAME = libpush_swap.a
@@ -34,9 +34,11 @@ clean:
 	cd utils && rm -f *.o
 	cd checker_program && rm -f *.o
 	cd algorithms/LIS && rm -f *.o
+	cd algorithms/three_sort && rm -f *.o
 fclean:
 	make clean
 	rm -f $(LIBNAME)
+	rm -f $(NAME)
 re:
 	make fclean
 	make all

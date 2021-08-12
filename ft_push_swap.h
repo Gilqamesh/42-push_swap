@@ -6,7 +6,7 @@
 /*   By: edavid <edavid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 13:41:50 by edavid            #+#    #+#             */
-/*   Updated: 2021/08/11 23:29:47 by edavid           ###   ########.fr       */
+/*   Updated: 2021/08/12 13:41:06 by edavid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_rot_vars
 typedef struct s_arrofarrptrs
 {
 	t_INTarrofarr	table;
-	t_list			**alloced_ptrs;
+	t_list			*alloced_ptrs;
 }	t_arrofarrptrs;
 # endif
 
@@ -203,5 +203,12 @@ char			*LIS_sort(t_push_swap *mystruct);
 int				is_stack_sorted(t_stack *stack);
 // Pushes all elements but 3 away to stack B and then applies optimal sort
 char			*three_sort(t_push_swap *mystruct);
+// Pushes away elements from stack A onto stack B that are not part of the LIS
+// and returns a string that consists of the operations for this.
+char			*keep_LIS_in_A(t_push_swap *mystruct,
+					t_INT_array2 *LIS_ord_unord);
+// Brute force approach to find the least amount of operations for each
+// element in B to push to A. (Depth of 1)
+char			*find_optimal_merge_sequence(t_push_swap *mystruct);
 
 #endif
